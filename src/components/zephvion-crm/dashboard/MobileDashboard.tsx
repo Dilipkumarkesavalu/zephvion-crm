@@ -25,7 +25,12 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
             src={lightModeLogo}
             alt={title}
           />
-          <h1 className="text-xl font-semibold">{title}</h1>
+          <h1
+            className="border-l border-border pl-2 font-mono text-base font-semibold tracking-[0.3em]"
+            aria-label={title}
+          >
+            CRM
+          </h1>
         </div>
       </MobileHeader>
       <MobileContent>{children}</MobileContent>

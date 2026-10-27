@@ -87,6 +87,9 @@ export const AppSidebar = () => {
             src={lightModeLogo}
             alt={title}
           />
+          <span className="border-l border-border pl-2 font-mono text-sm font-semibold tracking-[0.3em] group-data-[collapsible=icon]:hidden">
+            CRM
+          </span>
           <BrandMark className="hidden group-data-[collapsible=icon]:block size-6 shrink-0" />
         </Link>
       </SidebarHeader>
