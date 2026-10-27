@@ -9,12 +9,12 @@ sample data in the browser. This guide sets up the **real** CRM:
 
   | Email | Name | Role |
   |---|---|---|
-  | dilip@zephvion.com | Dilip Kumar | Admin |
-  | bhavani@zephvion.com | Bhavani | User |
-  | manjunath@zephvion.com | Manjunath | User |
-  | naren@zephvion.com | Naren | User |
-  | akhilesh@zephvion.com | Akhilesh | User |
-  | bhuvan@zephvion.com | Bhuvan | User |
+  | dilipkumark@zephvion.com | Dilip Kumar | Admin |
+  | vbhavani@zephvion.com | Bhavani | User |
+  | manjunath.poojary@zephvion.com | Manjunath Poojary | User |
+  | narenn@zephvion.com | Naren | User |
+  | akhileshaw@zephvion.com | Akhilesh | User |
+  | bhuvans@zephvion.com | Bhuvan | User |
 
 The real CRM will be published at
 **<https://dilipkumarkesavalu.github.io/zephvion-crm/app/>**, next to the demo.
@@ -115,7 +115,7 @@ a minute the CRM is live at `/zephvion-crm/app/`, and the demo stays at
 ## 7. First sign-in
 
 1. Open <https://dilipkumarkesavalu.github.io/zephvion-crm/app/>.
-2. Enter `dilip@zephvion.com` → **Email me a code** → type the 6-digit code.
+2. Enter `dilipkumark@zephvion.com` → **Email me a code** → type the 6-digit code.
 3. You are signed in as **Dilip Kumar (admin)**. Each team member does the
    same with their own address and lands as a regular user.
 
