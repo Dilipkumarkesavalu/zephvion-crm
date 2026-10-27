@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 0 380 60" role="img" aria-label="Zephvion">
+  <g fill="none" stroke="#0D82E4" stroke-width="8" stroke-linejoin="miter" stroke-miterlimit="4">
+    <path d="M2 12H30L2 48H30"/>
+    <path d="M72 12H46V48H72M46 30H68"/>
+    <path d="M88 52V12H104a10 10 0 0 1 0 20H88"/>
+    <path d="M130 8V52M156 8V52M130 30H156"/>
+    <path d="M216 8V52"/>
+    <circle cx="250" cy="30" r="18"/>
+  </g>
+  <path d="M164 8H173L184 40L195 8H204L189 52H179ZM284 8H293L312 37V8H320V52H311L292 23V52H284Z" fill="#0D82E4"/>
+  <path d="M250 20L259 37H241Z" fill="#0D82E4"/>
+  <text x="326" y="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="9" fill="#0D82E4">PVT.LTD</text>
+</svg>
