@@ -2,6 +2,8 @@
 
 An end-to-end CRM for growing businesses, by [Zephvion](https://zephvion.com): leads, clients, deals, follow-ups, and GST-ready quotes & invoices in one structured system.
 
+**Live demo:** <https://dilipkumarkesavalu.github.io/zephvion-crm/> (runs in your browser on sample data, nothing to sign up for)
+
 Built with React, TypeScript, Tailwind CSS (shadcn/ui) and Supabase, on top of the open-source [Atomic CRM](https://github.com/marmelab/atomic-crm) by Marmelab (MIT).
 
 ## Features
