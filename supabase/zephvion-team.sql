@@ -14,6 +14,7 @@ on conflict (domain) do nothing;
 
 insert into public.team_roster (email, first_name, last_name, administrator)
 values
+    ('dilipkumark@zephvion.com', 'Dilip', 'Kumar', true),
     ('dilip@zephvion.com', 'Dilip', 'Kumar', true),
     ('bhavani@zephvion.com', 'Bhavani', '', false),
     ('manjunath@zephvion.com', 'Manjunath', '', false),
