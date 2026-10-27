@@ -15,7 +15,7 @@ const singleNote = {
 };
 
 const meta = {
-  title: "Atomic CRM/Notes/NotesIteratorMobile",
+  title: "Zephvion CRM/Notes/NotesIteratorMobile",
   parameters: {
     layout: "fullscreen",
   },

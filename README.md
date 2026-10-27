@@ -4,7 +4,7 @@ An end-to-end CRM for growing businesses, by [Zephvion](https://zephvion.com): l
 
 **Live demo:** <https://dilipkumarkesavalu.github.io/zephvion-crm/> (runs in your browser on sample data, nothing to sign up for)
 
-Built with React, TypeScript, Tailwind CSS (shadcn/ui) and Supabase, on top of the open-source [Atomic CRM](https://github.com/marmelab/atomic-crm) by Marmelab (MIT).
+Built with React, TypeScript, Tailwind CSS (shadcn/ui) and Supabase.
 
 ## Features
 
@@ -74,8 +74,8 @@ npm run lint
 npm run test:unit:app
 ```
 
-See [AGENTS.md](./AGENTS.md) for architecture notes and the developer documentation in [`doc/`](./doc/) (inherited from Atomic CRM).
+See [AGENTS.md](./AGENTS.md) for architecture notes.
 
 ## License
 
-MIT. Zephvion CRM is based on [Atomic CRM](https://github.com/marmelab/atomic-crm), © Francois Zaninotto, Marmelab; see [LICENSE.md](./LICENSE.md).
+MIT, see [LICENSE.md](./LICENSE.md).

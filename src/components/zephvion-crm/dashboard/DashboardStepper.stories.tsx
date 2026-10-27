@@ -4,7 +4,7 @@ import { StoryWrapper } from "@/test/StoryWrapper";
 import { DashboardStepper } from "./DashboardStepper";
 
 const meta = {
-  title: "Atomic CRM/Dashboard/Dashboard Stepper",
+  title: "Zephvion CRM/Dashboard/Dashboard Stepper",
   parameters: {
     layout: "fullscreen",
   },

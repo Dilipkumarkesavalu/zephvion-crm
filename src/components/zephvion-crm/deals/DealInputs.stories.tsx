@@ -8,7 +8,7 @@ import { StoryWrapper, buildContact } from "@/test/StoryWrapper";
 import { DealInputs } from "./DealInputs";
 
 const meta = {
-  title: "Atomic CRM/Deals/DealInputs",
+  title: "Zephvion CRM/Deals/DealInputs",
   parameters: {
     layout: "fullscreen",
   },

@@ -1,4 +1,4 @@
-import { FileText, User } from "lucide-react";
+import { User } from "lucide-react";
 import { useTranslate, useUserMenu } from "ra-core";
 import { Link, matchPath, useLocation } from "react-router";
 import { RefreshButton } from "@/components/admin/refresh-button";
@@ -8,7 +8,6 @@ import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
-import { ChangelogPage } from "../misc/ChangelogPage";
 import { GlobalSearchButton } from "../search/GlobalSearchButton";
 
 /** Section name shown in the top bar, derived from the current route. */
@@ -46,7 +45,6 @@ const Header = () => {
         <RefreshButton />
         <UserMenu>
           <ProfileMenu />
-          <ChangelogMenuItem />
         </UserMenu>
       </div>
     </header>
@@ -69,19 +67,4 @@ const ProfileMenu = () => {
   );
 };
 
-const ChangelogMenuItem = () => {
-  const translate = useTranslate();
-  const userMenuContext = useUserMenu();
-  if (!userMenuContext) {
-    throw new Error("<ChangelogMenuItem> must be used inside <UserMenu>");
-  }
-  return (
-    <DropdownMenuItem asChild onClick={userMenuContext.onClose}>
-      <Link to={ChangelogPage.path} className="flex items-center gap-2">
-        <FileText />
-        {translate("crm.changelog.title")}
-      </Link>
-    </DropdownMenuItem>
-  );
-};
 export default Header;

@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Zephvion CRM (based on Atomic CRM) is a full-featured CRM built with React, shadcn-admin-kit, and Supabase. It provides contact management, task tracking, notes, email capture, and deal management with a Kanban board.
+Zephvion CRM is a full-featured CRM built with React, shadcn-admin-kit, and Supabase. It provides contact management, task tracking, notes, email capture, and deal management with a Kanban board.
 
 ## Development Commands
 
@@ -98,7 +98,6 @@ supabase/
 
 ### Key Architecture Patterns
 
-For more details, check out the doc/src/content/docs/developers/architecture-choices.mdx document.
 
 #### Mutable Dependencies
 

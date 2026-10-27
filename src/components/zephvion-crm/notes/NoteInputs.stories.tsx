@@ -24,7 +24,7 @@ export const NoteInputsStory = ({
 );
 
 const meta = {
-  title: "Atomic CRM/Notes/Note Inputs",
+  title: "Zephvion CRM/Notes/Note Inputs",
   includeStories: ["Default", "WithSaveButton", "WithAttachmentDefault"],
   render: (args) => <NoteInputsStory {...args} />,
 } satisfies Meta<typeof NoteInputsStory>;

@@ -9,7 +9,7 @@ describe("extractMailContactData", () => {
     expect(
       extractMailContactData([
         {
-          Email: "firstname.lastname@marmelab.com",
+          Email: "firstname.lastname@zephvion.com",
           Name: "Firstname Lastname",
         },
       ]),
@@ -17,10 +17,10 @@ describe("extractMailContactData", () => {
       {
         firstName: "Firstname",
         lastName: "Lastname",
-        email: "firstname.lastname@marmelab.com",
-        domain: "marmelab.com",
-        companyName: "Marmelab",
-        website: "https://marmelab.com",
+        email: "firstname.lastname@zephvion.com",
+        domain: "zephvion.com",
+        companyName: "Zephvion",
+        website: "https://zephvion.com",
       },
     ]);
   });
@@ -140,7 +140,7 @@ describe("extractMailContactData", () => {
     expect(
       extractMailContactData([
         {
-          Email: "Firstname.Lastname@marmelab.com",
+          Email: "Firstname.Lastname@zephvion.com",
           Name: "Firstname Lastname",
         },
       ]),
@@ -148,21 +148,21 @@ describe("extractMailContactData", () => {
       {
         firstName: "Firstname",
         lastName: "Lastname",
-        email: "firstname.lastname@marmelab.com",
-        domain: "marmelab.com",
-        companyName: "Marmelab",
-        website: "https://marmelab.com",
+        email: "firstname.lastname@zephvion.com",
+        domain: "zephvion.com",
+        companyName: "Zephvion",
+        website: "https://zephvion.com",
       },
     ]);
   });
 
   describe("extractCompanyName", () => {
     it("extracts company name from lowercase domain", () => {
-      expect(extractCompanyName("marmelab.com")).toBe("Marmelab");
+      expect(extractCompanyName("zephvion.com")).toBe("Zephvion");
     });
 
     it("extracts company name from uppercase domain", () => {
-      expect(extractCompanyName("Marmelab.com")).toBe("Marmelab");
+      expect(extractCompanyName("Zephvion.com")).toBe("Zephvion");
     });
 
     it("extracts company name from common free email provider", () => {

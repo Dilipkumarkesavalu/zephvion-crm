@@ -247,7 +247,7 @@ const checkBody = (json: any) => {
 /* To invoke locally:
   1. Run `make start`
   2. Make sure to have a Sales with email "support@postmarkapp.com" (create it if needed)
-  3. OPTIONAL: Create a Contact with email "firstname.lastname@marmelab.com"
+  3. OPTIONAL: Create a Contact with email "firstname.lastname@zephvion.com"
   4. In another terminal, run `make start-supabase-functions`
   5. In another terminal, make an HTTP request:
   curl -i --location --request POST 'http://127.0.0.1:54321/functions/v1/postmark' \
@@ -261,10 +261,10 @@ const checkBody = (json: any) => {
             "Name": "Postmarkapp Support",
             "MailboxHash": ""
         },
-        "To": "\"Firstname Lastname\" <firstname.lastname@marmelab.com>",
+        "To": "\"Firstname Lastname\" <firstname.lastname@zephvion.com>",
         "ToFull": [
             {
-            "Email": "firstname.lastname@marmelab.com",
+            "Email": "firstname.lastname@zephvion.com",
             "Name": "Firstname Lastname",
             "MailboxHash": "SampleHash"
             }
@@ -295,7 +295,7 @@ const checkBody = (json: any) => {
             "MailboxHash": ""
             }
         ],
-        "OriginalRecipient": "firstname.lastname@marmelab.com",
+        "OriginalRecipient": "firstname.lastname@zephvion.com",
         "Subject": "Test subject",
         "MessageID": "73e6d360-66eb-11e1-8e72-a8904824019b",
         "ReplyTo": "replyto@postmarkapp.com",

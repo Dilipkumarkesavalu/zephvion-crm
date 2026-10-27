@@ -6,7 +6,7 @@ import { buildContact, StoryWrapper } from "@/test/StoryWrapper";
 import type { DataProvider } from "ra-core";
 
 const meta = {
-  title: "Atomic CRM/Contacts/Contact Edit",
+  title: "Zephvion CRM/Contacts/Contact Edit",
   parameters: {
     layout: "fullscreen",
   },

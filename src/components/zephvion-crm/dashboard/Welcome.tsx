@@ -18,16 +18,6 @@ export const Welcome = () => (
         This demo runs on sample data, so feel free to explore and edit. It
         resets on reload.
       </p>
-      <p className="text-xs text-muted-foreground">
-        Built on the open-source{" "}
-        <a
-          href="https://github.com/marmelab/atomic-crm"
-          className="underline hover:no-underline"
-        >
-          Atomic CRM
-        </a>{" "}
-        (MIT).
-      </p>
     </CardContent>
   </Card>
 );

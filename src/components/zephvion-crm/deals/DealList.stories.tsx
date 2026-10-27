@@ -11,7 +11,7 @@ import {
 } from "@/test/StoryWrapper";
 
 const meta = {
-  title: "Atomic CRM/Deals/Deal List",
+  title: "Zephvion CRM/Deals/Deal List",
   parameters: {
     layout: "fullscreen",
   },

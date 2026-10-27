@@ -25,7 +25,7 @@ export function extractCompanyName(domain: string) {
  * Example:
  *   "ToFull": [
  *     {
- *       "Email": "firstname.lastname@marmelab.com",
+ *       "Email": "firstname.lastname@zephvion.com",
  *       "Name": "Firstname Lastname"
  *     }
  *   ]
@@ -34,8 +34,8 @@ export function extractCompanyName(domain: string) {
  *  {
  *    firstName: "Firstname",
  *    lastName: "Lastname",
- *    email: "firstname.lastname@marmelab.com",
- *    domain: "marmelab.com"
+ *    email: "firstname.lastname@zephvion.com",
+ *    domain: "zephvion.com"
  * }
  *
  */

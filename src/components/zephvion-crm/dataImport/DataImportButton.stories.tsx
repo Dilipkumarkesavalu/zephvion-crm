@@ -5,7 +5,7 @@ import { DataImportButton } from "./DataImportButton";
 import type { ImportableResourceName } from "./useImportableResources";
 
 const meta = {
-  title: "Atomic CRM/Data Import/Data Import Button",
+  title: "Zephvion CRM/Data Import/Data Import Button",
   parameters: {
     layout: "fullscreen",
   },

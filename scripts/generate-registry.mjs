@@ -10,7 +10,7 @@ const registryPath = "registry.json";
 const toPosixPath = (filePath) => filePath.split(path.sep).join("/");
 const findFiles = (...args) => globSync(...args).map(toPosixPath);
 const basePath = "src";
-const atomicCrmComponentsPath = path.posix.join(
+const crmComponentsPath = path.posix.join(
   basePath,
   "components",
   "zephvion-crm",
@@ -41,8 +41,8 @@ const excludedLibFiles = [
 const testFilePattern = "**/*.{test,spec}.*";
 const storyFilePattern = "**/*.stories.*";
 
-const atomicCrmComponents = findFiles(
-  path.posix.join(atomicCrmComponentsPath, "**", "*.ts*"),
+const crmComponents = findFiles(
+  path.posix.join(crmComponentsPath, "**", "*.ts*"),
   { ignore: [testFilePattern, storyFilePattern] },
 );
 const supabaseComponents = findFiles(
@@ -59,12 +59,11 @@ const libFiles = findFiles(path.posix.join(libPath, "**", "*.ts*")).filter(
     return !excludedLibFiles.includes(path.basename(file));
   },
 );
-const changelogPath = "CHANGELOG.md";
 
 const registryContent = JSON.parse(fs.readFileSync(registryPath, "utf-8"));
 
 const files = [
-  ...atomicCrmComponents.map((path) => {
+  ...crmComponents.map((path) => {
     return {
       path,
       type: "registry:component",
@@ -88,17 +87,12 @@ const files = [
       type: "registry:lib",
     };
   }),
-  {
-    path: changelogPath,
-    type: "registry:file",
-    target: "~/CHANGELOG.md",
-  },
 ];
 
 const newRegistryContent = {
   ...registryContent,
   items: registryContent.items.map((item) => {
-    if (item.name === "atomic-crm") {
+    if (item.name === "zephvion-crm") {
       return {
         ...item,
         files,

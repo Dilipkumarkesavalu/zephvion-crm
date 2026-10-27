@@ -1,12 +1,12 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "atomic-crm",
-  "homepage": "https://marmelab.com/atomic-crm/",
+  "name": "zephvion-crm",
+  "homepage": "https://zephvion.com",
   "items": [
     {
-      "name": "atomic-crm",
+      "name": "zephvion-crm",
       "type": "registry:block",
-      "title": "Atomic CRM",
+      "title": "Zephvion CRM",
       "description": "A fully fledged CRM application built with Shadcn Admin Kit",
       "registryDependencies": [
         "item",
@@ -502,10 +502,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/zephvion-crm/misc/ChangelogPage.tsx",
-          "type": "registry:component"
-        },
-        {
           "path": "src/components/zephvion-crm/misc/AsideSection.tsx",
           "type": "registry:component"
         },
@@ -526,11 +522,23 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/login/OtpLoginForm.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/login/LoginSkeleton.tsx",
           "type": "registry:component"
         },
         {
           "path": "src/components/zephvion-crm/login/LoginPage.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/login/LoginBrandPanel.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/login/emailOtp.ts",
           "type": "registry:component"
         },
         {
@@ -1048,11 +1056,6 @@
         {
           "path": "src/lib/toSlug.ts",
           "type": "registry:lib"
-        },
-        {
-          "path": "CHANGELOG.md",
-          "type": "registry:file",
-          "target": "~/CHANGELOG.md"
         }
       ]
     }
