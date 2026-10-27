@@ -397,7 +397,51 @@ const lifeCycleCallbacks: ResourceCallbacks[] = [
       return applyFullTextSearch(["name", "category", "description"])(params);
     },
   },
+  {
+    resource: "tasks",
+    afterCreate: async (result) => {
+      if (result.data.sales_id != null) notifyTaskAssignee(result.data.id);
+      return result;
+    },
+    // afterUpdate does not see the previous values, so remember reassigned
+    // tasks here and notify once the update has succeeded
+    beforeUpdate: async (params) => {
+      const previousAssignee = params.previousData?.sales_id;
+      const nextAssignee = params.data?.sales_id;
+      if (
+        previousAssignee !== undefined &&
+        nextAssignee != null &&
+        nextAssignee !== previousAssignee
+      ) {
+        reassignedTaskIds.add(String(params.id));
+      }
+      return params;
+    },
+    afterUpdate: async (result) => {
+      if (reassignedTaskIds.delete(String(result.data.id))) {
+        notifyTaskAssignee(result.data.id);
+      }
+      return result;
+    },
+  },
 ];
+
+/**
+ * Emails the assignee in the background (the server skips self-assigned
+ * tasks); a failed email never blocks saving the task.
+ */
+const reassignedTaskIds = new Set<string>();
+
+const notifyTaskAssignee = (taskId: Identifier) => {
+  getSupabaseClient()
+    .functions.invoke("notify_task_assignee", {
+      method: "POST",
+      body: { task_id: taskId },
+    })
+    .then(({ error }) => {
+      if (error) console.error("notify_task_assignee.error", error);
+    });
+};
 
 export const getDataProvider = () => {
   if (import.meta.env.VITE_SUPABASE_URL === undefined) {

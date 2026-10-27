@@ -49,7 +49,8 @@ npx supabase functions deploy
 ```
 
 `link` and `db push` ask for the database password from step 1.
-`functions deploy` installs the server functions used by the Users page.
+`functions deploy` installs the server functions used by the Users page and
+the task assignment emails.
 
 ## 3. Add the team and the @zephvion.com rule
 
@@ -97,6 +98,20 @@ Google Workspace (zephvion.com mail):
 
 Using another provider (Zoho, Resend, Brevo…) works the same way with its
 SMTP host, port and credentials.
+
+**Task assignment emails.** When someone assigns a task to a teammate, the
+`notify_task_assignee` function emails them from the same mailbox. It needs the
+mailbox details as function secrets (Supabase doesn't share the Auth SMTP
+password with functions). From the `zephvion-crm` folder:
+
+```sh
+npx supabase secrets set SMTP_HOST=smtp.hostinger.com SMTP_PORT=465 SMTP_USER=noreply@zephvion.com
+npx supabase secrets set SMTP_PASSWORD="<the noreply mailbox password>"
+```
+
+Optional: `SMTP_FROM_NAME` (default "Zephvion CRM") and `CRM_URL` (default the
+GitHub Pages `/app/` address, used for the "Open in Zephvion CRM" button).
+Without `SMTP_PASSWORD` tasks are still assigned, just without an email.
 
 ## 6. Publish the real CRM
 

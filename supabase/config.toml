@@ -180,5 +180,7 @@ verify_jwt = false
 verify_jwt = false
 [functions.users]
 verify_jwt = false
+[functions.notify_task_assignee]
+verify_jwt = false
 [functions.mcp]
 verify_jwt = false
