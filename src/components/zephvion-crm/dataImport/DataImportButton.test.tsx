@@ -198,7 +198,7 @@ describe("DataImportButton", () => {
       {
         name: "New website",
         company: "Acme",
-        category: "Website design",
+        category: "Website",
         stage: "Proposal Sent",
         amount: "12000",
         expected_closing_date: "2026-09-30",
@@ -217,7 +217,7 @@ describe("DataImportButton", () => {
     expect(deals).toHaveLength(2);
     expect(deals[0]).toMatchObject({
       amount: 12000,
-      category: "website-design",
+      category: "website",
       company_id: companies[0].id,
       name: "New website",
       stage: "proposal-sent",
@@ -226,20 +226,20 @@ describe("DataImportButton", () => {
     // Both rows name the same company, which is created once and shared
     expect(deals[1].company_id).toBe(companies[0].id);
     // stage is required, so an empty cell falls back to the first stage
-    expect(deals[1].stage).toBe("opportunity");
+    expect(deals[1].stage).toBe("lead");
   });
 
   it("appends imported deals below the deals already in their stage", async () => {
     const { dataProvider, screen } = await renderImport(
       useDealImport,
       [
-        { name: "First", stage: "Opportunity" },
-        { name: "Second", stage: "Opportunity" },
+        { name: "First", stage: "Lead" },
+        { name: "Second", stage: "Lead" },
         { name: "Other column", stage: "Proposal Sent" },
       ],
       {
         deals: [
-          { id: 1, name: "Already there", stage: "opportunity", index: 0 },
+          { id: 1, name: "Already there", stage: "lead", index: 0 },
         ] as Deal[],
       },
     );
@@ -254,9 +254,9 @@ describe("DataImportButton", () => {
     expect(
       deals.map(({ name, stage, index }) => ({ name, stage, index })),
     ).toEqual([
-      { name: "Already there", stage: "opportunity", index: 0 },
-      { name: "First", stage: "opportunity", index: 1 },
-      { name: "Second", stage: "opportunity", index: 2 },
+      { name: "Already there", stage: "lead", index: 0 },
+      { name: "First", stage: "lead", index: 1 },
+      { name: "Second", stage: "lead", index: 2 },
       { name: "Other column", stage: "proposal-sent", index: 0 },
     ]);
   });
