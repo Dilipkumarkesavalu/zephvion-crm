@@ -46,9 +46,11 @@ export const LoginBrandPanel = ({ logo, title }: LoginBrandPanelProps) => {
       />
 
       <div className="relative z-10 flex items-start justify-between">
-        <div className="flex items-center text-lg font-medium">
-          <img className="mr-2 h-6" src={logo} alt={title} />
-          {title}
+        <div className="flex items-center gap-3">
+          <img className="h-6" src={logo} alt={title} />
+          <span className="border-l border-white/30 pl-3 font-mono text-lg font-semibold tracking-[0.3em] text-white/90">
+            CRM
+          </span>
         </div>
         <div className="text-right font-mono text-xs leading-5 text-teal-300">
           <div>IST</div>
