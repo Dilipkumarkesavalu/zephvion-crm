@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/admin/text-input";
 import { Notification } from "@/components/admin/notification";
 import { useConfigurationContext } from "@/components/zephvion-crm/root/ConfigurationContext.tsx";
+import { LoginBrandPanel } from "./LoginBrandPanel";
 import { OtpLoginForm } from "./OtpLoginForm";
 import { SSOAuthButton } from "./SSOAuthButton";
 import {
@@ -93,13 +94,7 @@ export const LoginPage = (props: { redirectTo?: string }) => {
   return (
     <div className="min-h-screen flex">
       <div className="relative grid w-full lg:grid-cols-2">
-        <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-          <div className="absolute inset-0 bg-zinc-900" />
-          <div className="relative z-20 flex items-center text-lg font-medium">
-            <img className="h-6 mr-2" src={darkModeLogo} alt={title} />
-            {title}
-          </div>
-        </div>
+        <LoginBrandPanel logo={darkModeLogo} title={title} />
         <div className="flex flex-col justify-center w-full p-4 lg:p-8">
           <div className="w-full space-y-6 lg:mx-auto lg:w-[350px]">
             <div className="text-center">
