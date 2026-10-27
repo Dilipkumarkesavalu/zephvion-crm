@@ -6,6 +6,7 @@ import { required } from "ra-core";
 import { DateTimeInput } from "@/components/admin";
 
 import { contactOptionText } from "../misc/ContactOption";
+import { formatSaleName } from "../sales/saleName";
 import { useConfigurationContext } from "../root/ConfigurationContext";
 
 export const TaskFormContent = ({
@@ -35,6 +36,21 @@ export const TaskFormContent = ({
           />
         </ReferenceInput>
       )}
+
+      <ReferenceInput
+        source="sales_id"
+        reference="sales"
+        filter={{ "disabled@neq": true }}
+        sort={{ field: "first_name", order: "ASC" }}
+      >
+        <AutocompleteInput
+          label="resources.tasks.fields.sales_id"
+          optionText={formatSaleName}
+          helperText={false}
+          validate={required()}
+          modal
+        />
+      </ReferenceInput>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <DateTimeInput

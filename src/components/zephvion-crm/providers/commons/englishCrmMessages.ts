@@ -315,6 +315,7 @@ export const englishCrmMessages = {
         type: "Type",
         contact_id: "Contact",
         due_short: "due",
+        sales_id: "Assigned to",
       },
       action: {
         add: "Add task",
@@ -347,6 +348,12 @@ export const englishCrmMessages = {
         with_pending: "With pending tasks",
       },
       regarding_contact: "(Re: %{name})",
+      assigned_to: "Assigned to %{name}",
+      assignee_filter: {
+        label: "Show tasks for",
+        mine: "My tasks",
+        everyone: "Everyone",
+      },
       updated: "Task updated",
     },
     tags: {

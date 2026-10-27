@@ -320,6 +320,7 @@ export const frenchCrmMessages = {
         type: "Type",
         contact_id: "Contact",
         due_short: "échéance",
+        sales_id: "Assignée à",
       },
       action: {
         add: "Ajouter une tâche",
@@ -352,6 +353,12 @@ export const frenchCrmMessages = {
         with_pending: "Avec des tâches en attente",
       },
       regarding_contact: "(Concernant : %{name})",
+      assigned_to: "Assignée à %{name}",
+      assignee_filter: {
+        label: "Afficher les tâches de",
+        mine: "Mes tâches",
+        everyone: "Toute l'équipe",
+      },
       updated: "Tâche mise à jour",
     },
     tags: {

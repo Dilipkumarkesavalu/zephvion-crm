@@ -51,7 +51,8 @@ describe("TaskCreateSheet", () => {
       .getByLabelText(/description/i)
       .fill("Follow up about onboarding");
 
-    const [contactInput, typeInput] = screen.getByRole("combobox").all();
+    // Comboboxes: contact, assignee (defaults to the current user), type
+    const [contactInput, , typeInput] = screen.getByRole("combobox").all();
 
     await contactInput.click();
     await screen.getByText("Grace Hopper").click();
@@ -94,6 +95,7 @@ describe("TaskCreateSheet", () => {
 
     expect(createdTask).toMatchObject({
       contact_id: 2,
+      sales_id: 0,
       text: "Follow up about onboarding",
       type: "call",
     });

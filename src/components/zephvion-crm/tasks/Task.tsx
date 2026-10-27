@@ -2,6 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { MoreVertical } from "lucide-react";
 import {
   useDeleteWithUndoController,
+  useGetIdentity,
   useGetRecordRepresentation,
   useNotify,
   useTranslate,
@@ -20,7 +21,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useConfigurationContext } from "../root/ConfigurationContext";
-import type { Contact, Task as TData } from "../types";
+import { formatSaleName } from "../sales/saleName";
+import type { Contact, Sale, Task as TData } from "../types";
 import { TaskEdit } from "./TaskEdit";
 import { TaskEditSheet } from "./TaskEditSheet";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -38,6 +40,7 @@ export const Task = ({
   const translate = useTranslate();
   const queryClient = useQueryClient();
   const getContactRepresentation = useGetRecordRepresentation("contacts");
+  const { identity } = useGetIdentity();
 
   const [openEdit, setOpenEdit] = useState(false);
 
@@ -143,6 +146,25 @@ export const Task = ({
                       </>
                     );
                   }}
+                />
+              )}
+              {task.sales_id != null && task.sales_id !== identity?.id && (
+                <ReferenceField<TData, Sale>
+                  source="sales_id"
+                  reference="sales"
+                  record={task}
+                  link={false}
+                  className="inline text-sm text-muted-foreground"
+                  render={({ referenceRecord }) =>
+                    referenceRecord ? (
+                      <>
+                        {" · "}
+                        {translate("resources.tasks.assigned_to", {
+                          name: formatSaleName(referenceRecord as Sale),
+                        })}
+                      </>
+                    ) : null
+                  }
                 />
               )}
             </div>

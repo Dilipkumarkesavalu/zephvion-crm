@@ -22,10 +22,13 @@ import {
 
 export const TasksListByDueDate = ({
   filterByContact,
+  assignee,
   emptyPlaceholder,
   pendingPlaceholder,
 }: {
   filterByContact?: Identifier;
+  /** Whose tasks to list when not filtering by contact: a sales id, or "all". Defaults to the current user. */
+  assignee?: Identifier | "all";
   emptyPlaceholder?: React.ReactNode;
   pendingPlaceholder?: React.ReactNode;
 }) => {
@@ -41,7 +44,9 @@ export const TasksListByDueDate = ({
       filter: {
         ...(filterByContact != null
           ? { contact_id: filterByContact }
-          : { sales_id: identity?.id }),
+          : assignee === "all"
+            ? {}
+            : { sales_id: assignee ?? identity?.id }),
       },
     },
     { enabled: filterByContact != null ? true : !!identity },
