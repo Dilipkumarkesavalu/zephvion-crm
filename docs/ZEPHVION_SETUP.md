@@ -66,12 +66,17 @@ Supabase dashboard → **Authentication**:
 
 1. **Sign In / Providers → Email**: enabled. Keep **Confirm email** on.
    Set **Email OTP length** to `6` and **Email OTP expiration** to `3600`.
-2. **Emails → Templates → Magic Link**:
+2. **Emails → Templates → Confirm signup** and **Emails → Templates →
+   Magic Link** (the first sign-in of an address sends "Confirm signup", later
+   ones "Magic Link", so both need the code). For each:
    - Subject: `Your Zephvion CRM sign-in code`
-   - Body: paste the content of
+   - Body: click **Source** and paste the content of
      [`supabase/templates/magic_link.html`](../supabase/templates/magic_link.html).
      It contains `{{ .Token }}`, which is what makes Supabase send a **code**
      instead of a link.
+
+   Supabase only lets you edit templates once custom SMTP is set up, so do
+   step 5 first if the template fields are locked.
 3. **URL Configuration → Site URL**:
    `https://dilipkumarkesavalu.github.io/zephvion-crm/app/`
 
@@ -123,7 +128,8 @@ other domain is refused.
 | Symptom | Fix |
 |---|---|
 | No email arrives | Check spam; check step 5 SMTP settings and the Supabase **Logs → Auth**. |
-| Email contains a link, not a code | The Magic Link template is missing `{{ .Token }}` (step 4.2). |
+| Email contains a link, not a code | The Confirm signup or Magic Link template is missing `{{ .Token }}` (step 4.2). |
+| "Error sending confirmation email" | Supabase **Logs → Auth**, open the error. `535 authentication failed` means the SMTP mailbox doesn't exist, the password is wrong, or 2FA is on for that mailbox. |
 | "Only @zephvion.com email addresses can sign in" for a team member | Their address isn't on zephvion.com; fix the email in `zephvion-team.sql`. |
 | "Too many attempts" | Wait 60 seconds between codes; raise rate limits (step 5.4). |
 | Dilip isn't admin | Re-run `zephvion-team.sql`, then sign out and in again. |

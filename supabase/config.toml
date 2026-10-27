@@ -102,6 +102,12 @@ enable_confirmations = false
 subject = "You've been invited to Zephvion CRM"
 content_path = "./supabase/templates/invite.html"
 
+# First sign-in of a new address sends the confirmation email, later ones the
+# magic link: both show the one-time code ({{ .Token }}) used by the login page.
+[auth.email.template.confirmation]
+subject = "Your Zephvion CRM sign-in code"
+content_path = "./supabase/templates/magic_link.html"
+
 [auth.email.template.magic_link]
 subject = "Your Zephvion CRM sign-in code"
 content_path = "./supabase/templates/magic_link.html"
