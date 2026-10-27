@@ -1,7 +1,12 @@
 {
-  "short_name": "Atomic CRM",
-  "name": "Atomic CRM",
+  "short_name": "Zephvion CRM",
+  "name": "Zephvion CRM",
   "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
     {
       "src": "favicon.ico",
       "sizes": "48x48 32x32 24x24 16x16",
@@ -69,6 +74,6 @@
   "start_url": ".",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#000000",
+  "theme_color": "#0D82E4",
   "background_color": "#ffffff"
 }
