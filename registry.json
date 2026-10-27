@@ -1,0 +1,1060 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "atomic-crm",
+  "homepage": "https://marmelab.com/atomic-crm/",
+  "items": [
+    {
+      "name": "atomic-crm",
+      "type": "registry:block",
+      "title": "Atomic CRM",
+      "description": "A fully fledged CRM application built with Shadcn Admin Kit",
+      "registryDependencies": [
+        "item",
+        "progress",
+        "tabs",
+        "toggle",
+        "toggle-group",
+        "https://marmelab.com/shadcn-admin-kit/r/admin.json"
+      ],
+      "dependencies": [
+        "@hello-pangea/dnd@^18.0.1",
+        "@nivo/bar@^0.99.0",
+        "faker@^5.5.3",
+        "jsonexport@^3.2.0",
+        "papaparse@^5.5.3",
+        "ra-supabase-core@^3.5.1",
+        "ra-supabase-language-english@^3.5.0",
+        "zod@^4.0.5",
+        "@tanstack/query-async-storage-persister@^5.90.22",
+        "@tanstack/react-query-persist-client@^5.90.22",
+        "dompurify@^3.3.1",
+        "marked@^17.0.1",
+        "@streamparser/json-whatwg@^0.0.22",
+        "mime@^4.1.0"
+      ],
+      "files": [
+        {
+          "path": "src/components/zephvion-crm/types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/consts.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tasks/tasksPredicate.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tasks/TasksListFilter.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tasks/TasksListContent.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tasks/TasksListByDueDate.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tasks/TasksIterator.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tasks/TaskFormContent.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tasks/TaskEditSheet.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tasks/TaskEdit.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tasks/TaskCreateSheet.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tasks/Task.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tasks/MobileTasksList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tasks/AddTask.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tags/useTags.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tags/useCreateTag.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tags/TagForm.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tags/TagEditModal.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tags/TagDialog.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tags/TagCreateModal.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tags/TagChip.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tags/RoundButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tags/colors.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/simple-list/SimpleListLoading.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/simple-list/SimpleListItem.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/simple-list/SimpleList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/simple-list/ListPlaceholder.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/simple-list/ListNoResults.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/settings/SettingsTags.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/settings/SettingsPageMobile.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/settings/SettingsPage.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/settings/ProfilePage.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/search/searchModel.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/search/GlobalSearchButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/sales/useGetSalesName.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/sales/SalesList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/sales/SalesInputs.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/sales/salesErrorNotification.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/sales/SalesEdit.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/sales/SalesCreate.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/sales/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/sales/AccountManagerInput.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/root/useConfigurationLoader.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/root/defaultConfiguration.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/root/CRM.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/root/ConfigurationContext.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/supabase/supabase.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/supabase/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/supabase/dataProvider.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/supabase/authProvider.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/search.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataProvider.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/authProvider.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/internal/transformOrFilter.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/internal/transformInFilter.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/internal/transformFilter.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/internal/transformContainsFilter.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/internal/supabaseAdapter.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/internal/listParser.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/utils.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/tasks.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/tags.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/samples.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/sales.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/invoices.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/finalize.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/deals.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/dealNotes.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/contacts.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/contactNotes.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/companies.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/commons/mergeContacts.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/commons/i18nProvider.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/commons/getContactAvatar.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/commons/getCompanyAvatar.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/commons/frenchCrmMessages.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/commons/englishCrmMessages.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/commons/canAccess.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/commons/attachments.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/commons/activity.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/utils.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/StatusSelector.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/NotesIteratorMobile.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/NotesIterator.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/NoteShowPage.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/noteModel.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/NoteInputsMobile.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/NoteInputs.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/NoteEditSheet.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/NoteCreateSheet.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/NoteCreate.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/NoteAttachments.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/Note.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/foreignKeyMapping.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/notes/AttachmentField.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/usePapaParse.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/useImportFromJson.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/useAppBarHeight.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/unsupportedDomains.const.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/Status.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/ResponsiveFilters.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/RelativeDate.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/MobileBackButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/Markdown.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/isLinkedInUrl.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/InfinitePagination.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/ImportPage.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/ImageEditorField.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/fetchWithTimeout.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/EditSheet.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/CreateSheet.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/ContactOption.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/ChangelogPage.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/AsideSection.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/misc/ActiveFilterButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/login/StartPage.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/login/SSOAuthButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/login/SignupPage.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/login/LoginSkeleton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/login/LoginPage.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/login/ConfirmationRequired.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/login/authConfig.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/layout/useRefreshData.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/layout/TopToolbar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/layout/PullToRefresh.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/layout/MobileRefreshButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/layout/MobileNavigation.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/layout/MobileLayout.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/layout/MobileHeader.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/layout/MobileContent.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/layout/Layout.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/layout/Header.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/layout/FormToolbar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/layout/AppSidebar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/useInvoiceTransform.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/sellerDetails.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/InvoiceSummary.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/InvoiceStatusBadge.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/InvoiceShow.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/invoiceModel.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/invoiceMessages.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/InvoiceList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/InvoiceInputs.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/InvoiceEdit.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/InvoiceDocument.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/invoiceDefaults.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/InvoiceCreate.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/DealInvoices.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/filters/FilterCategory.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/stages.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/OnlyMineInput.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/dealUtils.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/DealShow.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/DealListContent.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/DealList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/DealInputs.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/DealEmpty.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/DealEdit.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/DealCreate.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/DealColumn.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/DealCard.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/DealArchivedList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/deals/ContactList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dataImport/useImportableResources.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dataImport/useDealImport.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dataImport/useCompanyResolver.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dataImport/useCompanyImport.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dataImport/types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dataImport/parseCell.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dataImport/fetchRecordsWithCache.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dataImport/DataImportProvider.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dataImport/DataImportProgressToast.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dataImport/DataImportDialog.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dataImport/DataImportButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dataImport/createEachRow.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/Welcome.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/useDashboardRecords.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/TasksList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/RevenueChart.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/PipelineByStage.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/MobileDashboard.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/LatestNotes.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/KpiTiles.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/HotContacts.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/DealsPipeline.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/DealsChart.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/DashboardStepper.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/dashboardMetrics.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/DashboardGreeting.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/DashboardActivityLog.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/Dashboard.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/useContactImport.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/TagsListEdit.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/TagsList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/index.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ExportVCardButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactTasksList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactShow.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactPersonalInfo.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/contactModel.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactMergeButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactListFilter.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactListContent.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactInputs.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactEmpty.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactEditSheet.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactEdit.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactCreateSheet.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactCreate.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactBackgroundInfo.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/ContactAside.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/BulkTagButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/Avatar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/contacts/AutocompleteContactInput.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/sizes.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/GridList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/getTranslatedCompanySizeLabel.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/CompanyShow.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/CompanyListFilter.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/CompanyList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/CompanyInputs.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/CompanyEmpty.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/CompanyEdit.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/CompanyCreate.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/CompanyCard.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/CompanyAvatar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/CompanyAside.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/companies/AutocompleteCompanyInput.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/activity/ActivityLogNote.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/activity/ActivityLogIterator.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/activity/ActivityLogDealNoteCreated.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/activity/ActivityLogDealCreated.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/activity/ActivityLogContext.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/activity/ActivityLogContactNoteCreated.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/activity/ActivityLogContactCreated.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/activity/ActivityLogCompanyCreated.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/activity/ActivityLog.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/supabase/set-password-page.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/supabase/oauth-consent-page.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/supabase/layout.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/supabase/forgot-password-page.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/hooks/user-menu-context.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/hooks/useBulkExport.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/hooks/simple-form-iterator-context.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/lib/toSlug.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "CHANGELOG.md",
+          "type": "registry:file",
+          "target": "~/CHANGELOG.md"
+        }
+      ]
+    }
+  ]
+}
