@@ -194,6 +194,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/sales/saleName.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/sales/index.ts",
           "type": "registry:component"
         },
