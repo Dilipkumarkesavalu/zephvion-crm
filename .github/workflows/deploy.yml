@@ -1,4 +1,4 @@
-name: 🚀 Deploy demo
+name: 🚀 Deploy
 on:
     push:
         branches:
@@ -16,7 +16,7 @@ permissions:
 
 jobs:
     build:
-        name: 🔨 Build demo
+        name: 🔨 Build demo and CRM
         runs-on: ubuntu-latest
         timeout-minutes: 10
         env:
@@ -37,8 +37,26 @@ jobs:
             - name: 📥 Download deps
               run: npm ci
 
-            - name: 🔨 Build
+            # The real CRM (email-code login, Supabase data) is published under
+            # /app/ once the SUPABASE_URL and SB_PUBLISHABLE_KEY repository
+            # variables exist. See docs/ZEPHVION_SETUP.md.
+            - name: 🔨 Build CRM app
+              if: ${{ vars.SUPABASE_URL != '' && vars.SB_PUBLISHABLE_KEY != '' }}
+              run: npx vite build --outDir dist-app
+              env:
+                  VITE_IS_DEMO: false
+                  VITE_SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+                  VITE_SB_PUBLISHABLE_KEY: ${{ vars.SB_PUBLISHABLE_KEY }}
+                  VITE_ATTACHMENTS_BUCKET: attachments
+                  VITE_LOGIN_WITH_EMAIL_OTP: true
+                  VITE_ALLOWED_EMAIL_DOMAIN: zephvion.com
+
+            - name: 🔨 Build demo
               run: npm run build:demo
+
+            - name: 📁 Place CRM app under /app
+              if: ${{ vars.SUPABASE_URL != '' && vars.SB_PUBLISHABLE_KEY != '' }}
+              run: mv dist-app dist/app
 
             - name: 📦 Upload Pages artifact
               uses: actions/upload-pages-artifact@v3

@@ -6,9 +6,11 @@ import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/admin/text-input";
 import { Notification } from "@/components/admin/notification";
 import { useConfigurationContext } from "@/components/zephvion-crm/root/ConfigurationContext.tsx";
+import { OtpLoginForm } from "./OtpLoginForm";
 import { SSOAuthButton } from "./SSOAuthButton";
 import {
   disableEmailPasswordAuthentication,
+  emailOtpLogin,
   googleWorkplaceDomain,
 } from "./authConfig";
 
@@ -105,7 +107,8 @@ export const LoginPage = (props: { redirectTo?: string }) => {
                 {translate("ra.auth.sign_in")}
               </h1>
             </div>
-            {disableEmailPasswordAuthentication ? null : (
+            {emailOtpLogin ? <OtpLoginForm redirectTo={redirectTo} /> : null}
+            {disableEmailPasswordAuthentication || emailOtpLogin ? null : (
               <Form className="space-y-8" onSubmit={handleSubmit}>
                 <TextInput
                   label="ra.auth.email"
@@ -137,7 +140,7 @@ export const LoginPage = (props: { redirectTo?: string }) => {
                 })}
               </SSOAuthButton>
             ) : null}
-            {disableEmailPasswordAuthentication ? null : (
+            {disableEmailPasswordAuthentication || emailOtpLogin ? null : (
               <Link
                 to={"/forgot-password"}
                 className="block text-sm text-center hover:underline"

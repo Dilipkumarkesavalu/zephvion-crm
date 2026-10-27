@@ -11,7 +11,7 @@ export const DEFAULT_USER = {
   id: 0,
   first_name: "Dilip",
   last_name: "Kumar",
-  email: "admin@zephvion.com",
+  email: "dilip@zephvion.com",
   password: "demo",
   administrator: true,
   avatar: {

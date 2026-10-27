@@ -170,3 +170,10 @@ grant all on table public.invoices to service_role;
 grant all on sequence public.invoices_id_seq to anon;
 grant all on sequence public.invoices_id_seq to authenticated;
 grant all on sequence public.invoices_id_seq to service_role;
+
+grant all on function public.prepare_auth_user() to service_role;
+
+grant all on table public.allowed_email_domains to authenticated;
+grant all on table public.allowed_email_domains to service_role;
+grant all on table public.team_roster to authenticated;
+grant all on table public.team_roster to service_role;

@@ -74,3 +74,9 @@ create policy "Enable read access for authenticated users" on public.invoices fo
 create policy "Enable insert for authenticated users only" on public.invoices for insert to authenticated with check (true);
 create policy "Enable update for authenticated users only" on public.invoices for update to authenticated using (true) with check (true);
 create policy "Invoices Delete Policy" on public.invoices for delete to authenticated using (true);
+
+-- Sign-in restrictions: readable and editable by admins only
+alter table public.allowed_email_domains enable row level security;
+alter table public.team_roster enable row level security;
+create policy "Enable all for admins" on public.allowed_email_domains for all to authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Enable all for admins" on public.team_roster for all to authenticated using (public.is_admin()) with check (public.is_admin());

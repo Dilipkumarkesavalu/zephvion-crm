@@ -1,6 +1,8 @@
 import type { AuthProvider } from "ra-core";
 import { supabaseAuthProvider } from "ra-supabase-core";
 
+import { emailOtpLogin } from "../../login/authConfig";
+import { normalizeEmail } from "../../login/emailOtp";
 import { canAccess } from "../commons/canAccess";
 import { getSupabaseClient } from "./supabase";
 
@@ -92,7 +94,32 @@ export const getAuthProvider = (): AuthProvider => {
   const baseAuthProvider = getBaseAuthProvider();
   return {
     ...baseAuthProvider,
+    /**
+     * Emails a one-time sign-in code. Unknown addresses get an account on
+     * first login; the database rejects addresses outside the allowed domain.
+     */
+    sendLoginCode: async (email: string) => {
+      const { error } = await getSupabaseClient().auth.signInWithOtp({
+        email: normalizeEmail(email),
+        options: { shouldCreateUser: true },
+      });
+      if (error) {
+        throw error;
+      }
+    },
     login: async (params) => {
+      if (params.otp) {
+        const { error } = await getSupabaseClient().auth.verifyOtp({
+          email: normalizeEmail(params.email),
+          token: String(params.otp).trim(),
+          type: "email",
+        });
+        if (error) {
+          throw error;
+        }
+        clearCache();
+        return;
+      }
       if (params.ssoDomain) {
         const { error } = await getSupabaseClient().auth.signInWithSSO({
           domain: params.ssoDomain,
@@ -133,7 +160,9 @@ export const getAuthProvider = (): AuthProvider => {
 
       const isInitialized = await getIsInitialized();
 
-      if (!isInitialized) {
+      // With email codes, the first person to sign in initializes the CRM,
+      // so there is no separate sign-up step.
+      if (!isInitialized && !emailOtpLogin) {
         await getSupabaseClient().auth.signOut();
         throw {
           redirectTo: "/sign-up",

@@ -17,7 +17,7 @@ Built with React, TypeScript, Tailwind CSS (shadcn/ui) and Supabase, on top of t
   - automatic numbering (`QT-2026-0001`, `INV-2026-0001`) and amount in words (Indian system)
   - quote → invoice conversion, paid / overdue tracking
   - branded A4 PDF via the browser's "Save as PDF"
-- **Team & access**: users, admin roles, SSO (Google, Azure, Keycloak, Auth0).
+- **Team & access**: passwordless email-code sign-in limited to the company domain, admin and user roles.
 - **Light & dark themes** in Zephvion's brand colours, responsive down to mobile.
 
 ## Quick start (demo mode, no backend)
@@ -30,6 +30,10 @@ npm run dev:demo
 ```
 
 Open <http://localhost:5174>. The demo runs on realistic sample data stored in the browser; it resets on reload.
+
+## Going live (email-code login for the Zephvion team)
+
+The real CRM signs people in with a 6-digit code emailed to their `@zephvion.com` address (other domains are refused by the database) and is published at `/app/` next to the demo. Follow [docs/ZEPHVION_SETUP.md](./docs/ZEPHVION_SETUP.md).
 
 ## Full stack (Supabase)
 

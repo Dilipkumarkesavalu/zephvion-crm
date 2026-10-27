@@ -234,9 +234,14 @@ CREATE OR REPLACE FUNCTION "public"."handle_new_user"() RETURNS "trigger"
     AS $$
 declare
   sales_count int;
+  roster_administrator boolean;
 begin
   select count(id) into sales_count
   from public.sales;
+
+  select administrator into roster_administrator
+  from public.team_roster
+  where email = lower(new.email);
 
   insert into public.sales (first_name, last_name, email, user_id, administrator)
   values (
@@ -244,7 +249,11 @@ begin
     coalesce(new.raw_user_meta_data ->> 'last_name', new.raw_user_meta_data -> 'custom_claims' ->> 'last_name', 'Pending'),
     new.email,
     new.id,
-    case when sales_count > 0 then FALSE else TRUE end
+    -- The roster decides roles; without a roster, the first user is admin
+    coalesce(
+      roster_administrator,
+      sales_count = 0 and not exists (select 1 from public.team_roster)
+    )
   );
   return new;
 end;
@@ -466,4 +475,43 @@ BEGIN
   END IF;
   RETURN NEW;
 END;
+$$;
+
+CREATE OR REPLACE FUNCTION "public"."prepare_auth_user"() RETURNS "trigger"
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+declare
+  email_domain text;
+  roster_first_name text;
+  roster_last_name text;
+begin
+  -- Reject addresses outside the allowed domains, when any are configured
+  email_domain := lower(split_part(coalesce(new.email, ''), '@', 2));
+  if exists (select 1 from public.allowed_email_domains)
+    and not exists (
+      select 1 from public.allowed_email_domains where domain = email_domain
+    ) then
+    raise exception 'Email domain "%" is not allowed to sign in', email_domain
+      using errcode = 'P0001';
+  end if;
+
+  -- Give roster members their name on creation (handle_new_user and
+  -- handle_update_user read names from the user metadata)
+  if tg_op = 'INSERT' then
+    select first_name, last_name into roster_first_name, roster_last_name
+    from public.team_roster
+    where email = lower(new.email);
+
+    if found then
+      new.raw_user_meta_data := coalesce(new.raw_user_meta_data, '{}'::jsonb)
+        || jsonb_build_object(
+          'first_name', roster_first_name,
+          'last_name', roster_last_name
+        );
+    end if;
+  end if;
+
+  return new;
+end;
 $$;

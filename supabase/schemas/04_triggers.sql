@@ -87,3 +87,9 @@ create or replace trigger on_auth_user_updated
 create or replace trigger set_invoice_sales_id_trigger
     before insert on public.invoices
     for each row execute function public.set_sales_id_default();
+
+-- Runs before handle_new_user: enforces allowed email domains and applies
+-- team roster names
+create or replace trigger before_auth_user_saved
+    before insert or update of email on auth.users
+    for each row execute function public.prepare_auth_user();

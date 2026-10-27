@@ -99,11 +99,15 @@ double_confirm_changes = true
 enable_confirmations = false
 
 [auth.email.template.invite]
-subject = "You've been invited to Atomic CRM"
+subject = "You've been invited to Zephvion CRM"
 content_path = "./supabase/templates/invite.html"
 
+[auth.email.template.magic_link]
+subject = "Your Zephvion CRM sign-in code"
+content_path = "./supabase/templates/magic_link.html"
+
 [auth.email.template.recovery]
-subject = "Reset your Atomic CRM Password"
+subject = "Reset your Zephvion CRM password"
 content_path = "./supabase/templates/recovery.html"
 
 [auth.sms]

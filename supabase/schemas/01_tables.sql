@@ -226,3 +226,19 @@ alter table public.invoices
 
 create index invoices_company_id_idx on public.invoices using btree (company_id);
 create index invoices_deal_id_idx on public.invoices using btree (deal_id);
+
+-- Sign-in restrictions. Both tables are empty by default (no restriction);
+-- fill them per deployment, e.g. with supabase/zephvion-team.sql.
+create table public.allowed_email_domains (
+    domain text primary key,
+    constraint allowed_email_domains_lowercase check (domain = lower(domain))
+);
+
+-- Team members' names and roles, applied when they first sign in.
+create table public.team_roster (
+    email text primary key,
+    first_name text not null,
+    last_name text not null default '',
+    administrator boolean not null default false,
+    constraint team_roster_email_lowercase check (email = lower(email))
+);
