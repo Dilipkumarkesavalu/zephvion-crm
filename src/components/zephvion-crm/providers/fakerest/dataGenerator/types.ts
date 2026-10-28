@@ -1,10 +1,13 @@
 import type {
+  AuditLogEntry,
   Company,
   Contact,
   ContactNote,
   Deal,
   DealNote,
+  Department,
   Invoice,
+  Notification,
   Sale,
   Tag,
   Task,
@@ -18,6 +21,9 @@ export interface Db {
   deals: Deal[];
   deal_notes: DealNote[];
   invoices: Invoice[];
+  departments: Department[];
+  notifications: Notification[];
+  audit_log: AuditLogEntry[];
   sales: Sale[];
   tags: Tag[];
   tasks: Task[];

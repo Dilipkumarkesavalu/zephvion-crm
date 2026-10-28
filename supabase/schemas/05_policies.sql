@@ -80,3 +80,26 @@ alter table public.allowed_email_domains enable row level security;
 alter table public.team_roster enable row level security;
 create policy "Enable all for admins" on public.allowed_email_domains for all to authenticated using (public.is_admin()) with check (public.is_admin());
 create policy "Enable all for admins" on public.team_roster for all to authenticated using (public.is_admin()) with check (public.is_admin());
+
+-- Departments, audit log and notifications
+alter table public.departments enable row level security;
+
+alter table public.audit_log enable row level security;
+
+alter table public.notifications enable row level security;
+
+create policy "Enable read access for authenticated users" on public.departments for select to authenticated using (true);
+
+create policy "Enable insert for admins" on public.departments for insert to authenticated with check (public.is_admin());
+
+create policy "Enable update for admins" on public.departments for update to authenticated using (public.is_admin()) with check (public.is_admin());
+
+create policy "Enable delete for admins" on public.departments for delete to authenticated using (public.is_admin());
+
+create policy "Enable read access for admins" on public.audit_log for select to authenticated using (public.is_admin());
+
+create policy "Recipients read their notifications" on public.notifications for select to authenticated using (recipient_sales_id = public.current_sales_id());
+
+create policy "Recipients update their notifications" on public.notifications for update to authenticated using (recipient_sales_id = public.current_sales_id()) with check (recipient_sales_id = public.current_sales_id());
+
+create policy "Recipients delete their notifications" on public.notifications for delete to authenticated using (recipient_sales_id = public.current_sales_id());

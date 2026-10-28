@@ -25,12 +25,55 @@ export type SalesFormData = {
   last_name: string;
   administrator: boolean;
   disabled: boolean;
+  role?: SaleRole;
+  department_id?: Identifier | null;
 };
+
+export const SALE_ROLES = [
+  "owner",
+  "admin",
+  "head",
+  "manager",
+  "member",
+  "finance",
+  "viewer",
+] as const;
+
+export type SaleRole = (typeof SALE_ROLES)[number];
+
+export type Department = {
+  name: string;
+  color: string;
+  head_sales_id?: Identifier | null;
+  created_at?: string;
+} & Pick<RaRecord, "id">;
+
+export type AuditLogEntry = {
+  created_at: string;
+  table_name: string;
+  record_id: string;
+  action: "insert" | "update" | "delete";
+  sales_id?: Identifier | null;
+  changes: Record<string, unknown>;
+} & Pick<RaRecord, "id">;
+
+export type Notification = {
+  created_at: string;
+  recipient_sales_id: Identifier;
+  actor_sales_id?: Identifier | null;
+  type: string;
+  resource: string;
+  record_id: Identifier;
+  title: string;
+  read_at?: string | null;
+} & Pick<RaRecord, "id">;
 
 export type Sale = {
   first_name: string;
   last_name: string;
   administrator: boolean;
+  role?: SaleRole;
+  department_id?: Identifier | null;
   avatar?: RAFile;
   disabled?: boolean;
   user_id: string;

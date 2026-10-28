@@ -27,5 +27,10 @@ export const canAccess = <
     return false;
   }
 
+  // Departments are managed, and the audit log is read, by admins only
+  if (params.resource === "departments" || params.resource === "audit_log") {
+    return false;
+  }
+
   return true;
 };

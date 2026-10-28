@@ -93,3 +93,30 @@ create or replace trigger set_invoice_sales_id_trigger
 create or replace trigger before_auth_user_saved
     before insert or update of email on auth.users
     for each row execute function public.prepare_auth_user();
+
+-- Role sync, audit log and assignment notifications
+create or replace trigger sync_sales_role
+    before insert or update on public.sales
+    for each row execute function public.sync_sales_role();
+
+create or replace trigger audit_companies after insert or update or delete on public.companies for each row execute function public.write_audit_log();
+
+create or replace trigger audit_contacts after insert or update or delete on public.contacts for each row execute function public.write_audit_log();
+
+create or replace trigger audit_deals after insert or update or delete on public.deals for each row execute function public.write_audit_log();
+
+create or replace trigger audit_tasks after insert or update or delete on public.tasks for each row execute function public.write_audit_log();
+
+create or replace trigger audit_invoices after insert or update or delete on public.invoices for each row execute function public.write_audit_log();
+
+create or replace trigger audit_sales after insert or update or delete on public.sales for each row execute function public.write_audit_log();
+
+create or replace trigger audit_departments after insert or update or delete on public.departments for each row execute function public.write_audit_log();
+
+create or replace trigger notify_task_assignment after insert or update of sales_id on public.tasks for each row execute function public.notify_assignment();
+
+create or replace trigger notify_deal_assignment after insert or update of sales_id on public.deals for each row execute function public.notify_assignment();
+
+create or replace trigger notify_contact_assignment after insert or update of sales_id on public.contacts for each row execute function public.notify_assignment();
+
+create or replace trigger notify_company_assignment after insert or update of sales_id on public.companies for each row execute function public.notify_assignment();

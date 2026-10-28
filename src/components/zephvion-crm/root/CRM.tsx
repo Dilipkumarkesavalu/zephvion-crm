@@ -55,6 +55,12 @@ import { i18nProvider as defaulti18nProvider } from "../providers/commons/i18nPr
 import { StartPage } from "../login/StartPage.tsx";
 import { useIsMobile } from "@/hooks/use-mobile.ts";
 import { MobileTasksList } from "../tasks/MobileTasksList.tsx";
+import { AuditLogList } from "../organisation/AuditLogList";
+import {
+  DepartmentCreate,
+  DepartmentEdit,
+  DepartmentList,
+} from "../organisation/Departments";
 import { ContactListMobile } from "../contacts/ContactList.tsx";
 import { ContactShow } from "../contacts/ContactShow.tsx";
 import { CompanyShow } from "../companies/CompanyShow.tsx";
@@ -270,6 +276,15 @@ const DesktopAdmin = (
       <Resource name="tasks" />
       <Resource name="sales" {...sales} />
       <Resource name="tags" />
+      <Resource
+        name="departments"
+        list={DepartmentList}
+        create={DepartmentCreate}
+        edit={DepartmentEdit}
+        recordRepresentation="name"
+      />
+      <Resource name="audit_log" list={AuditLogList} />
+      <Resource name="notifications" />
     </Admin>
   );
 };

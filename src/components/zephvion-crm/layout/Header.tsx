@@ -8,6 +8,7 @@ import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
+import { NotificationBell } from "../organisation/NotificationBell";
 import { GlobalSearchButton } from "../search/GlobalSearchButton";
 
 /** Section name shown in the top bar, derived from the current route. */
@@ -20,6 +21,11 @@ const useSectionTitle = (): string => {
     ["/deals/*", translate("resources.deals.name", { smart_count: 2 })],
     ["/invoices/*", translate("resources.invoices.name", { smart_count: 2 })],
     ["/sales/*", translate("resources.sales.name", { smart_count: 2 })],
+    [
+      "/departments/*",
+      translate("resources.departments.name", { smart_count: 2 }),
+    ],
+    ["/audit_log", translate("crm.audit.title")],
     ["/settings", translate("crm.settings.title")],
     ["/profile", translate("crm.profile.title")],
   ];
@@ -41,6 +47,7 @@ const Header = () => {
       <h1 className="text-base font-semibold truncate">{sectionTitle}</h1>
       <div className="ml-auto flex items-center">
         <GlobalSearchButton />
+        <NotificationBell />
         <ThemeModeToggle />
         <RefreshButton />
         <UserMenu>

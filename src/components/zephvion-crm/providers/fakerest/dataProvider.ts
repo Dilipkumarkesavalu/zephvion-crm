@@ -37,6 +37,16 @@ import generateData from "./dataGenerator";
 import type { Db } from "./dataGenerator/types";
 import { withSupabaseFilterAdapter } from "./internal/supabaseAdapter";
 
+// Mirrors the sync_sales_role database trigger: the role decides admin access
+const withAdministratorFromRole = <
+  T extends { role?: string; administrator?: boolean },
+>(
+  data: T,
+): T =>
+  data.role
+    ? { ...data, administrator: ["owner", "admin"].includes(data.role) }
+    : data;
+
 const TASK_MARKED_AS_DONE = "TASK_MARKED_AS_DONE";
 const TASK_MARKED_AS_UNDONE = "TASK_MARKED_AS_UNDONE";
 const TASK_DONE_NOT_CHANGED = "TASK_DONE_NOT_CHANGED";
@@ -250,7 +260,7 @@ export const createDataProvider = ({
     salesCreate: async ({ ...data }: SalesFormData): Promise<Sale> => {
       const response = await dataProvider.create("sales", {
         data: {
-          ...data,
+          ...withAdministratorFromRole(data),
           password: "new_password",
         },
       });
@@ -271,7 +281,7 @@ export const createDataProvider = ({
 
       const { data: sale } = await dataProvider.update<Sale>("sales", {
         id,
-        data,
+        data: withAdministratorFromRole(data),
         previousData,
       });
       return { ...sale, user_id: sale.id.toString() };

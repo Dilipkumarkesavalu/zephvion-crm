@@ -14,6 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { CrmDataProvider } from "../providers/types";
 import type { SalesFormData } from "../types";
 import { getSalesErrorNotification } from "./salesErrorNotification";
+import { withAdministratorFromRole } from "./roles";
 import { SalesInputs } from "./SalesInputs";
 
 export function SalesCreate() {
@@ -47,7 +48,7 @@ export function SalesCreate() {
     },
   });
   const onSubmit: SubmitHandler<SalesFormData> = async (data) => {
-    mutate(data);
+    mutate(withAdministratorFromRole(data));
   };
 
   return (

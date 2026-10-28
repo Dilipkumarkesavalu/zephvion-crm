@@ -16,6 +16,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import type { CrmDataProvider } from "../providers/types";
 import type { Sale, SalesFormData } from "../types";
 import { getSalesErrorNotification } from "./salesErrorNotification";
+import { withAdministratorFromRole } from "./roles";
 import { SalesInputs } from "./SalesInputs";
 
 function EditToolbar() {
@@ -68,7 +69,7 @@ export function SalesEdit() {
   });
 
   const onSubmit: SubmitHandler<SalesFormData> = async (data) => {
-    mutate(data);
+    mutate(withAdministratorFromRole(data));
   };
 
   return (

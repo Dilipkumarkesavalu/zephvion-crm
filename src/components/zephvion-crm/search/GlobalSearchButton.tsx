@@ -34,6 +34,7 @@ import {
   getSnippet,
   highlight,
 } from "./searchModel";
+import { CommandActions } from "./CommandActions";
 
 // Whether the keyboard shortcut fired while the user is typing in a field, in
 // which case it must not open the dialog. contenteditable covers rich text
@@ -292,9 +293,12 @@ export const GlobalSearchDialog = ({
             }
           >
             {isTooShort ? (
-              <div className="px-4 py-6 text-center text-sm text-muted-foreground">
-                {translate("crm.search.hint", { min: MIN_SEARCH_LENGTH })}
-              </div>
+              <>
+                <CommandActions query={query.trim()} onSelect={handleSelect} />
+                <div className="px-4 py-4 text-center text-sm text-muted-foreground">
+                  {translate("crm.search.hint", { min: MIN_SEARCH_LENGTH })}
+                </div>
+              </>
             ) : error ? (
               <div
                 role="alert"
@@ -311,6 +315,7 @@ export const GlobalSearchDialog = ({
                 <CommandEmpty className="px-4 py-6 text-center text-sm">
                   {translate("crm.search.empty")}
                 </CommandEmpty>
+                <CommandActions query={query.trim()} onSelect={handleSelect} />
                 {SEARCH_RESOURCES.map(({ name, icon: Icon, labelKey }) => {
                   const groupResults = linkedResults.filter(
                     ({ result }) => result.resource === name,

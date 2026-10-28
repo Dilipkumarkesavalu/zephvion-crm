@@ -177,3 +177,38 @@ grant all on table public.allowed_email_domains to authenticated;
 grant all on table public.allowed_email_domains to service_role;
 grant all on table public.team_roster to authenticated;
 grant all on table public.team_roster to service_role;
+
+-- Departments, audit log and notifications
+grant all on function public.sync_sales_role() to anon;
+
+grant all on function public.sync_sales_role() to authenticated;
+
+grant all on function public.sync_sales_role() to service_role;
+
+grant all on function public.current_sales_id() to authenticated;
+
+grant all on function public.current_sales_id() to service_role;
+
+grant all on function public.write_audit_log() to service_role;
+
+grant all on function public.notify_assignment() to service_role;
+
+grant all on table public.departments to authenticated;
+
+grant all on table public.departments to service_role;
+
+grant all on sequence public.departments_id_seq to authenticated;
+
+grant all on sequence public.departments_id_seq to service_role;
+
+grant select on table public.audit_log to authenticated;
+
+grant all on table public.audit_log to service_role;
+
+grant all on sequence public.audit_log_id_seq to service_role;
+
+grant select, update, delete on table public.notifications to authenticated;
+
+grant all on table public.notifications to service_role;
+
+grant all on sequence public.notifications_id_seq to service_role;

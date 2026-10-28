@@ -1,8 +1,10 @@
 import {
   Building2,
   Handshake,
+  History,
   Import,
   LayoutDashboard,
+  Network,
   ReceiptText,
   Settings,
   Users,
@@ -118,6 +120,26 @@ export const AppSidebar = () => {
                     label: translate("resources.sales.name", {
                       smart_count: 2,
                     }),
+                  }}
+                />
+              </CanAccess>
+              <CanAccess resource="departments" action="list">
+                <NavMenuItem
+                  item={{
+                    to: "/departments",
+                    icon: Network,
+                    label: translate("resources.departments.name", {
+                      smart_count: 2,
+                    }),
+                  }}
+                />
+              </CanAccess>
+              <CanAccess resource="audit_log" action="list">
+                <NavMenuItem
+                  item={{
+                    to: "/audit_log",
+                    icon: History,
+                    label: translate("crm.audit.title"),
                   }}
                 />
               </CanAccess>

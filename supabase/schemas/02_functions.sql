@@ -515,3 +515,106 @@ begin
   return new;
 end;
 $$;
+
+-- Roles, audit log and notifications
+CREATE OR REPLACE FUNCTION "public"."sync_sales_role"() RETURNS "trigger"
+    LANGUAGE "plpgsql"
+    SET "search_path" TO ''
+    AS $$
+begin
+  -- "administrator" stays the flag the app and policies check; "role" is the
+  -- finer-grained source of truth. Whichever one changed drives the other.
+  if tg_op = 'INSERT' then
+    if new.administrator and new.role not in ('owner', 'admin') then
+      new.role := 'admin';
+    end if;
+  elsif new.role is not distinct from old.role
+    and new.administrator is distinct from old.administrator then
+    new.role := case
+      when new.administrator then 'admin'
+      when old.role in ('owner', 'admin') then 'member'
+      else old.role
+    end;
+  end if;
+  new.administrator := new.role in ('owner', 'admin');
+  return new;
+end;
+$$;
+
+CREATE OR REPLACE FUNCTION "public"."current_sales_id"() RETURNS bigint
+    LANGUAGE "sql" STABLE SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+  select id from public.sales where user_id = auth.uid()
+$$;
+
+CREATE OR REPLACE FUNCTION "public"."write_audit_log"() RETURNS "trigger"
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+declare
+  old_row jsonb;
+  new_row jsonb;
+  diff jsonb := '{}'::jsonb;
+begin
+  if tg_op = 'INSERT' then
+    new_row := to_jsonb(new);
+    insert into public.audit_log (table_name, record_id, action, sales_id, changes)
+    values (tg_table_name, new_row ->> 'id', 'insert', public.current_sales_id(), new_row);
+    return new;
+  elsif tg_op = 'DELETE' then
+    old_row := to_jsonb(old);
+    insert into public.audit_log (table_name, record_id, action, sales_id, changes)
+    values (tg_table_name, old_row ->> 'id', 'delete', public.current_sales_id(), old_row);
+    return old;
+  end if;
+
+  old_row := to_jsonb(old);
+  new_row := to_jsonb(new);
+  -- Only the fields that changed, as {"field": [old, new]}
+  select coalesce(jsonb_object_agg(n.key, jsonb_build_array(old_row -> n.key, n.value)), '{}'::jsonb)
+  into diff
+  from jsonb_each(new_row) n
+  where n.value is distinct from old_row -> n.key;
+
+  if diff <> '{}'::jsonb then
+    insert into public.audit_log (table_name, record_id, action, sales_id, changes)
+    values (tg_table_name, new_row ->> 'id', 'update', public.current_sales_id(), diff);
+  end if;
+  return new;
+end;
+$$;
+
+CREATE OR REPLACE FUNCTION "public"."notify_assignment"() RETURNS "trigger"
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+declare
+  actor bigint := public.current_sales_id();
+  row_data jsonb := to_jsonb(new);
+  record_title text;
+begin
+  if new.sales_id is null
+    or (tg_op = 'UPDATE' and new.sales_id is not distinct from old.sales_id)
+    or new.sales_id is not distinct from actor then
+    return new;
+  end if;
+
+  record_title := case tg_table_name
+    when 'contacts' then trim(concat_ws(' ', row_data ->> 'first_name', row_data ->> 'last_name'))
+    when 'tasks' then row_data ->> 'text'
+    else row_data ->> 'name'
+  end;
+
+  insert into public.notifications (recipient_sales_id, actor_sales_id, type, resource, record_id, title)
+  values (
+    new.sales_id,
+    actor,
+    tg_table_name || '_assigned',
+    tg_table_name,
+    (row_data ->> 'id')::bigint,
+    left(coalesce(nullif(record_title, ''), 'Untitled'), 200)
+  );
+  return new;
+end;
+$$;
