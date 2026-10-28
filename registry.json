@@ -42,7 +42,19 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/views/SavedViewsMenu.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/views/savedViewModel.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/tasks/tasksPredicate.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tasks/TasksPage.tsx",
           "type": "registry:component"
         },
         {
@@ -303,6 +315,10 @@
         },
         {
           "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/tags.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/savedViews.ts",
           "type": "registry:component"
         },
         {
@@ -1027,6 +1043,18 @@
         },
         {
           "path": "src/components/zephvion-crm/companies/AutocompleteCompanyInput.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/client360/useClientData.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/client360/ClientOverview.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/client360/clientModel.ts",
           "type": "registry:component"
         },
         {
