@@ -618,3 +618,29 @@ begin
   return new;
 end;
 $$;
+
+-- Department-based record visibility
+CREATE OR REPLACE FUNCTION "public"."visible_sales_ids"() RETURNS bigint[]
+    LANGUAGE "sql" STABLE SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+  -- null means every record; otherwise the account managers whose records
+  -- the current user may see (their own department, or just themselves)
+  select case
+    when me.id is null then array[]::bigint[]
+    when me.role in ('owner', 'admin', 'head', 'finance') then null
+    when me.department_id is null then array[me.id]
+    else array(select s.id from public.sales s where s.department_id = me.department_id)
+  end
+  from (select 1) as one
+  left join public.sales me on me.user_id = auth.uid()
+$$;
+
+CREATE OR REPLACE FUNCTION "public"."can_see_owner"("owner_sales_id" bigint) RETURNS boolean
+    LANGUAGE "sql" STABLE
+    SET "search_path" TO ''
+    AS $$
+  select owner_sales_id is null
+    or public.visible_sales_ids() is null
+    or owner_sales_id = any(public.visible_sales_ids())
+$$;

@@ -115,10 +115,10 @@ export const organisationMessages = {
     role_hints: {
       owner: "Everything, including other owners",
       admin: "Users, departments, settings and all records",
-      head: "Leads a department",
-      manager: "Manages a team",
-      member: "Works on their own records",
-      finance: "Invoices, payments and margins",
+      head: "Leads a department and sees every client",
+      manager: "Manages a team; sees their department's clients",
+      member: "Sees their department's clients and their own records",
+      finance: "Invoices and payments; sees every client",
       viewer: "Read-only access",
     },
     audit: {
