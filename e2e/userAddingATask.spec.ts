@@ -76,9 +76,11 @@ test.describe("user adding a task", () => {
       await expect(page.getByText("Follow up with Jane")).toBeVisible();
       await expect(page.getByText("due 4/11/2026, 9:00:00 PM")).toBeVisible();
     } else {
-      await expect(page.getByText("Tasks")).toBeVisible();
+      // Scoped to the page body: the sidebar also has a "Tasks" link
+      const tasksSection = page.getByRole("main").getByText("Tasks");
+      await expect(tasksSection).toBeVisible();
 
-      await expect(page.getByText("Tasks").locator("..")).toHaveText(
+      await expect(tasksSection.locator("..")).toHaveText(
         /Follow up with Jane/,
       );
       await menu.goToDashboard();
