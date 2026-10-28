@@ -4,6 +4,7 @@ import {
   Handshake,
   History,
   Import,
+  Inbox,
   LayoutDashboard,
   Network,
   ReceiptText,
@@ -53,6 +54,11 @@ export const AppSidebar = () => {
     {
       label: translate("crm.nav.sell"),
       items: [
+        {
+          to: "/leads",
+          icon: Inbox,
+          label: translate("resources.leads.name", { smart_count: 2 }),
+        },
         {
           to: "/contacts",
           icon: UsersRound,

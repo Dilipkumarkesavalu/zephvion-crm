@@ -16,6 +16,7 @@ const useSectionTitle = (): string => {
   const location = useLocation();
   const translate = useTranslate();
   const sections: Array<[string, string]> = [
+    ["/leads/*", translate("resources.leads.name", { smart_count: 2 })],
     ["/contacts/*", translate("resources.contacts.name", { smart_count: 2 })],
     ["/companies/*", translate("resources.companies.name", { smart_count: 2 })],
     ["/deals/*", translate("resources.deals.name", { smart_count: 2 })],

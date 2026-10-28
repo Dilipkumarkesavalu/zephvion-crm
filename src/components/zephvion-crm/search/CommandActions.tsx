@@ -4,6 +4,7 @@ import {
   FilePlus2,
   Handshake,
   History,
+  Inbox,
   LayoutDashboard,
   Network,
   Plus,
@@ -43,6 +44,12 @@ const useCommandActions = () => {
         label: translate("ra.page.dashboard"),
         to: "/",
         icon: LayoutDashboard,
+      },
+      {
+        id: "go.leads",
+        label: plural("leads"),
+        to: "/leads",
+        icon: Inbox,
       },
       {
         id: "go.contacts",
@@ -99,6 +106,12 @@ const useCommandActions = () => {
         : []),
     ];
     const create: CommandAction[] = [
+      {
+        id: "new.lead",
+        label: translate("resources.leads.action.new"),
+        to: "/leads/create",
+        icon: Plus,
+      },
       {
         id: "new.contact",
         label: translate("crm.command.new_contact"),

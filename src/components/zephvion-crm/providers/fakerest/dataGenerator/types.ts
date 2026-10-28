@@ -7,6 +7,7 @@ import type {
   DealNote,
   Department,
   Invoice,
+  Lead,
   Notification,
   SavedView,
   Sale,
@@ -25,6 +26,7 @@ export interface Db {
   departments: Department[];
   notifications: Notification[];
   saved_views: SavedView[];
+  leads: Lead[];
   audit_log: AuditLogEntry[];
   sales: Sale[];
   tags: Tag[];

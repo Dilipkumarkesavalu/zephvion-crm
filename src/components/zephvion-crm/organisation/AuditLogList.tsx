@@ -12,6 +12,7 @@ import { formatSaleName } from "../sales/saleName";
 import type { AuditLogEntry, Sale } from "../types";
 
 const AUDITED_TABLES = [
+  "leads",
   "companies",
   "contacts",
   "deals",

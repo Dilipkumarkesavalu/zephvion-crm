@@ -21,6 +21,7 @@ import { Dashboard } from "../dashboard/Dashboard";
 import { MobileDashboard } from "../dashboard/MobileDashboard";
 import deals from "../deals";
 import invoices from "../invoices";
+import leads from "../leads";
 import { Layout } from "../layout/Layout";
 import { MobileLayout } from "../layout/MobileLayout";
 import { SignupPage } from "../login/SignupPage";
@@ -268,6 +269,7 @@ const DesktopAdmin = (
         <Route path={SettingsPage.path} element={<SettingsPage />} />
         <Route path={ImportPage.path} element={<ImportPage />} />
       </CustomRoutes>
+      <Resource name="leads" {...leads} />
       <Resource name="deals" {...deals} />
       <Resource name="invoices" {...invoices} />
       <Resource name="contacts" {...contacts} />

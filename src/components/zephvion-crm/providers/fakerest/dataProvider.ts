@@ -13,6 +13,7 @@ import type {
   Contact,
   ContactNote,
   Deal,
+  Lead,
   DealNote,
   Sale,
   SalesFormData,
@@ -28,6 +29,7 @@ import { getCompanyAvatar } from "../commons/getCompanyAvatar";
 import { getContactAvatar } from "../commons/getContactAvatar";
 import { mergeContacts } from "../commons/mergeContacts";
 import { getSearchResults } from "./search";
+import { prepareLead } from "../../leads/leadModel";
 import type { CrmDataProvider } from "../types";
 import {
   authProvider as defaultAuthProvider,
@@ -639,6 +641,18 @@ export const createDataProvider = ({
           return result;
         },
       } satisfies ResourceCallbacks<Deal>,
+      {
+        // The database trigger scores leads and sets the response deadline
+        resource: "leads",
+        beforeCreate: async (params) => ({
+          ...params,
+          data: prepareLead(params.data),
+        }),
+        beforeUpdate: async (params) => ({
+          ...params,
+          data: prepareLead({ ...params.previousData, ...params.data }),
+        }),
+      } satisfies ResourceCallbacks<Lead>,
       {
         resource: "tags",
         afterDelete: async (result, dataProvider) => {

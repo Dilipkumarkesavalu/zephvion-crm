@@ -182,5 +182,8 @@ verify_jwt = false
 verify_jwt = false
 [functions.notify_task_assignee]
 verify_jwt = false
+# Public website contact form; validates input and drops honeypot spam itself
+[functions.lead_capture]
+verify_jwt = false
 [functions.mcp]
 verify_jwt = false

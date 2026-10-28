@@ -602,6 +602,7 @@ begin
 
   record_title := case tg_table_name
     when 'contacts' then trim(concat_ws(' ', row_data ->> 'first_name', row_data ->> 'last_name'))
+    when 'leads' then trim(concat_ws(' ', row_data ->> 'first_name', row_data ->> 'last_name', nullif('· ' || coalesce(row_data ->> 'company_name', ''), '· ')))
     when 'tasks' then row_data ->> 'text'
     else row_data ->> 'name'
   end;
@@ -643,4 +644,71 @@ CREATE OR REPLACE FUNCTION "public"."can_see_owner"("owner_sales_id" bigint) RET
   select owner_sales_id is null
     or public.visible_sales_ids() is null
     or owner_sales_id = any(public.visible_sales_ids())
+$$;
+
+-- Leads: scoring, owner pick and preparation
+-- Same rules as src/components/zephvion-crm/leads/leadScore.ts
+CREATE OR REPLACE FUNCTION "public"."lead_score"("lead" "public"."leads") RETURNS integer
+    LANGUAGE "sql" IMMUTABLE
+    SET "search_path" TO ''
+    AS $$
+  select least(100,
+    case
+      when coalesce(lead.budget, 0) >= 500000 then 40
+      when coalesce(lead.budget, 0) >= 200000 then 30
+      when coalesce(lead.budget, 0) >= 50000 then 20
+      when coalesce(lead.budget, 0) > 0 then 10
+      else 0
+    end
+    + case when coalesce(trim(lead.company_name), '') <> '' then 15 else 0 end
+    + case when coalesce(trim(lead.phone), '') <> '' then 10 else 0 end
+    + case when coalesce(trim(lead.email), '') <> '' then 5 else 0 end
+    + case lead.source
+        when 'referral' then 20
+        when 'website' then 15
+        when 'whatsapp' then 15
+        when 'email' then 10
+        when 'linkedin' then 10
+        when 'event' then 10
+        else 5
+      end
+    + case when char_length(coalesce(lead.message, '')) >= 40 then 10 else 0 end
+  )
+$$;
+
+-- Active member of the sales department with the fewest open leads
+CREATE OR REPLACE FUNCTION "public"."pick_lead_owner"() RETURNS bigint
+    LANGUAGE "sql" STABLE SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+  select s.id
+  from public.sales s
+  join public.departments d on d.id = s.department_id
+  where d.name = 'Sales and Business Development' and not s.disabled
+  order by (
+    select count(*) from public.leads l
+    where l.sales_id = s.id and l.status in ('new', 'contacted', 'qualified')
+  ), s.id
+  limit 1
+$$;
+
+CREATE OR REPLACE FUNCTION "public"."prepare_lead"() RETURNS "trigger"
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+begin
+  new.updated_at := now();
+  new.score := public.lead_score(new);
+  if tg_op = 'INSERT' then
+    if new.sales_id is null then
+      new.sales_id := public.pick_lead_owner();
+    end if;
+    -- Two hours to make first contact
+    new.first_response_due := coalesce(new.first_response_due, new.created_at + interval '2 hours');
+  end if;
+  if new.status <> 'new' and new.first_responded_at is null then
+    new.first_responded_at := now();
+  end if;
+  return new;
+end;
 $$;

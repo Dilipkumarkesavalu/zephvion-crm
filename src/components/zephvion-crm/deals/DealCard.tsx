@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CompanyAvatar } from "../companies/CompanyAvatar";
 import { useConfigurationContext } from "../root/ConfigurationContext";
 import type { Deal } from "../types";
+import { getDealIdleDays, isStaleDeal } from "./forecast";
 
 export const DealCard = ({ deal, index }: { deal: Deal; index: number }) => {
   if (!deal) return null;
@@ -92,6 +93,14 @@ export const DealCardContent = ({
                 optionValue="value"
               />
             </p>
+            {isStaleDeal(deal) ? (
+              <p
+                className="mt-1 text-xs font-medium text-amber-600 dark:text-amber-400"
+                title="No changes for two weeks or more"
+              >
+                Quiet for {getDealIdleDays(deal)} days
+              </p>
+            ) : null}
           </CardContent>
         </Card>
       </RecordContextProvider>

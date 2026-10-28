@@ -57,7 +57,59 @@ export type AuditLogEntry = {
   changes: Record<string, unknown>;
 } & Pick<RaRecord, "id">;
 
-export type SavedViewResource = "contacts" | "companies" | "deals" | "invoices";
+export const LEAD_STATUSES = [
+  "new",
+  "contacted",
+  "qualified",
+  "disqualified",
+  "converted",
+] as const;
+export type LeadStatus = (typeof LEAD_STATUSES)[number];
+
+export const LEAD_SOURCES = [
+  "website",
+  "whatsapp",
+  "email",
+  "referral",
+  "linkedin",
+  "event",
+  "import",
+  "manual",
+  "other",
+] as const;
+export type LeadSource = (typeof LEAD_SOURCES)[number];
+
+export type Lead = {
+  created_at: string;
+  updated_at: string;
+  first_name: string;
+  last_name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  company_name?: string | null;
+  service?: string | null;
+  budget?: number | null;
+  message?: string | null;
+  source: LeadSource;
+  utm_source?: string | null;
+  utm_campaign?: string | null;
+  status: LeadStatus;
+  sales_id?: Identifier | null;
+  score: number;
+  first_response_due?: string | null;
+  first_responded_at?: string | null;
+  disqualify_reason?: string | null;
+  converted_contact_id?: Identifier | null;
+  converted_company_id?: Identifier | null;
+  converted_deal_id?: Identifier | null;
+} & Pick<RaRecord, "id">;
+
+export type SavedViewResource =
+  | "leads"
+  | "contacts"
+  | "companies"
+  | "deals"
+  | "invoices";
 
 export type SavedView = {
   created_at: string;

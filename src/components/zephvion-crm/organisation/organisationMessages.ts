@@ -130,6 +130,7 @@ export const organisationMessages = {
         delete: "deleted",
       },
       tables: {
+        leads: "Lead",
         companies: "Company",
         contacts: "Contact",
         deals: "Deal",
@@ -152,6 +153,7 @@ export const organisationMessages = {
         deals: "%{actor} assigned you a deal",
         contacts: "%{actor} assigned you a contact",
         companies: "%{actor} assigned you a company",
+        leads: "%{actor} assigned you a lead",
       },
       someone: "Someone",
     },

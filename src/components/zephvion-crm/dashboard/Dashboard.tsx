@@ -7,7 +7,9 @@ import { DealsChart } from "./DealsChart";
 import { HotContacts } from "./HotContacts";
 import { TasksList } from "./TasksList";
 import { DashboardGreeting } from "./DashboardGreeting";
+import { ForecastCard } from "./ForecastCard";
 import { KpiTiles } from "./KpiTiles";
+import { LeadInboxCard } from "./LeadInboxCard";
 import { PipelineByStage } from "./PipelineByStage";
 import { RevenueChart } from "./RevenueChart";
 
@@ -50,6 +52,14 @@ export const Dashboard = () => {
     <div className="flex flex-col gap-6">
       <DashboardGreeting />
       <KpiTiles />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="lg:col-span-8">
+          <ForecastCard />
+        </div>
+        <div className="lg:col-span-4">
+          <LeadInboxCard />
+        </div>
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-8">
           <RevenueChart />

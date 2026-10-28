@@ -6,6 +6,7 @@ import { generateDepartments } from "./departments";
 import { generateDeals } from "./deals";
 import { finalize } from "./finalize";
 import { generateInvoices } from "./invoices";
+import { generateLeads } from "./leads";
 import { generateAuditLog, generateNotifications } from "./notifications";
 import { generateSales } from "./sales";
 import { generateSavedViews } from "./savedViews";
@@ -28,6 +29,7 @@ export default (): Db => {
   db.notifications = generateNotifications(db);
   db.audit_log = generateAuditLog(db);
   db.saved_views = generateSavedViews(db);
+  db.leads = generateLeads(db);
   db.configuration = [
     {
       id: 1,

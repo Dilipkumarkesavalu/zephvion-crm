@@ -217,3 +217,10 @@ grant all on sequence public.notifications_id_seq to service_role;
 grant select, insert, update, delete on table public.saved_views to authenticated;
 grant all on table public.saved_views to service_role;
 grant all on sequence public.saved_views_id_seq to service_role;
+
+-- Leads
+grant select, insert, update, delete on table public.leads to authenticated;
+grant all on table public.leads to service_role;
+grant all on sequence public.leads_id_seq to service_role;
+revoke execute on function public.pick_lead_owner() from public, anon;
+grant execute on function public.pick_lead_owner() to authenticated, service_role;

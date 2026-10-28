@@ -25,6 +25,7 @@ const REFRESH_MS = 30_000;
 const SHOWN = 20;
 
 const RECORD_PATHS: Record<string, string> = {
+  leads: "/leads",
   deals: "/deals",
   contacts: "/contacts",
   companies: "/companies",

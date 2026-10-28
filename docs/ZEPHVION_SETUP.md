@@ -138,6 +138,48 @@ Anyone else with a `@zephvion.com` address can also sign in, as a regular user
 named "Pending" until an admin edits their name on the **Users** page. Any
 other domain is refused.
 
+## 8. Send website enquiries to the lead inbox
+
+The `lead_capture` function turns a zephvion.com contact form into a lead in
+**Sell → Leads**: it is scored Hot / Warm / Cold, given to the member of
+**Sales and Business Development** with the fewest open leads, and must be
+contacted within 2 hours. A repeat enquiry from the same email within 30 days
+is added to the open lead instead of creating a new one.
+
+Point the website form at the function. Field names the function reads:
+`name` (or `first_name` + `last_name`), `email`, `phone`, `company`, `service`,
+`budget` (accepts "2 lakh", "₹1,50,000", "80k"), `message`, optional
+`utm_source` / `utm_campaign`, and `redirect` (a zephvion.com thank-you page).
+Keep the hidden `company_website` field empty: bots fill it and are dropped.
+
+```html
+<form method="post"
+      action="https://uphoiejqlfbeogtvxxqp.supabase.co/functions/v1/lead_capture">
+  <input name="name" required placeholder="Your name">
+  <input name="email" type="email" placeholder="Email">
+  <input name="phone" placeholder="Phone">
+  <input name="company" placeholder="Company">
+  <select name="service">
+    <option>Website</option><option>Branding</option><option>Mobile app</option>
+    <option>Digital system</option><option>Digital marketing</option><option>Consulting</option>
+  </select>
+  <input name="budget" placeholder="Budget, e.g. 2 lakh">
+  <textarea name="message" placeholder="What do you need?"></textarea>
+  <input name="company_website" tabindex="-1" autocomplete="off" style="display:none">
+  <input type="hidden" name="redirect" value="https://zephvion.com/thank-you">
+  <button>Send</button>
+</form>
+```
+
+From JavaScript, `fetch` the same URL with a JSON body; it answers
+`{ "ok": true }` or `{ "ok": false, "error": "..." }`. Browsers may post from
+`https://zephvion.com` and `https://www.zephvion.com`; to allow other sites,
+set the `LEAD_FORM_ORIGINS` secret to a comma-separated list.
+
+Leads only get an owner once someone is in the **Sales and Business
+Development** department; until then they arrive unassigned and everyone can
+see them.
+
 ## Troubleshooting
 
 | Symptom | Fix |

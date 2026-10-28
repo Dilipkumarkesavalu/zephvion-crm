@@ -110,3 +110,10 @@ create policy "Read own and shared views" on public.saved_views for select to au
 create policy "Create own views" on public.saved_views for insert to authenticated with check (sales_id = public.current_sales_id());
 create policy "Update own views" on public.saved_views for update to authenticated using (sales_id = public.current_sales_id()) with check (sales_id = public.current_sales_id());
 create policy "Delete own views" on public.saved_views for delete to authenticated using (sales_id = public.current_sales_id());
+
+-- Leads
+alter table public.leads enable row level security;
+create policy "Read visible leads" on public.leads for select to authenticated using (public.can_see_owner(sales_id));
+create policy "Create leads" on public.leads for insert to authenticated with check (true);
+create policy "Update visible leads" on public.leads for update to authenticated using (public.can_see_owner(sales_id)) with check (true);
+create policy "Delete visible leads" on public.leads for delete to authenticated using (public.can_see_owner(sales_id));

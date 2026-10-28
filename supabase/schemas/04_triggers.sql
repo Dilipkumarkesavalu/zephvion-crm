@@ -120,3 +120,11 @@ create or replace trigger notify_deal_assignment after insert or update of sales
 create or replace trigger notify_contact_assignment after insert or update of sales_id on public.contacts for each row execute function public.notify_assignment();
 
 create or replace trigger notify_company_assignment after insert or update of sales_id on public.companies for each row execute function public.notify_assignment();
+
+-- Leads
+create or replace trigger prepare_lead before insert or update on public.leads
+    for each row execute function public.prepare_lead();
+create or replace trigger audit_leads after insert or update or delete on public.leads
+    for each row execute function public.write_audit_log();
+create or replace trigger notify_lead_assignment after insert or update of sales_id on public.leads
+    for each row execute function public.notify_assignment();
