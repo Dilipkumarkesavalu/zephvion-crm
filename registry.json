@@ -334,6 +334,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/leads.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/invoices.ts",
           "type": "registry:component"
         },
@@ -606,6 +610,38 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/leads/LeadShow.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/leads/leadModel.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/leads/leadMessages.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/leads/LeadList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/leads/LeadForm.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/leads/LeadBadges.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/leads/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/leads/convertLead.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/layout/useRefreshData.ts",
           "type": "registry:component"
         },
@@ -730,6 +766,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/deals/forecast.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/deals/dealUtils.ts",
           "type": "registry:component"
         },
@@ -850,6 +890,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/dashboard/LeadInboxCard.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/dashboard/LatestNotes.tsx",
           "type": "registry:component"
         },
@@ -859,6 +903,10 @@
         },
         {
           "path": "src/components/zephvion-crm/dashboard/HotContacts.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/dashboard/ForecastCard.tsx",
           "type": "registry:component"
         },
         {
