@@ -8,6 +8,7 @@ import type {
   Department,
   Invoice,
   Notification,
+  SavedView,
   Sale,
   Tag,
   Task,
@@ -23,6 +24,7 @@ export interface Db {
   invoices: Invoice[];
   departments: Department[];
   notifications: Notification[];
+  saved_views: SavedView[];
   audit_log: AuditLogEntry[];
   sales: Sale[];
   tags: Tag[];

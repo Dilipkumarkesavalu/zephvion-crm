@@ -20,6 +20,7 @@ const useSectionTitle = (): string => {
     ["/companies/*", translate("resources.companies.name", { smart_count: 2 })],
     ["/deals/*", translate("resources.deals.name", { smart_count: 2 })],
     ["/invoices/*", translate("resources.invoices.name", { smart_count: 2 })],
+    ["/tasks", translate("resources.tasks.name", { smart_count: 2 })],
     ["/sales/*", translate("resources.sales.name", { smart_count: 2 })],
     [
       "/departments/*",

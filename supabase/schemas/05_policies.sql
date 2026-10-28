@@ -103,3 +103,10 @@ create policy "Recipients read their notifications" on public.notifications for 
 create policy "Recipients update their notifications" on public.notifications for update to authenticated using (recipient_sales_id = public.current_sales_id()) with check (recipient_sales_id = public.current_sales_id());
 
 create policy "Recipients delete their notifications" on public.notifications for delete to authenticated using (recipient_sales_id = public.current_sales_id());
+
+-- Saved list views
+alter table public.saved_views enable row level security;
+create policy "Read own and shared views" on public.saved_views for select to authenticated using (sales_id = public.current_sales_id() or is_shared);
+create policy "Create own views" on public.saved_views for insert to authenticated with check (sales_id = public.current_sales_id());
+create policy "Update own views" on public.saved_views for update to authenticated using (sales_id = public.current_sales_id()) with check (sales_id = public.current_sales_id());
+create policy "Delete own views" on public.saved_views for delete to authenticated using (sales_id = public.current_sales_id());

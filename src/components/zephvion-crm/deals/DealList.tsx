@@ -19,6 +19,7 @@ import { SelectInput } from "@/components/admin/select-input";
 import { DataImportButton } from "../dataImport/DataImportButton";
 import { useConfigurationContext } from "../root/ConfigurationContext";
 import { TopToolbar } from "../layout/TopToolbar";
+import { SavedViewsMenu } from "../views/SavedViewsMenu";
 import { AccountManagerInput } from "../sales/AccountManagerInput";
 import { DealArchivedList } from "./DealArchivedList";
 import { DealCreate } from "./DealCreate";
@@ -116,6 +117,7 @@ const DealLayout = () => {
 
 const DealActions = () => (
   <TopToolbar>
+    <SavedViewsMenu resource="deals" />
     <FilterButton />
     <DataImportButton resource="deals" />
     <ExportButton />

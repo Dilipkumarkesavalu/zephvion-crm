@@ -31,6 +31,7 @@ import {
   ContactListFilter,
 } from "./ContactListFilter";
 import { TopToolbar } from "../layout/TopToolbar";
+import { SavedViewsMenu } from "../views/SavedViewsMenu";
 import { InfinitePagination } from "../misc/InfinitePagination";
 import MobileHeader from "../layout/MobileHeader";
 import { MobileContent } from "../layout/MobileContent";
@@ -88,6 +89,7 @@ const ContactBulkActionButtons = () => (
 
 const ContactListActions = () => (
   <TopToolbar>
+    <SavedViewsMenu resource="contacts" />
     <SortButton fields={["first_name", "last_name", "last_seen"]} />
     <DataImportButton resource="contacts" />
     <ExportButton exporter={exporter} />

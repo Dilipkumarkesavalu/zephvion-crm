@@ -1,5 +1,6 @@
 import {
   Building2,
+  CheckSquare,
   FilePlus2,
   Handshake,
   History,
@@ -56,6 +57,12 @@ const useCommandActions = () => {
         icon: Building2,
       },
       { id: "go.deals", label: plural("deals"), to: "/deals", icon: Handshake },
+      {
+        id: "go.tasks",
+        label: plural("tasks"),
+        to: "/tasks",
+        icon: CheckSquare,
+      },
       {
         id: "go.invoices",
         label: plural("invoices"),

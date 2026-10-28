@@ -57,6 +57,17 @@ export type AuditLogEntry = {
   changes: Record<string, unknown>;
 } & Pick<RaRecord, "id">;
 
+export type SavedViewResource = "contacts" | "companies" | "deals" | "invoices";
+
+export type SavedView = {
+  created_at: string;
+  sales_id: Identifier;
+  resource: SavedViewResource;
+  name: string;
+  filter: Record<string, unknown>;
+  is_shared: boolean;
+} & Pick<RaRecord, "id">;
+
 export type Notification = {
   created_at: string;
   recipient_sales_id: Identifier;

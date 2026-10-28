@@ -1,5 +1,6 @@
 import {
   Building2,
+  CheckSquare,
   Handshake,
   History,
   Import,
@@ -42,32 +43,52 @@ export const AppSidebar = () => {
   const translate = useTranslate();
   const { darkModeLogo, lightModeLogo, title } = useConfigurationContext();
 
-  const workspaceItems: NavItem[] = [
+  const dashboardItem: NavItem = {
+    to: "/",
+    icon: LayoutDashboard,
+    label: translate("ra.page.dashboard"),
+    match: "/",
+  };
+  const workspaces: Array<{ label: string; items: NavItem[] }> = [
     {
-      to: "/",
-      icon: LayoutDashboard,
-      label: translate("ra.page.dashboard"),
-      match: "/",
+      label: translate("crm.nav.sell"),
+      items: [
+        {
+          to: "/contacts",
+          icon: UsersRound,
+          label: translate("resources.contacts.name", { smart_count: 2 }),
+        },
+        {
+          to: "/companies",
+          icon: Building2,
+          label: translate("resources.companies.name", { smart_count: 2 }),
+        },
+        {
+          to: "/deals",
+          icon: Handshake,
+          label: translate("resources.deals.name", { smart_count: 2 }),
+        },
+      ],
     },
     {
-      to: "/contacts",
-      icon: UsersRound,
-      label: translate("resources.contacts.name", { smart_count: 2 }),
+      label: translate("crm.nav.billing"),
+      items: [
+        {
+          to: "/invoices",
+          icon: ReceiptText,
+          label: translate("resources.invoices.name", { smart_count: 2 }),
+        },
+      ],
     },
     {
-      to: "/companies",
-      icon: Building2,
-      label: translate("resources.companies.name", { smart_count: 2 }),
-    },
-    {
-      to: "/deals",
-      icon: Handshake,
-      label: translate("resources.deals.name", { smart_count: 2 }),
-    },
-    {
-      to: "/invoices",
-      icon: ReceiptText,
-      label: translate("resources.invoices.name", { smart_count: 2 }),
+      label: translate("crm.nav.work"),
+      items: [
+        {
+          to: "/tasks",
+          icon: CheckSquare,
+          label: translate("resources.tasks.name", { smart_count: 2 }),
+        },
+      ],
     },
   ];
 
@@ -97,15 +118,24 @@ export const AppSidebar = () => {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>CRM</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {workspaceItems.map((item) => (
-                <NavMenuItem key={item.to} item={item} />
-              ))}
+              <NavMenuItem item={dashboardItem} />
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        {workspaces.map((workspace) => (
+          <SidebarGroup key={workspace.label}>
+            <SidebarGroupLabel>{workspace.label}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {workspace.items.map((item) => (
+                  <NavMenuItem key={item.to} item={item} />
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
         <SidebarGroup>
           <SidebarGroupLabel>
             {translate("crm.settings.title")}

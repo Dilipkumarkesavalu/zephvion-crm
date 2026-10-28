@@ -23,6 +23,7 @@ import {
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ActivityLog } from "../activity/ActivityLog";
+import { ClientOverview } from "../client360/ClientOverview";
 import { Avatar } from "../contacts/Avatar";
 import { TagsList } from "../contacts/TagsList";
 import { findDealLabel } from "../deals/dealUtils";
@@ -93,13 +94,13 @@ const CompanyShowContent = () => {
   const { record, isPending } = useShowContext<Company>();
   const navigate = useNavigate();
 
-  // Get tab from URL or default to "activity"
+  // Get tab from URL or default to the client 360 overview
   const tabMatch = useMatch("/companies/:id/show/:tab");
-  const currentTab = tabMatch?.params?.tab || "activity";
+  const currentTab = tabMatch?.params?.tab || "overview";
 
   const handleTabChange = (value: string) => {
     if (value === currentTab) return;
-    if (value === "activity") {
+    if (value === "overview") {
       navigate(`/companies/${record?.id}/show`);
       return;
     }
@@ -120,7 +121,12 @@ const CompanyShowContent = () => {
               </h5>
             </div>
             <Tabs defaultValue={currentTab} onValueChange={handleTabChange}>
-              <TabsList className="grid w-full grid-cols-3">
+              <TabsList
+                className={`grid w-full ${record.nb_deals ? "grid-cols-4" : "grid-cols-3"}`}
+              >
+                <TabsTrigger value="overview">
+                  {translate("crm.client360.tab")}
+                </TabsTrigger>
                 <TabsTrigger value="activity">
                   {translate("crm.common.activity")}
                 </TabsTrigger>
@@ -139,6 +145,9 @@ const CompanyShowContent = () => {
                   </TabsTrigger>
                 ) : null}
               </TabsList>
+              <TabsContent value="overview" className="pt-2">
+                <ClientOverview companyId={record.id} />
+              </TabsContent>
               <TabsContent value="activity" className="pt-2">
                 <ActivityLog companyId={record.id} context="company" />
               </TabsContent>

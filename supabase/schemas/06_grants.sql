@@ -212,3 +212,8 @@ grant select, update, delete on table public.notifications to authenticated;
 grant all on table public.notifications to service_role;
 
 grant all on sequence public.notifications_id_seq to service_role;
+
+-- Saved list views
+grant select, insert, update, delete on table public.saved_views to authenticated;
+grant all on table public.saved_views to service_role;
+grant all on sequence public.saved_views_id_seq to service_role;

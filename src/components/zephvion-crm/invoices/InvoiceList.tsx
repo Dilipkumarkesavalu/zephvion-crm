@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { TopToolbar } from "../layout/TopToolbar";
+import { SavedViewsMenu } from "../views/SavedViewsMenu";
 import { useConfigurationContext } from "../root/ConfigurationContext";
 import type { Invoice, InvoiceType } from "../types";
 import { formatISODateString } from "../deals/dealUtils";
@@ -121,6 +122,7 @@ const TypeTabs = () => {
 
 const InvoiceListActions = () => (
   <TopToolbar>
+    <SavedViewsMenu resource="invoices" />
     <NewDocumentButtons />
   </TopToolbar>
 );

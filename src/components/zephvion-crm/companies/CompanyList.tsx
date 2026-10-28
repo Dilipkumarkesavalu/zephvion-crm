@@ -7,6 +7,7 @@ import { SortButton } from "@/components/admin/sort-button";
 
 import { DataImportButton } from "../dataImport/DataImportButton";
 import { TopToolbar } from "../layout/TopToolbar";
+import { SavedViewsMenu } from "../views/SavedViewsMenu";
 import { CompanyEmpty } from "./CompanyEmpty";
 import { CompanyListFilter } from "./CompanyListFilter";
 import { ImageList } from "./GridList";
@@ -48,6 +49,7 @@ const CompanyListActions = () => {
   const translate = useTranslate();
   return (
     <TopToolbar>
+      <SavedViewsMenu resource="companies" />
       <SortButton fields={["name", "created_at", "nb_contacts"]} />
       <DataImportButton resource="companies" />
       <ExportButton />

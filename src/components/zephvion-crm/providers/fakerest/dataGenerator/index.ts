@@ -8,6 +8,7 @@ import { finalize } from "./finalize";
 import { generateInvoices } from "./invoices";
 import { generateAuditLog, generateNotifications } from "./notifications";
 import { generateSales } from "./sales";
+import { generateSavedViews } from "./savedViews";
 import { generateTags } from "./tags";
 import { generateTasks } from "./tasks";
 import type { Db } from "./types";
@@ -26,6 +27,7 @@ export default (): Db => {
   db.invoices = generateInvoices(db);
   db.notifications = generateNotifications(db);
   db.audit_log = generateAuditLog(db);
+  db.saved_views = generateSavedViews(db);
   db.configuration = [
     {
       id: 1,
