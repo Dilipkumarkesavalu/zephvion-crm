@@ -170,6 +170,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/search/CommandActions.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/sales/useGetSalesName.ts",
           "type": "registry:component"
         },
@@ -195,6 +199,10 @@
         },
         {
           "path": "src/components/zephvion-crm/sales/saleName.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/sales/roles.ts",
           "type": "registry:component"
         },
         {
@@ -306,6 +314,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/notifications.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/invoices.ts",
           "type": "registry:component"
         },
@@ -315,6 +327,10 @@
         },
         {
           "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/finalize.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/departments.ts",
           "type": "registry:component"
         },
         {
@@ -371,6 +387,26 @@
         },
         {
           "path": "src/components/zephvion-crm/providers/commons/activity.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/organisation/organisationMessages.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/organisation/NotificationBell.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/organisation/Departments.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/organisation/departmentColors.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/organisation/AuditLogList.tsx",
           "type": "registry:component"
         },
         {
