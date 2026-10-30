@@ -1266,6 +1266,30 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/assistant/useAssistant.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/assistant/DraftEmailButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/assistant/assistantTypes.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/assistant/assistantMessages.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/assistant/AskAiSheet.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/assistant/AiSummaryCard.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/activity/ActivityLogNote.tsx",
           "type": "registry:component"
         },
