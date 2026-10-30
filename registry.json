@@ -50,6 +50,38 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/tickets/TicketThread.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tickets/TicketShow.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tickets/ticketModel.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tickets/ticketMessages.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tickets/TicketList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tickets/TicketForm.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tickets/TicketBadges.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/tickets/index.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/tasks/tasksPredicate.ts",
           "type": "registry:component"
         },
@@ -307,6 +339,10 @@
         },
         {
           "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/tickets.ts",
           "type": "registry:component"
         },
         {
