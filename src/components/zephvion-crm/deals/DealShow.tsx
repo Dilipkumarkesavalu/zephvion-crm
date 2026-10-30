@@ -30,6 +30,7 @@ import { DealInvoices } from "../invoices/DealInvoices";
 import { DealProjectButton } from "../projects/DealProjectButton";
 import { ContactList } from "./ContactList";
 import { findDealLabel, formatISODateString } from "./dealUtils";
+import { DraftEmailButton } from "../assistant/DraftEmailButton";
 
 export const DealShow = ({ open, id }: { open: boolean; id?: string }) => {
   const redirect = useRedirect();
@@ -80,6 +81,7 @@ const DealShowContent = () => {
                 </>
               ) : (
                 <>
+                  <DraftEmailButton resource="deals" recordId={record.id} />
                   <DealProjectButton deal={record} />
                   <ArchiveButton record={record} />
                   <EditButton />

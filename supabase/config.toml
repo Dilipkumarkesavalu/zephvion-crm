@@ -192,6 +192,8 @@ verify_jwt = false
 [functions.invoice_reminders]
 verify_jwt = false
 # Client portal: every request carries a client's secret link token
+[functions.ai_assistant]
+verify_jwt = false
 [functions.client_portal]
 verify_jwt = false
 [functions.ticket_reply]

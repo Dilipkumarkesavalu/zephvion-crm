@@ -176,3 +176,7 @@ alter table public.portal_access enable row level security;
 create policy "Read portal links of visible clients" on public.portal_access for select to authenticated using (exists (select 1 from public.companies c where c.id = portal_access.company_id));
 create policy "Create portal links for visible clients" on public.portal_access for insert to authenticated with check (exists (select 1 from public.companies c where c.id = portal_access.company_id));
 create policy "Update portal links of visible clients" on public.portal_access for update to authenticated using (exists (select 1 from public.companies c where c.id = portal_access.company_id)) with check (exists (select 1 from public.companies c where c.id = portal_access.company_id));
+
+-- AI assistant usage
+alter table public.ai_requests enable row level security;
+create policy "Read own AI usage" on public.ai_requests for select to authenticated using (sales_id = public.current_sales_id() or public.is_admin());

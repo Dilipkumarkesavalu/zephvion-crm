@@ -22,6 +22,10 @@ import { ATTACHMENTS_BUCKET } from "../commons/attachments";
 import { getIsInitialized } from "./authProvider";
 import { getSupabaseClient } from "./supabase";
 import type { PortalRequest, PortalResponse } from "../../portal/portalLink";
+import type {
+  AssistantPayload,
+  AssistantResult,
+} from "../../assistant/assistantTypes";
 
 const getBaseDataProvider = () =>
   supabaseDataProvider({
@@ -300,6 +304,19 @@ const getDataProviderWithCustomMethods = () => {
         return { ok: false, reason: "the reminder could not be sent" };
       }
       return { ...data, ok: !!data?.sent };
+    },
+    /** The AI assistant: client summaries, email drafts and questions. */
+    async askAssistant(payload: AssistantPayload): Promise<AssistantResult> {
+      const { data, error } =
+        await getSupabaseClient().functions.invoke<AssistantResult>(
+          "ai_assistant",
+          { method: "POST", body: payload },
+        );
+      if (error) {
+        console.error("ai_assistant.error", error);
+        return { ok: false, reason: "model_error" };
+      }
+      return data ?? { ok: false, reason: "model_error" };
     },
     /** The client portal, opened with a client's secret link token. */
     async callPortal(

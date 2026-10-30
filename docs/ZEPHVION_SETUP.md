@@ -229,6 +229,36 @@ Invoices → ⋯ → Import Invoices**, upload the file and confirm the column
 mapping. Each line item is one row; rows with the same invoice number form
 one invoice.
 
+## 10. AI assistant (open-source model)
+
+The assistant summarises clients, drafts emails and answers questions about
+the CRM. It runs on an open-source model (default: Llama 3.3 70B) through any
+service with an OpenAI-compatible API. It reads records as the person asking,
+so it only sees what they can see, and it can never change anything. Each
+person can make 100 requests a day; usage is logged in `ai_requests`.
+
+**Connect it (Groq, the default):** create a key at <https://console.groq.com>
+→ API Keys, then from the `zephvion-crm` folder type it yourself:
+
+```sh
+npx supabase secrets set AI_API_KEY="gsk_..." --project-ref uphoiejqlfbeogtvxxqp
+```
+
+**Another provider or your own server:** also set `AI_BASE_URL` and
+`AI_MODEL`, for example:
+
+| Provider | `AI_BASE_URL` | Example `AI_MODEL` |
+|---|---|---|
+| Groq (default) | `https://api.groq.com/openai/v1` | `llama-3.3-70b-versatile` |
+| Together AI | `https://api.together.xyz/v1` | `meta-llama/Llama-3.3-70B-Instruct-Turbo` |
+| OpenRouter | `https://openrouter.ai/api/v1` | `meta-llama/llama-3.3-70b-instruct` |
+| Your own Ollama / vLLM | `https://<your-server>/v1` | the model you pulled, e.g. `qwen2.5:32b` |
+
+Pick a model that supports tool calling, or the "Ask AI" panel can't look
+records up. With a hosted provider, the client details in a request are sent
+to that provider; run your own Ollama or vLLM server to keep everything in
+house.
+
 ## Troubleshooting
 
 | Symptom | Fix |

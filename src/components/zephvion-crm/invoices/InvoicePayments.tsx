@@ -43,6 +43,7 @@ import {
   getBalanceDue,
   toISODate,
 } from "./invoiceModel";
+import { DraftEmailButton } from "../assistant/DraftEmailButton";
 
 /**
  * Money received against an invoice: record payments (with TDS), remind the
@@ -81,6 +82,7 @@ export const InvoicePayments = ({ invoice }: { invoice: Invoice }) => {
           </h2>
           {isOpen ? (
             <>
+              <DraftEmailButton resource="invoices" recordId={invoice.id} />
               <PaymentLinkButton invoice={invoice} />
               <ReminderButton invoiceId={invoice.id} />
               <RecordPaymentButton invoiceId={invoice.id} balance={balance} />

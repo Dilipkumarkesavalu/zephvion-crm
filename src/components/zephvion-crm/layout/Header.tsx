@@ -10,6 +10,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 
 import { NotificationBell } from "../organisation/NotificationBell";
 import { GlobalSearchButton } from "../search/GlobalSearchButton";
+import { AskAiSheet } from "../assistant/AskAiSheet";
 
 /** Section name shown in the top bar, derived from the current route. */
 const useSectionTitle = (): string => {
@@ -54,6 +55,7 @@ const Header = () => {
       <h1 className="text-base font-semibold truncate">{sectionTitle}</h1>
       <div className="ml-auto flex items-center">
         <GlobalSearchButton />
+        <AskAiSheet />
         <NotificationBell />
         <ThemeModeToggle />
         <RefreshButton />

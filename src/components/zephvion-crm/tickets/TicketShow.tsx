@@ -34,6 +34,7 @@ import {
   TicketStatusBadge,
 } from "./TicketBadges";
 import { TicketThread } from "./TicketThread";
+import { DraftEmailButton } from "../assistant/DraftEmailButton";
 
 export const TicketShow = () => (
   <ShowBase>
@@ -64,7 +65,10 @@ const TicketShowContent = () => {
             {translate("resources.tickets.name", { smart_count: 2 })}
           </Link>
         </Button>
-        <Button asChild variant="outline" size="sm" className="ml-auto">
+        <div className="ml-auto">
+          <DraftEmailButton resource="tickets" recordId={ticket.id} />
+        </div>
+        <Button asChild variant="outline" size="sm">
           <Link to={`/tickets/${ticket.id}`}>
             <Pencil />
             {translate("ra.action.edit")}

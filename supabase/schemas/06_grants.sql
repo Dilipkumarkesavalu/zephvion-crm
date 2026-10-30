@@ -273,3 +273,8 @@ revoke execute on function public.apply_automation_rule(public.automation_rules,
 grant select, insert, update on table public.portal_access to authenticated;
 grant all on table public.portal_access to service_role;
 grant all on sequence public.portal_access_id_seq to service_role;
+
+-- AI assistant usage
+grant select on table public.ai_requests to authenticated;
+grant all on table public.ai_requests to service_role;
+grant all on sequence public.ai_requests_id_seq to service_role;

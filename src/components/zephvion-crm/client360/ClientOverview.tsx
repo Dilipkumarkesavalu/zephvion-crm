@@ -27,6 +27,7 @@ import {
   type TimelineKind,
 } from "./clientModel";
 import { useClientData } from "./useClientData";
+import { AiSummaryCard } from "../assistant/AiSummaryCard";
 
 const PAGE_SIZE = 25;
 
@@ -74,7 +75,12 @@ export const ClientOverview = ({ companyId }: { companyId: Identifier }) => {
       </p>
     );
   }
-  return <ClientOverviewContent data={data} />;
+  return (
+    <div className="flex flex-col gap-4 pt-2">
+      <AiSummaryCard companyId={companyId} />
+      <ClientOverviewContent data={data} />
+    </div>
+  );
 };
 
 const ClientOverviewContent = ({

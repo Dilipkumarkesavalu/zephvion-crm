@@ -38,6 +38,7 @@ import { getSearchResults } from "./search";
 import { settleInvoice } from "../../invoices/billingModel";
 import { prepareLead } from "../../leads/leadModel";
 import type { PortalRequest } from "../../portal/portalLink";
+import type { AssistantPayload } from "../../assistant/assistantTypes";
 import { callDemoPortal } from "./demoPortal";
 import { nextTicketNumber, prepareTicket } from "../../tickets/ticketModel";
 import type { CrmDataProvider } from "../types";
@@ -379,6 +380,11 @@ export const createDataProvider = ({
       reason: "demo",
     }),
     createPaymentLink: async (_invoiceId: Identifier) => ({
+      ok: false,
+      reason: "demo",
+    }),
+    // The demo has no AI model connected
+    askAssistant: async (_payload: AssistantPayload) => ({
       ok: false,
       reason: "demo",
     }),
