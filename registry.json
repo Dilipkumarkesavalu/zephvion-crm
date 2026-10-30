@@ -314,6 +314,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/providers/fakerest/demoPortal.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/providers/fakerest/dataProvider.ts",
           "type": "registry:component"
         },
@@ -507,6 +511,22 @@
         },
         {
           "path": "src/components/zephvion-crm/projects/DealProjectButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/portal/shapePortal.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/portal/PortalPage.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/portal/portalLink.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/portal/CompanyPortalCard.tsx",
           "type": "registry:component"
         },
         {
