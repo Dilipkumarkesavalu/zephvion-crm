@@ -4,6 +4,25 @@
  * to these until it gets its own translation.
  */
 export const invoiceMessages = {
+  crm: {
+    settings: {
+      sections: {
+        billing: "Billing details",
+      },
+      billing: {
+        hint: "Printed on every quote and invoice. Bank details only appear on invoices once the account number and IFSC are filled in.",
+        address: "Registered address (one line per row)",
+        gstin: "GSTIN",
+        pan: "PAN",
+        email: "Billing email",
+        phone: "Billing phone",
+        bank_account_name: "Account name",
+        bank_name: "Bank",
+        bank_account_number: "Account number",
+        bank_ifsc: "IFSC",
+      },
+    },
+  },
   resources: {
     invoices: {
       name: "Quote & Invoice |||| Quotes & Invoices",

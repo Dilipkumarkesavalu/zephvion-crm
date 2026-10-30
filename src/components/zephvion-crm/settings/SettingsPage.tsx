@@ -27,6 +27,7 @@ import {
   type ConfigurationContextValue,
 } from "../root/ConfigurationContext";
 import { defaultConfiguration } from "../root/defaultConfiguration";
+import { mergeSellerDetails } from "../invoices/sellerDetails";
 import { SettingsTags } from "./SettingsTags";
 
 const SECTIONS = [
@@ -34,6 +35,11 @@ const SECTIONS = [
     id: "branding",
     label: "crm.settings.sections.branding",
     fallback: "Branding",
+  },
+  {
+    id: "billing",
+    label: "crm.settings.sections.billing",
+    fallback: "Billing details",
   },
   {
     id: "companies",
@@ -130,6 +136,7 @@ const transformFormValues = (data: Record<string, any>) => ({
     dealStages: ensureValues(data.dealStages),
     dealPipelineStatuses: data.dealPipelineStatuses,
     noteStatuses: ensureValues(data.noteStatuses),
+    seller: data.seller,
   } as ConfigurationContextValue,
 });
 
@@ -178,6 +185,7 @@ const SettingsForm = () => {
       dealStages: config.dealStages,
       dealPipelineStatuses: config.dealPipelineStatuses,
       noteStatuses: config.noteStatuses,
+      seller: mergeSellerDetails(config.seller),
     }),
     [config],
   );
@@ -305,6 +313,55 @@ const SettingsFormFields = () => {
                   backgroundImageColor="#1a1a1a"
                 />
               </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Billing details */}
+        <Card id="billing">
+          <CardContent className="space-y-4">
+            <h2 className="text-xl font-semibold text-muted-foreground">
+              {translate("crm.settings.sections.billing")}
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {translate("crm.settings.billing.hint")}
+            </p>
+            <TextInput
+              source="seller.address"
+              label="crm.settings.billing.address"
+              multiline
+              rows={3}
+            />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <TextInput
+                source="seller.gstin"
+                label="crm.settings.billing.gstin"
+              />
+              <TextInput source="seller.pan" label="crm.settings.billing.pan" />
+              <TextInput
+                source="seller.email"
+                label="crm.settings.billing.email"
+              />
+              <TextInput
+                source="seller.phone"
+                label="crm.settings.billing.phone"
+              />
+              <TextInput
+                source="seller.bank.accountName"
+                label="crm.settings.billing.bank_account_name"
+              />
+              <TextInput
+                source="seller.bank.bankName"
+                label="crm.settings.billing.bank_name"
+              />
+              <TextInput
+                source="seller.bank.accountNumber"
+                label="crm.settings.billing.bank_account_number"
+              />
+              <TextInput
+                source="seller.bank.ifsc"
+                label="crm.settings.billing.bank_ifsc"
+              />
             </div>
           </CardContent>
         </Card>

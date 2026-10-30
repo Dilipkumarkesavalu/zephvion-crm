@@ -25,7 +25,7 @@ import {
   getTaxLines,
   sanitizeItems,
 } from "./invoiceModel";
-import { sellerDetails } from "./sellerDetails";
+import { SELLER_HOME_STATE } from "./sellerDetails";
 
 const validateItems = (items: Partial<InvoiceItem>[] | undefined) =>
   sanitizeItems(items).length > 0
@@ -181,7 +181,7 @@ const TaxModeFromClient = ({ companyId }: { companyId: unknown }) => {
     if (getFieldState("tax_mode").isDirty) return;
     setValue(
       "tax_mode",
-      getTaxModeForState(company.state_abbr, sellerDetails.homeState),
+      getTaxModeForState(company.state_abbr, SELLER_HOME_STATE),
     );
   }, [company, getFieldState, setValue]);
 

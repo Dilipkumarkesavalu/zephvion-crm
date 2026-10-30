@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useStore } from "ra-core";
 
+import type { SellerDetails } from "../invoices/sellerDetails";
 import type { DealStage, LabeledValue, NoteStatus } from "../types";
 import { defaultConfiguration } from "./defaultConfiguration";
 
@@ -17,6 +18,8 @@ export interface ConfigurationContextValue {
   title: string;
   darkModeLogo: string;
   lightModeLogo: string;
+  /** Billing details printed on quotes and invoices (Settings → Billing). */
+  seller?: Partial<SellerDetails>;
 }
 
 export const useConfigurationContext = () => {

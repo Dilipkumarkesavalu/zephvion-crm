@@ -13,7 +13,7 @@ import {
 import {
   defaultInvoiceNotes,
   defaultQuoteNotes,
-  sellerDetails,
+  SELLER_HOME_STATE,
 } from "../../../invoices/sellerDetails";
 import type { Deal, Invoice, InvoiceItem } from "../../../types";
 import type { Db } from "./types";
@@ -70,7 +70,7 @@ const buildDocument = (
     sales_id: deal.sales_id,
     issue_date: toISODate(values.issue),
     due_date: toISODate(add(values.issue, { days: termDays })),
-    tax_mode: getTaxModeForState(company?.state_abbr, sellerDetails.homeState),
+    tax_mode: getTaxModeForState(company?.state_abbr, SELLER_HOME_STATE),
     items: values.items,
     notes: values.type === "quote" ? defaultQuoteNotes : defaultInvoiceNotes,
     subtotal,

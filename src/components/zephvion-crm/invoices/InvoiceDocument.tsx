@@ -11,7 +11,7 @@ import {
   getLineTaxable,
   getTaxLines,
 } from "./invoiceModel";
-import { sellerDetails } from "./sellerDetails";
+import { SELLER_STATE_LABEL, useSellerDetails } from "./sellerDetails";
 
 /**
  * A4 document for a quote or tax invoice. Always rendered on a light "paper"
@@ -20,6 +20,12 @@ import { sellerDetails } from "./sellerDetails";
 export const InvoiceDocument = ({ invoice }: { invoice: Invoice }) => {
   const translate = useTranslate();
   const { currency, lightModeLogo } = useConfigurationContext();
+  const sellerDetails = useSellerDetails();
+  const sellerContact = [sellerDetails.email, sellerDetails.phone]
+    .filter(Boolean)
+    .join(" · ");
+  const bank = sellerDetails.bank;
+  const hasBankDetails = !!bank.accountNumber && !!bank.ifsc;
   const { data: company } = useGetOne<Company>(
     "companies",
     { id: invoice.company_id },
@@ -60,13 +66,14 @@ export const InvoiceDocument = ({ invoice }: { invoice: Invoice }) => {
               className="h-8 w-auto self-start"
             />
             <div className="text-neutral-600">
-              {sellerDetails.addressLines.map((line) => (
-                <div key={line}>{line}</div>
-              ))}
+              {sellerDetails.address
+                .split("\n")
+                .filter((line) => line.trim())
+                .map((line) => (
+                  <div key={line}>{line}</div>
+                ))}
               <div>GSTIN: {sellerDetails.gstin}</div>
-              <div>
-                {sellerDetails.email} · {sellerDetails.phone}
-              </div>
+              {sellerContact ? <div>{sellerContact}</div> : null}
             </div>
           </div>
           <div className="sm:text-right flex flex-col gap-1">
@@ -131,7 +138,7 @@ export const InvoiceDocument = ({ invoice }: { invoice: Invoice }) => {
               {translate(`resources.invoices.tax_modes.${invoice.tax_mode}`)}
             </div>
             <div className="text-neutral-600">
-              Place of supply: {company?.state_abbr || sellerDetails.state}
+              Place of supply: {company?.state_abbr || SELLER_STATE_LABEL}
             </div>
             <div className="text-neutral-600">PAN: {sellerDetails.pan}</div>
           </div>
@@ -217,17 +224,17 @@ export const InvoiceDocument = ({ invoice }: { invoice: Invoice }) => {
                 </div>
               </div>
             ) : null}
-            {!isQuote ? (
+            {!isQuote && hasBankDetails ? (
               <div>
                 <SectionLabel>
                   {translate("resources.invoices.document.bank_details")}
                 </SectionLabel>
                 <div className="text-neutral-600">
-                  {sellerDetails.bank.accountName} ·{" "}
-                  {sellerDetails.bank.bankName}
+                  {[bank.accountName, bank.bankName]
+                    .filter(Boolean)
+                    .join(" · ")}
                   <br />
-                  A/c {sellerDetails.bank.accountNumber} · IFSC{" "}
-                  {sellerDetails.bank.ifsc}
+                  A/c {bank.accountNumber} · IFSC {bank.ifsc}
                 </div>
               </div>
             ) : null}
