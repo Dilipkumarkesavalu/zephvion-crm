@@ -16,6 +16,8 @@ import type {
   Invoice,
   InvoicePayment,
   Lead,
+  Project,
+  ProjectMilestone,
   DealNote,
   Sale,
   SalesFormData,
@@ -156,6 +158,16 @@ const preserveAttachmentMimeType = <
     ...attachment,
     type: attachment.type ?? attachment.rawFile?.type,
   })),
+});
+
+const stampMilestone = <T extends Partial<ProjectMilestone>>(
+  milestone: T,
+): T => ({
+  ...milestone,
+  completed_at:
+    milestone.status === "done"
+      ? (milestone.completed_at ?? new Date().toISOString())
+      : null,
 });
 
 export const createDataProvider = ({
@@ -684,6 +696,25 @@ export const createDataProvider = ({
           data: prepareLead({ ...params.previousData, ...params.data }),
         }),
       } satisfies ResourceCallbacks<Lead>,
+      {
+        // Database triggers stamp when a milestone is done
+        resource: "project_milestones",
+        beforeCreate: async (params) => ({
+          ...params,
+          data: stampMilestone(params.data),
+        }),
+        beforeUpdate: async (params) => ({
+          ...params,
+          data: stampMilestone({ ...params.previousData, ...params.data }),
+        }),
+      } satisfies ResourceCallbacks<ProjectMilestone>,
+      {
+        resource: "projects",
+        beforeUpdate: async (params) => ({
+          ...params,
+          data: { ...params.data, updated_at: new Date().toISOString() },
+        }),
+      } satisfies ResourceCallbacks<Project>,
       {
         // The database trigger keeps the invoice's paid amount and status
         resource: "invoice_payments",

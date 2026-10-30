@@ -22,6 +22,7 @@ import { MobileDashboard } from "../dashboard/MobileDashboard";
 import deals from "../deals";
 import invoices from "../invoices";
 import leads from "../leads";
+import projects from "../projects";
 import { ReceivablesPage } from "../invoices/ReceivablesPage";
 import { Layout } from "../layout/Layout";
 import { MobileLayout } from "../layout/MobileLayout";
@@ -291,6 +292,9 @@ const DesktopAdmin = (
       <Resource name="audit_log" list={AuditLogList} />
       <Resource name="notifications" />
       <Resource name="saved_views" />
+      <Resource name="projects" {...projects} />
+      <Resource name="project_milestones" />
+      <Resource name="time_entries" />
       <Resource name="invoice_payments" />
       <Resource name="invoice_reminders" />
     </Admin>

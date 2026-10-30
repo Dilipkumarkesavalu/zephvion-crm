@@ -109,7 +109,8 @@ export type SavedViewResource =
   | "contacts"
   | "companies"
   | "deals"
-  | "invoices";
+  | "invoices"
+  | "projects";
 
 export type SavedView = {
   created_at: string;
@@ -278,6 +279,58 @@ export type Invoice = {
   recurring_parent_id?: Identifier | null;
   payment_link_url?: string | null;
   payment_link_id?: string | null;
+  project_id?: Identifier | null;
+  milestone_id?: Identifier | null;
+} & Pick<RaRecord, "id">;
+
+export const PROJECT_STATUSES = [
+  "planning",
+  "active",
+  "on_hold",
+  "completed",
+  "cancelled",
+] as const;
+export type ProjectStatus = (typeof PROJECT_STATUSES)[number];
+
+export type Project = {
+  created_at: string;
+  updated_at: string;
+  name: string;
+  company_id: Identifier;
+  deal_id?: Identifier | null;
+  /** Project manager */
+  sales_id?: Identifier | null;
+  status: ProjectStatus;
+  start_date?: string | null;
+  due_date?: string | null;
+  budget: number;
+  budget_hours: number;
+  description?: string | null;
+} & Pick<RaRecord, "id">;
+
+export const MILESTONE_STATUSES = ["pending", "in_progress", "done"] as const;
+export type MilestoneStatus = (typeof MILESTONE_STATUSES)[number];
+
+export type ProjectMilestone = {
+  created_at: string;
+  project_id: Identifier;
+  name: string;
+  due_date?: string | null;
+  amount: number;
+  status: MilestoneStatus;
+  completed_at?: string | null;
+  position: number;
+} & Pick<RaRecord, "id">;
+
+export type TimeEntry = {
+  created_at: string;
+  project_id: Identifier;
+  milestone_id?: Identifier | null;
+  sales_id: Identifier;
+  spent_on: string;
+  hours: number;
+  description?: string | null;
+  billable: boolean;
 } & Pick<RaRecord, "id">;
 
 export const INVOICE_RECURRENCES = [

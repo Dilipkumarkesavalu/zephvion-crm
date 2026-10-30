@@ -808,3 +808,29 @@ $$;
 
 -- generate_recurring_invoices() runs daily through pg_cron, scheduled in
 -- migration 20261030100000_billing.sql
+
+-- Delivery
+CREATE OR REPLACE FUNCTION "public"."touch_project"() RETURNS "trigger"
+    LANGUAGE "plpgsql"
+    SET "search_path" TO ''
+    AS $$
+begin
+  new.updated_at := now();
+  return new;
+end;
+$$;
+
+-- Stamps when a milestone is done, and clears it if reopened
+CREATE OR REPLACE FUNCTION "public"."stamp_milestone_completion"() RETURNS "trigger"
+    LANGUAGE "plpgsql"
+    SET "search_path" TO ''
+    AS $$
+begin
+  if new.status = 'done' and new.completed_at is null then
+    new.completed_at := now();
+  elsif new.status <> 'done' then
+    new.completed_at := null;
+  end if;
+  return new;
+end;
+$$;

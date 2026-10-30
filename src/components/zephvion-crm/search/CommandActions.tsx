@@ -2,6 +2,7 @@ import {
   Building2,
   CheckSquare,
   FilePlus2,
+  FolderKanban,
   Handshake,
   History,
   Inbox,
@@ -71,6 +72,12 @@ const useCommandActions = () => {
         icon: ReceiptText,
       },
       {
+        id: "go.projects",
+        label: plural("projects"),
+        to: "/projects",
+        icon: FolderKanban,
+      },
+      {
         id: "go.tasks",
         label: plural("tasks"),
         to: "/tasks",
@@ -116,6 +123,12 @@ const useCommandActions = () => {
         id: "new.lead",
         label: translate("resources.leads.action.new"),
         to: "/leads/create",
+        icon: Plus,
+      },
+      {
+        id: "new.project",
+        label: translate("resources.projects.action.new"),
+        to: "/projects/create",
         icon: Plus,
       },
       {

@@ -10,6 +10,9 @@ import type {
   InvoicePayment,
   InvoiceReminder,
   Lead,
+  Project,
+  ProjectMilestone,
+  TimeEntry,
   Notification,
   SavedView,
   Sale,
@@ -31,6 +34,9 @@ export interface Db {
   leads: Lead[];
   invoice_payments: InvoicePayment[];
   invoice_reminders: InvoiceReminder[];
+  projects: Project[];
+  project_milestones: ProjectMilestone[];
+  time_entries: TimeEntry[];
   audit_log: AuditLogEntry[];
   sales: Sale[];
   tags: Tag[];

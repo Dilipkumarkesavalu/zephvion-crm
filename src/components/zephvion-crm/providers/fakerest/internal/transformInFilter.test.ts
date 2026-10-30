@@ -30,3 +30,11 @@ it("should return an array of quoted strings", () => {
   expect(transformInFilter('("a")')).toEqual(["a"]);
   expect(transformInFilter('("a","B, c")')).toEqual(["a", "B, c"]);
 });
+
+it("accepts values with underscores, as PostgREST does", () => {
+  expect(transformInFilter("(planning,active,on_hold)")).toEqual([
+    "planning",
+    "active",
+    "on_hold",
+  ]);
+});

@@ -235,3 +235,14 @@ grant all on sequence public.invoice_reminders_id_seq to service_role;
 revoke execute on function public.generate_recurring_invoices() from public, anon, authenticated;
 revoke execute on function public.next_invoice_number(date) from public, anon;
 grant execute on function public.next_invoice_number(date) to authenticated, service_role;
+
+-- Delivery
+grant select, insert, update, delete on table public.projects to authenticated;
+grant select, insert, update, delete on table public.project_milestones to authenticated;
+grant select, insert, update, delete on table public.time_entries to authenticated;
+grant all on table public.projects to service_role;
+grant all on table public.project_milestones to service_role;
+grant all on table public.time_entries to service_role;
+grant all on sequence public.projects_id_seq to service_role;
+grant all on sequence public.project_milestones_id_seq to service_role;
+grant all on sequence public.time_entries_id_seq to service_role;

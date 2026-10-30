@@ -13,6 +13,7 @@ import type { AuditLogEntry, Sale } from "../types";
 
 const AUDITED_TABLES = [
   "leads",
+  "projects",
   "companies",
   "contacts",
   "deals",

@@ -79,6 +79,7 @@ export const organisationMessages = {
     nav: {
       sell: "Sell",
       billing: "Billing",
+      deliver: "Deliver",
       work: "Work",
     },
     views: {
@@ -131,6 +132,7 @@ export const organisationMessages = {
       },
       tables: {
         leads: "Lead",
+        projects: "Project",
         companies: "Company",
         contacts: "Contact",
         deals: "Deal",
@@ -154,6 +156,7 @@ export const organisationMessages = {
         contacts: "%{actor} assigned you a contact",
         companies: "%{actor} assigned you a company",
         leads: "%{actor} assigned you a lead",
+        projects: "%{actor} made you project manager",
       },
       someone: "Someone",
     },

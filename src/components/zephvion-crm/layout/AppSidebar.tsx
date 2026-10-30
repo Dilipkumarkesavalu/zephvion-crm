@@ -2,6 +2,7 @@ import {
   Building2,
   CheckSquare,
   HandCoins,
+  FolderKanban,
   Handshake,
   History,
   Import,
@@ -89,6 +90,16 @@ export const AppSidebar = () => {
           to: "/receivables",
           icon: HandCoins,
           label: translate("resources.invoices.receivables.title"),
+        },
+      ],
+    },
+    {
+      label: translate("crm.nav.deliver"),
+      items: [
+        {
+          to: "/projects",
+          icon: FolderKanban,
+          label: translate("resources.projects.name", { smart_count: 2 }),
         },
       ],
     },

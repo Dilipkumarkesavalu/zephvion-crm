@@ -9,6 +9,7 @@ import { frenchCrmMessages } from "./frenchCrmMessages";
 import { invoiceMessages } from "../../invoices/invoiceMessages";
 import { organisationMessages } from "../../organisation/organisationMessages";
 import { leadMessages } from "../../leads/leadMessages";
+import { projectMessages } from "../../projects/projectMessages";
 
 const raSupabaseEnglishMessagesOverride = {
   "ra-supabase": {
@@ -53,6 +54,7 @@ const englishCatalog = mergeTranslations(
   invoiceMessages,
   organisationMessages,
   leadMessages,
+  projectMessages,
 );
 
 const frenchCatalog = mergeTranslations(

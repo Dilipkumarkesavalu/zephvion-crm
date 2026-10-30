@@ -127,3 +127,21 @@ create policy "Delete payments on visible invoices" on public.invoice_payments f
 
 alter table public.invoice_reminders enable row level security;
 create policy "Read reminders on visible invoices" on public.invoice_reminders for select to authenticated using (exists (select 1 from public.invoices i where i.id = invoice_reminders.invoice_id));
+
+-- Delivery
+alter table public.projects enable row level security;
+create policy "Read visible projects" on public.projects for select to authenticated using (public.can_see_owner(sales_id) or exists (select 1 from public.companies c where c.id = projects.company_id));
+create policy "Create projects" on public.projects for insert to authenticated with check (true);
+create policy "Update visible projects" on public.projects for update to authenticated using (public.can_see_owner(sales_id) or exists (select 1 from public.companies c where c.id = projects.company_id)) with check (true);
+create policy "Delete visible projects" on public.projects for delete to authenticated using (public.can_see_owner(sales_id) or exists (select 1 from public.companies c where c.id = projects.company_id));
+
+alter table public.project_milestones enable row level security;
+create policy "Milestones of visible projects" on public.project_milestones for all to authenticated using (exists (select 1 from public.projects p where p.id = project_milestones.project_id)) with check (exists (select 1 from public.projects p where p.id = project_milestones.project_id));
+
+-- Everyone on a visible project sees its time; people change only their own
+-- entries, admins any
+alter table public.time_entries enable row level security;
+create policy "Read time on visible projects" on public.time_entries for select to authenticated using (exists (select 1 from public.projects p where p.id = time_entries.project_id));
+create policy "Log own time" on public.time_entries for insert to authenticated with check (sales_id = public.current_sales_id() and exists (select 1 from public.projects p where p.id = time_entries.project_id));
+create policy "Edit own time" on public.time_entries for update to authenticated using (sales_id = public.current_sales_id() or public.is_admin()) with check (sales_id = public.current_sales_id() or public.is_admin());
+create policy "Delete own time" on public.time_entries for delete to authenticated using (sales_id = public.current_sales_id() or public.is_admin());

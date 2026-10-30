@@ -27,6 +27,7 @@ import { NotesIterator } from "../notes/NotesIterator";
 import { useConfigurationContext } from "../root/ConfigurationContext";
 import type { Deal } from "../types";
 import { DealInvoices } from "../invoices/DealInvoices";
+import { DealProjectButton } from "../projects/DealProjectButton";
 import { ContactList } from "./ContactList";
 import { findDealLabel, formatISODateString } from "./dealUtils";
 
@@ -79,6 +80,7 @@ const DealShowContent = () => {
                 </>
               ) : (
                 <>
+                  <DealProjectButton deal={record} />
                   <ArchiveButton record={record} />
                   <EditButton />
                 </>

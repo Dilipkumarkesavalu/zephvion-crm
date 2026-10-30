@@ -134,3 +134,13 @@ create or replace trigger refresh_invoice_payments after insert or update or del
     for each row execute function public.refresh_invoice_payments();
 create or replace trigger audit_invoice_payments after insert or update or delete on public.invoice_payments
     for each row execute function public.write_audit_log();
+
+-- Delivery
+create or replace trigger touch_project before update on public.projects
+    for each row execute function public.touch_project();
+create or replace trigger stamp_milestone_completion before insert or update on public.project_milestones
+    for each row execute function public.stamp_milestone_completion();
+create or replace trigger audit_projects after insert or update or delete on public.projects
+    for each row execute function public.write_audit_log();
+create or replace trigger notify_project_assignment after insert or update of sales_id on public.projects
+    for each row execute function public.notify_assignment();
