@@ -2,6 +2,7 @@
 import * as jose from "jsr:@panva/jose@6";
 import { createClient, type User } from "jsr:@supabase/supabase-js@2";
 import { createErrorResponse } from "./utils.ts";
+import { getPublishableKey } from "./publishableKey.ts";
 
 const SUPABASE_JWT_ISSUER =
   Deno.env.get("SB_JWT_ISSUER") ?? Deno.env.get("SUPABASE_URL") + "/auth/v1";
@@ -64,7 +65,7 @@ export const UserMiddleware = async (
     const authHeader = req.headers.get("Authorization")!;
     const localClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SB_PUBLISHABLE_KEY") ?? "",
+      getPublishableKey(),
       { global: { headers: { Authorization: authHeader } } },
     );
 
