@@ -159,6 +159,8 @@ const NotificationItem = ({
           <span className="block text-xs text-muted-foreground">
             {notification.type === "automation" ? (
               translate("crm.notifications.automation")
+            ) : notification.type === "portal_reply" ? (
+              translate("crm.notifications.portal_reply")
             ) : notification.actor_sales_id != null ? (
               <ReferenceField<Notification, Sale>
                 record={notification}

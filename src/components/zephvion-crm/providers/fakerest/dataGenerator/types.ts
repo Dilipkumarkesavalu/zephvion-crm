@@ -17,6 +17,7 @@ import type {
   TicketComment,
   AutomationRule,
   AutomationRun,
+  PortalAccess,
   Notification,
   SavedView,
   Sale,
@@ -45,6 +46,7 @@ export interface Db {
   ticket_comments: TicketComment[];
   automation_rules: AutomationRule[];
   automation_runs: AutomationRun[];
+  portal_access: PortalAccess[];
   audit_log: AuditLogEntry[];
   sales: Sale[];
   tags: Tag[];

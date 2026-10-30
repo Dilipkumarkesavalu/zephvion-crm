@@ -27,6 +27,7 @@ import tickets from "../tickets";
 import { ReceivablesPage } from "../invoices/ReceivablesPage";
 import { AutomationsPage } from "../automations/AutomationsPage";
 import { ReportsPage } from "../reports/ReportsPage";
+import { PortalPage } from "../portal/PortalPage";
 import { Layout } from "../layout/Layout";
 import { MobileLayout } from "../layout/MobileLayout";
 import { SignupPage } from "../login/SignupPage";
@@ -267,6 +268,7 @@ const DesktopAdmin = (
           element={<ForgotPasswordPage />}
         />
         <Route path={OAuthConsentPage.path} element={<OAuthConsentPage />} />
+        <Route path={PortalPage.path} element={<PortalPage />} />
       </CustomRoutes>
 
       <CustomRoutes>
@@ -302,6 +304,7 @@ const DesktopAdmin = (
       <Resource name="ticket_comments" />
       <Resource name="automation_rules" />
       <Resource name="automation_runs" />
+      <Resource name="portal_access" />
       <Resource name="project_milestones" />
       <Resource name="time_entries" />
       <Resource name="invoice_payments" />
@@ -365,6 +368,7 @@ const MobileAdmin = (
             element={<ForgotPasswordPage />}
           />
           <Route path={OAuthConsentPage.path} element={<OAuthConsentPage />} />
+          <Route path={PortalPage.path} element={<PortalPage />} />
         </CustomRoutes>
         <CustomRoutes>
           <Route

@@ -900,7 +900,7 @@ CREATE OR REPLACE FUNCTION "public"."mark_ticket_responded"() RETURNS "trigger"
     SET "search_path" TO ''
     AS $$
 begin
-  if not new.is_internal then
+  if not new.is_internal and not new.is_from_client then
     update public.tickets
     set first_responded_at = coalesce(first_responded_at, new.created_at)
     where id = new.ticket_id and first_responded_at is null;

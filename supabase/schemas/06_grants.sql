@@ -268,3 +268,8 @@ grant all on sequence public.automation_rules_id_seq to service_role;
 grant all on sequence public.automation_runs_id_seq to service_role;
 revoke execute on function public.run_scheduled_automations() from public, anon, authenticated;
 revoke execute on function public.apply_automation_rule(public.automation_rules, text, jsonb) from public, anon, authenticated;
+
+-- Client portal
+grant select, insert, update on table public.portal_access to authenticated;
+grant all on table public.portal_access to service_role;
+grant all on sequence public.portal_access_id_seq to service_role;

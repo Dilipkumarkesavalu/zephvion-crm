@@ -14,6 +14,7 @@ import { SelectField } from "@/components/admin/select-field";
 
 import { formatLocalizedDate } from "../misc/RelativeDate";
 import { AsideSection } from "../misc/AsideSection";
+import { CompanyPortalCard } from "../portal/CompanyPortalCard";
 import { useConfigurationContext } from "../root/ConfigurationContext";
 import type { Company } from "../types";
 import { getTranslatedCompanySizeLabel } from "./getTranslatedCompanySizeLabel";
@@ -46,6 +47,8 @@ export const CompanyAside = ({ link = "edit" }: CompanyAsideProps) => {
       <ContextInfo record={record} />
 
       <AdditionalInfo record={record} />
+
+      {link === "edit" ? <CompanyPortalCard /> : null}
 
       {link !== "edit" && (
         <div className="mt-6 pt-6 border-t hidden sm:flex flex-col gap-2 items-start">

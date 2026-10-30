@@ -65,6 +65,7 @@ export const automationMessages = {
     },
     notifications: {
       automation: "Automation",
+      portal_reply: "Client replied in the portal",
     },
   },
 };

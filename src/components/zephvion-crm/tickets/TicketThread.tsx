@@ -101,20 +101,25 @@ const CommentItem = ({
     <li
       className={cn(
         "rounded-lg border p-3",
+        comment.is_from_client && "border-primary/30 bg-primary/5",
         comment.is_internal && "border-amber-500/30 bg-amber-500/5",
       )}
     >
       <div className="mb-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
         <span className="font-medium text-foreground">
-          <ReferenceField<TicketComment, Sale>
-            record={comment}
-            source="sales_id"
-            reference="sales"
-            link={false}
-            render={({ referenceRecord }) =>
-              referenceRecord ? formatSaleName(referenceRecord as Sale) : null
-            }
-          />
+          {comment.is_from_client ? (
+            translate("resources.tickets.thread.from_client")
+          ) : (
+            <ReferenceField<TicketComment, Sale>
+              record={comment}
+              source="sales_id"
+              reference="sales"
+              link={false}
+              render={({ referenceRecord }) =>
+                referenceRecord ? formatSaleName(referenceRecord as Sale) : null
+              }
+            />
+          )}
         </span>
         <span>
           {formatDistanceToNow(new Date(comment.created_at), {

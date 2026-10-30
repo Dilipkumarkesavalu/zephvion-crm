@@ -170,3 +170,9 @@ create policy "Admins delete automation rules" on public.automation_rules for de
 
 alter table public.automation_runs enable row level security;
 create policy "Read automation runs" on public.automation_runs for select to authenticated using (true);
+
+-- Client portal
+alter table public.portal_access enable row level security;
+create policy "Read portal links of visible clients" on public.portal_access for select to authenticated using (exists (select 1 from public.companies c where c.id = portal_access.company_id));
+create policy "Create portal links for visible clients" on public.portal_access for insert to authenticated with check (exists (select 1 from public.companies c where c.id = portal_access.company_id));
+create policy "Update portal links of visible clients" on public.portal_access for update to authenticated using (exists (select 1 from public.companies c where c.id = portal_access.company_id)) with check (exists (select 1 from public.companies c where c.id = portal_access.company_id));

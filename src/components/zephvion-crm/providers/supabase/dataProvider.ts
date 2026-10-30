@@ -21,6 +21,7 @@ import type { ConfigurationContextValue } from "../../root/ConfigurationContext"
 import { ATTACHMENTS_BUCKET } from "../commons/attachments";
 import { getIsInitialized } from "./authProvider";
 import { getSupabaseClient } from "./supabase";
+import type { PortalRequest, PortalResponse } from "../../portal/portalLink";
 
 const getBaseDataProvider = () =>
   supabaseDataProvider({
@@ -300,6 +301,25 @@ const getDataProviderWithCustomMethods = () => {
       }
       return { ...data, ok: !!data?.sent };
     },
+    /** The client portal, opened with a client's secret link token. */
+    async callPortal(
+      token: string,
+      request: PortalRequest,
+    ): Promise<PortalResponse> {
+      const { data, error } =
+        await getSupabaseClient().functions.invoke<PortalResponse>(
+          "client_portal",
+          { method: "POST", body: { token, ...request } },
+        );
+      if (error) {
+        // Error responses still carry the message for the client
+        const body = await (error as { context?: Response }).context
+          ?.json()
+          .catch(() => null);
+        return { ok: false, error: body?.error ?? "Something went wrong." };
+      }
+      return data ?? { ok: false, error: "Something went wrong." };
+    },
     /** Emails a ticket reply to the ticket's contact. */
     async emailTicketReply(commentId: Identifier): Promise<BillingResult> {
       const { data, error } =
@@ -334,6 +354,8 @@ const getDataProviderWithCustomMethods = () => {
     },
   } satisfies DataProvider;
 };
+
+export type { PortalRequest, PortalResponse };
 
 export interface BillingResult {
   ok: boolean;

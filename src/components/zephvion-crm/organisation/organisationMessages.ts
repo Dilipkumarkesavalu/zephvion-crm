@@ -98,6 +98,19 @@ export const organisationMessages = {
       save_error: "Could not save the view",
       delete: "Delete %{name}",
     },
+    portal: {
+      title: "Client portal",
+      none: "No portal link yet. Clients use it to see invoices, project progress and their support requests.",
+      create: "Create portal link",
+      new_link: "Create a new link",
+      turn_off: "Turn off",
+      copy_now:
+        "Copy this link and send it to the client now. It is shown only once; creating a new link stops this one.",
+      copied: "Link copied",
+      last_opened: "Link on, last opened %{time}",
+      never_opened: "Link on, not opened yet",
+      error: "Could not create the link",
+    },
     command: {
       go_to: "Go to",
       create: "Create",
@@ -137,6 +150,7 @@ export const organisationMessages = {
         projects: "Project",
         tickets: "Ticket",
         automation_rules: "Automation",
+        portal_access: "Portal link",
         companies: "Company",
         contacts: "Contact",
         deals: "Deal",

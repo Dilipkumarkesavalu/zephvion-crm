@@ -37,6 +37,8 @@ import { mergeContacts } from "../commons/mergeContacts";
 import { getSearchResults } from "./search";
 import { settleInvoice } from "../../invoices/billingModel";
 import { prepareLead } from "../../leads/leadModel";
+import type { PortalRequest } from "../../portal/portalLink";
+import { callDemoPortal } from "./demoPortal";
 import { nextTicketNumber, prepareTicket } from "../../tickets/ticketModel";
 import type { CrmDataProvider } from "../types";
 import {
@@ -380,6 +382,8 @@ export const createDataProvider = ({
       ok: false,
       reason: "demo",
     }),
+    callPortal: async (token: string, request: PortalRequest) =>
+      callDemoPortal(dataProvider, token, request),
     emailTicketReply: async (_commentId: Identifier) => ({
       ok: false,
       reason: "demo",

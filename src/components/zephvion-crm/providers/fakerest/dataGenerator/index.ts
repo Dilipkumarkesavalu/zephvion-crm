@@ -39,6 +39,7 @@ export default (): Db => {
   Object.assign(db, generateProjects(db));
   Object.assign(db, generateTickets(db));
   Object.assign(db, generateAutomations(db));
+  db.portal_access = [];
   db.configuration = [
     {
       id: 1,

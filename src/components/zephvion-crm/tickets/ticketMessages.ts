@@ -68,6 +68,7 @@ export const ticketMessages = {
         send: "Add reply",
         add_note: "Add note",
         internal_badge: "Internal",
+        from_client: "Client (portal)",
         emailed: "Emailed to %{to}",
         email_now: "Email to client",
         sent: "Reply added",

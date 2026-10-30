@@ -16,6 +16,7 @@ const AUDITED_TABLES = [
   "projects",
   "tickets",
   "automation_rules",
+  "portal_access",
   "companies",
   "contacts",
   "deals",

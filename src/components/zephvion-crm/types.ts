@@ -309,6 +309,16 @@ export type Project = {
   description?: string | null;
 } & Pick<RaRecord, "id">;
 
+export type PortalAccess = {
+  created_at: string;
+  company_id: Identifier;
+  /** SHA-256 of the link's token; the token itself is never stored */
+  token_hash: string;
+  is_active: boolean;
+  sales_id?: Identifier | null;
+  last_used_at?: string | null;
+} & Pick<RaRecord, "id">;
+
 export const AUTOMATION_EVENTS = [
   "deal_stage_changed",
   "lead_created",
@@ -400,6 +410,8 @@ export type TicketComment = {
   is_internal: boolean;
   emailed_at?: string | null;
   emailed_to?: string | null;
+  /** Sent by the client through the portal */
+  is_from_client?: boolean;
 } & Pick<RaRecord, "id">;
 
 export const MILESTONE_STATUSES = ["pending", "in_progress", "done"] as const;

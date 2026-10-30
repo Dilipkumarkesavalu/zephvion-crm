@@ -164,3 +164,7 @@ create or replace trigger automations_on_ticket after insert on public.tickets
     for each row execute function public.run_event_automations();
 create or replace trigger audit_automation_rules after insert or update or delete on public.automation_rules
     for each row execute function public.write_audit_log();
+
+-- Client portal
+create or replace trigger audit_portal_access after insert or update or delete on public.portal_access
+    for each row execute function public.write_audit_log();
