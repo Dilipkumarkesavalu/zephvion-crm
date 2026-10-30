@@ -448,7 +448,12 @@ const answer = async (
     return json(outcome.body);
   } catch (error) {
     console.error("ai_assistant failed", error);
-    await log("error");
+    // Keep the provider's reason (never the key) so failures can be diagnosed
+    const detail =
+      error instanceof ModelError
+        ? `error: ${error.status} ${error.message}`
+        : `error: ${String(error)}`;
+    await log(detail.slice(0, 300));
     const reason =
       error instanceof ModelError && error.status === 429
         ? "busy"

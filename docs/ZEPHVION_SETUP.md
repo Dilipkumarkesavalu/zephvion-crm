@@ -249,7 +249,7 @@ npx supabase secrets set AI_API_KEY="gsk_..." --project-ref uphoiejqlfbeogtvxxqp
 
 | Provider | `AI_BASE_URL` | Example `AI_MODEL` |
 |---|---|---|
-| Groq (default) | `https://api.groq.com/openai/v1` | `llama-3.3-70b-versatile` |
+| Groq (default) | `https://api.groq.com/openai/v1` | `openai/gpt-oss-120b` |
 | Together AI | `https://api.together.xyz/v1` | `meta-llama/Llama-3.3-70B-Instruct-Turbo` |
 | OpenRouter | `https://openrouter.ai/api/v1` | `meta-llama/llama-3.3-70b-instruct` |
 | Your own Ollama / vLLM | `https://<your-server>/v1` | the model you pulled, e.g. `qwen2.5:32b` |
@@ -258,6 +258,11 @@ Pick a model that supports tool calling, or the "Ask AI" panel can't look
 records up. With a hosted provider, the client details in a request are sent
 to that provider; run your own Ollama or vLLM server to keep everything in
 house.
+
+If the assistant says "The AI service didn't answer", the provider's reason
+is saved in the `outcome` column of the `ai_requests` table (for example
+`error: 404 The model ... does not exist`). Fix the model with
+`npx supabase secrets set AI_MODEL=<model> --project-ref uphoiejqlfbeogtvxxqp`.
 
 ## Troubleshooting
 

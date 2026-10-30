@@ -10,7 +10,7 @@
  * AI_BASE_URL, AI_API_KEY and AI_MODEL function secrets.
  */
 export const DEFAULT_BASE_URL = "https://api.groq.com/openai/v1";
-export const DEFAULT_MODEL = "llama-3.3-70b-versatile";
+export const DEFAULT_MODEL = "openai/gpt-oss-120b";
 export const DAILY_LIMIT_PER_PERSON = 100;
 export const MAX_ASK_TURNS = 6;
 export const MAX_HISTORY_MESSAGES = 10;
