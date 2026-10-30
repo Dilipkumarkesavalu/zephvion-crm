@@ -342,6 +342,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/invoicePayments.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/index.ts",
           "type": "registry:component"
         },
@@ -690,11 +694,23 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/invoices/ZohoExportButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/zohoExport.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/invoices/useInvoiceTransform.ts",
           "type": "registry:component"
         },
         {
           "path": "src/components/zephvion-crm/invoices/sellerDetails.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/ReceivablesPage.tsx",
           "type": "registry:component"
         },
         {
@@ -707,6 +723,10 @@
         },
         {
           "path": "src/components/zephvion-crm/invoices/InvoiceShow.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/InvoicePayments.tsx",
           "type": "registry:component"
         },
         {
@@ -747,6 +767,10 @@
         },
         {
           "path": "src/components/zephvion-crm/invoices/DealInvoices.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/invoices/billingModel.ts",
           "type": "registry:component"
         },
         {
