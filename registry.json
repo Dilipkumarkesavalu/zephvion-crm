@@ -274,6 +274,18 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/reports/ReportsPage.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/reports/reportModel.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/reports/reportMessages.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/providers/types.ts",
           "type": "registry:component"
         },
@@ -415,6 +427,10 @@
         },
         {
           "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/companies.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/automations.ts",
           "type": "registry:component"
         },
         {
@@ -1207,6 +1223,26 @@
         },
         {
           "path": "src/components/zephvion-crm/client360/clientModel.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/automations/RuleSentence.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/automations/AutomationsPage.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/automations/AutomationRuleDialog.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/automations/automationModel.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/automations/automationMessages.ts",
           "type": "registry:component"
         },
         {
