@@ -330,6 +330,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/projects.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/zephvion-crm/providers/fakerest/dataGenerator/notifications.ts",
           "type": "registry:component"
         },
@@ -411,6 +415,46 @@
         },
         {
           "path": "src/components/zephvion-crm/providers/commons/activity.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/projects/ProjectTime.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/projects/ProjectShow.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/projects/projectModel.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/projects/ProjectMilestones.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/projects/projectMessages.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/projects/ProjectList.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/projects/ProjectForm.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/projects/ProjectBadges.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/projects/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/zephvion-crm/projects/DealProjectButton.tsx",
           "type": "registry:component"
         },
         {
