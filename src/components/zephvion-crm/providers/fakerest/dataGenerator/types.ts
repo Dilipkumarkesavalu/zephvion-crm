@@ -15,6 +15,8 @@ import type {
   TimeEntry,
   Ticket,
   TicketComment,
+  AutomationRule,
+  AutomationRun,
   Notification,
   SavedView,
   Sale,
@@ -41,6 +43,8 @@ export interface Db {
   time_entries: TimeEntry[];
   tickets: Ticket[];
   ticket_comments: TicketComment[];
+  automation_rules: AutomationRule[];
+  automation_runs: AutomationRun[];
   audit_log: AuditLogEntry[];
   sales: Sale[];
   tags: Tag[];

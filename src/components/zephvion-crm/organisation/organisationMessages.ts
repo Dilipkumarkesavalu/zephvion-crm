@@ -81,6 +81,7 @@ export const organisationMessages = {
       billing: "Billing",
       deliver: "Deliver",
       support: "Support",
+      insights: "Insights",
       work: "Work",
     },
     views: {
@@ -135,6 +136,7 @@ export const organisationMessages = {
         leads: "Lead",
         projects: "Project",
         tickets: "Ticket",
+        automation_rules: "Automation",
         companies: "Company",
         contacts: "Contact",
         deals: "Deal",

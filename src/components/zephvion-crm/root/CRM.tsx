@@ -25,6 +25,8 @@ import leads from "../leads";
 import projects from "../projects";
 import tickets from "../tickets";
 import { ReceivablesPage } from "../invoices/ReceivablesPage";
+import { AutomationsPage } from "../automations/AutomationsPage";
+import { ReportsPage } from "../reports/ReportsPage";
 import { Layout } from "../layout/Layout";
 import { MobileLayout } from "../layout/MobileLayout";
 import { SignupPage } from "../login/SignupPage";
@@ -272,6 +274,8 @@ const DesktopAdmin = (
         <Route path={SettingsPage.path} element={<SettingsPage />} />
         <Route path={ImportPage.path} element={<ImportPage />} />
         <Route path={ReceivablesPage.path} element={<ReceivablesPage />} />
+        <Route path={ReportsPage.path} element={<ReportsPage />} />
+        <Route path={AutomationsPage.path} element={<AutomationsPage />} />
       </CustomRoutes>
       <Resource name="leads" {...leads} />
       <Resource name="deals" {...deals} />
@@ -296,6 +300,8 @@ const DesktopAdmin = (
       <Resource name="projects" {...projects} />
       <Resource name="tickets" {...tickets} />
       <Resource name="ticket_comments" />
+      <Resource name="automation_rules" />
+      <Resource name="automation_runs" />
       <Resource name="project_milestones" />
       <Resource name="time_entries" />
       <Resource name="invoice_payments" />

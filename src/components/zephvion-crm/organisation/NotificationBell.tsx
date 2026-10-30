@@ -157,7 +157,9 @@ const NotificationItem = ({
         />
         <span className="min-w-0 flex-1">
           <span className="block text-xs text-muted-foreground">
-            {notification.actor_sales_id != null ? (
+            {notification.type === "automation" ? (
+              translate("crm.notifications.automation")
+            ) : notification.actor_sales_id != null ? (
               <ReferenceField<Notification, Sale>
                 record={notification}
                 source="actor_sales_id"

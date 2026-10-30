@@ -309,6 +309,46 @@ export type Project = {
   description?: string | null;
 } & Pick<RaRecord, "id">;
 
+export const AUTOMATION_EVENTS = [
+  "deal_stage_changed",
+  "lead_created",
+  "ticket_created",
+  "deal_idle",
+  "invoice_overdue",
+] as const;
+export type AutomationEvent = (typeof AUTOMATION_EVENTS)[number];
+export type AutomationAction = "notify" | "create_task";
+
+export type AutomationRule = {
+  created_at: string;
+  updated_at: string;
+  name: string;
+  is_active: boolean;
+  event: AutomationEvent;
+  /** e.g. { stage: "won" }, { priority: "urgent" }, { days: 14 } */
+  condition: Record<string, string | number>;
+  action: AutomationAction;
+  action_config: {
+    /** "owner" (the record's owner) or a sales id */
+    recipient?: string;
+    message?: string;
+    task_text?: string;
+    task_type?: string;
+    due_days?: number;
+  };
+  sales_id?: Identifier | null;
+  run_count: number;
+  last_run_at?: string | null;
+} & Pick<RaRecord, "id">;
+
+export type AutomationRun = {
+  created_at: string;
+  rule_id: Identifier;
+  resource: string;
+  record_id: Identifier;
+  outcome: string;
+} & Pick<RaRecord, "id">;
+
 export const TICKET_STATUSES = [
   "open",
   "in_progress",

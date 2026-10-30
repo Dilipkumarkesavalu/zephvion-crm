@@ -909,3 +909,173 @@ begin
   return new;
 end;
 $$;
+
+-- Automation rules
+-- Runs one rule's action for one record. Returns what happened.
+CREATE OR REPLACE FUNCTION "public"."apply_automation_rule"("rule" "public"."automation_rules", "resource" text, "record" jsonb) RETURNS text
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+declare
+  recipient_setting text := coalesce(rule.action_config ->> 'recipient', 'owner');
+  recipient bigint;
+  record_id bigint := (record ->> 'id')::bigint;
+  record_title text;
+  contact_id bigint;
+  outcome text;
+begin
+  recipient := case
+    when recipient_setting = 'owner' then nullif(record ->> 'sales_id', '')::bigint
+    else nullif(recipient_setting, '')::bigint
+  end;
+  if recipient is not null and not exists (
+    select 1 from public.sales s where s.id = recipient and not s.disabled
+  ) then
+    recipient := null;
+  end if;
+
+  record_title := case resource
+    when 'leads' then trim(concat_ws(' ', record ->> 'first_name', record ->> 'last_name'))
+    when 'tickets' then concat_ws(' ', record ->> 'number', record ->> 'subject')
+    else coalesce(record ->> 'name', record ->> 'number')
+  end;
+
+  if rule.action = 'create_task' then
+    contact_id := case resource
+      when 'deals' then nullif(record -> 'contact_ids' ->> 0, '')::bigint
+      when 'tickets' then nullif(record ->> 'contact_id', '')::bigint
+      when 'invoices' then nullif(record ->> 'contact_id', '')::bigint
+      else null
+    end;
+    if contact_id is null then
+      outcome := 'skipped: no contact to attach the task to';
+    else
+      insert into public.tasks (contact_id, type, text, due_date, sales_id)
+      values (
+        contact_id,
+        coalesce(nullif(rule.action_config ->> 'task_type', ''), 'none'),
+        left(coalesce(nullif(rule.action_config ->> 'task_text', ''), rule.name) || ' (' || coalesce(record_title, '') || ')', 500),
+        now() + make_interval(days => coalesce((rule.action_config ->> 'due_days')::int, 1)),
+        recipient
+      );
+      outcome := 'task created';
+    end if;
+  elsif recipient is null then
+    outcome := 'skipped: nobody to notify';
+  else
+    insert into public.notifications (recipient_sales_id, actor_sales_id, type, resource, record_id, title)
+    values (
+      recipient,
+      null,
+      'automation',
+      resource,
+      record_id,
+      left(coalesce(nullif(rule.action_config ->> 'message', ''), rule.name) || ': ' || coalesce(record_title, ''), 200)
+    );
+    outcome := 'notified';
+  end if;
+
+  update public.automation_rules
+  set run_count = run_count + 1, last_run_at = now()
+  where id = rule.id;
+  return outcome;
+end;
+$$;
+
+-- Event rules: a record changed, check which active rules match it
+CREATE OR REPLACE FUNCTION "public"."run_event_automations"() RETURNS "trigger"
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+declare
+  event_name text;
+  row_data jsonb := to_jsonb(new);
+  rule public.automation_rules;
+  outcome text;
+begin
+  event_name := case
+    when tg_table_name = 'deals' and tg_op = 'UPDATE'
+      and row_data ->> 'stage' is distinct from to_jsonb(old) ->> 'stage' then 'deal_stage_changed'
+    when tg_table_name = 'leads' and tg_op = 'INSERT' then 'lead_created'
+    when tg_table_name = 'tickets' and tg_op = 'INSERT' then 'ticket_created'
+    else null
+  end;
+  if event_name is null then
+    return new;
+  end if;
+
+  for rule in
+    select * from public.automation_rules r
+    where r.is_active and r.event = event_name
+      -- Every condition key must equal the record's field ("any" or empty matches all)
+      and not exists (
+        select 1 from jsonb_each_text(r.condition) c
+        where c.value not in ('', 'any') and coalesce(row_data ->> c.key, '') <> c.value
+      )
+    order by r.id
+  loop
+    outcome := public.apply_automation_rule(rule, tg_table_name, row_data);
+    insert into public.automation_runs (rule_id, resource, record_id, outcome)
+    values (rule.id, tg_table_name, (row_data ->> 'id')::bigint, outcome);
+  end loop;
+  return new;
+end;
+$$;
+
+-- Time rules, run daily: deals quiet for N days, invoices unpaid N days late
+CREATE OR REPLACE FUNCTION "public"."run_scheduled_automations"() RETURNS integer
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+declare
+  rule public.automation_rules;
+  target record;
+  days integer;
+  outcome text;
+  fired integer := 0;
+begin
+  for rule in
+    select * from public.automation_rules where is_active and event in ('deal_idle', 'invoice_overdue')
+  loop
+    days := greatest(1, coalesce((rule.condition ->> 'days')::int, 14));
+    if rule.event = 'deal_idle' then
+      for target in
+        select d.* from public.deals d
+        where d.archived_at is null and d.stage not in ('won', 'lost')
+          and d.updated_at < now() - make_interval(days => days)
+          and not exists (
+            select 1 from public.automation_runs ar
+            where ar.rule_id = rule.id and ar.resource = 'deals' and ar.record_id = d.id
+              and ar.record_version is not distinct from d.updated_at
+          )
+        limit 200
+      loop
+        outcome := public.apply_automation_rule(rule, 'deals', to_jsonb(target));
+        insert into public.automation_runs (rule_id, resource, record_id, outcome, record_version)
+        values (rule.id, 'deals', target.id, outcome, target.updated_at);
+        fired := fired + 1;
+      end loop;
+    else
+      for target in
+        select i.* from public.invoices i
+        where i.type = 'invoice' and i.status = 'sent'
+          and i.due_date < current_date - days
+          and not exists (
+            select 1 from public.automation_runs ar
+            where ar.rule_id = rule.id and ar.resource = 'invoices' and ar.record_id = i.id
+          )
+        limit 200
+      loop
+        outcome := public.apply_automation_rule(rule, 'invoices', to_jsonb(target));
+        insert into public.automation_runs (rule_id, resource, record_id, outcome)
+        values (rule.id, 'invoices', target.id, outcome);
+        fired := fired + 1;
+      end loop;
+    end if;
+  end loop;
+  return fired;
+end;
+$$;
+
+-- run_scheduled_automations() runs daily through pg_cron, scheduled in
+-- migration 20261030200000_automations.sql

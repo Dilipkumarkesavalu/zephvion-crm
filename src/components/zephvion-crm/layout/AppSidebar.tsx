@@ -1,10 +1,12 @@
 import {
+  BarChart3,
   Building2,
   CheckSquare,
   HandCoins,
   FolderKanban,
   Handshake,
   History,
+  Zap,
   Import,
   Inbox,
   LifeBuoy,
@@ -111,6 +113,21 @@ export const AppSidebar = () => {
           to: "/tickets",
           icon: LifeBuoy,
           label: translate("resources.tickets.name", { smart_count: 2 }),
+        },
+      ],
+    },
+    {
+      label: translate("crm.nav.insights"),
+      items: [
+        {
+          to: "/reports",
+          icon: BarChart3,
+          label: translate("crm.reports.title"),
+        },
+        {
+          to: "/automations",
+          icon: Zap,
+          label: translate("crm.automations.title"),
         },
       ],
     },

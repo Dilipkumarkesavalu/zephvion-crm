@@ -28,6 +28,14 @@ export const canAccess = <
   }
 
   // Departments are managed, and the audit log is read, by admins only
+  // Everyone can see the automation rules; only admins change them
+  if (
+    params.resource === "automation_rules" &&
+    !["list", "show"].includes(params.action)
+  ) {
+    return false;
+  }
+
   if (params.resource === "departments" || params.resource === "audit_log") {
     return false;
   }

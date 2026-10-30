@@ -22,6 +22,8 @@ const useSectionTitle = (): string => {
     ["/deals/*", translate("resources.deals.name", { smart_count: 2 })],
     ["/invoices/*", translate("resources.invoices.name", { smart_count: 2 })],
     ["/tasks", translate("resources.tasks.name", { smart_count: 2 })],
+    ["/reports", translate("crm.reports.title")],
+    ["/automations", translate("crm.automations.title")],
     ["/tickets/*", translate("resources.tickets.name", { smart_count: 2 })],
     ["/projects/*", translate("resources.projects.name", { smart_count: 2 })],
     ["/receivables", translate("resources.invoices.receivables.title")],

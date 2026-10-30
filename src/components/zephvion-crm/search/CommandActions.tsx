@@ -1,10 +1,12 @@
 import {
+  BarChart3,
   Building2,
   CheckSquare,
   FilePlus2,
   FolderKanban,
   Handshake,
   History,
+  Zap,
   Inbox,
   LifeBuoy,
   LayoutDashboard,
@@ -77,6 +79,18 @@ const useCommandActions = () => {
         label: plural("projects"),
         to: "/projects",
         icon: FolderKanban,
+      },
+      {
+        id: "go.reports",
+        label: translate("crm.reports.title"),
+        to: "/reports",
+        icon: BarChart3,
+      },
+      {
+        id: "go.automations",
+        label: translate("crm.automations.title"),
+        to: "/automations",
+        icon: Zap,
       },
       {
         id: "go.tickets",

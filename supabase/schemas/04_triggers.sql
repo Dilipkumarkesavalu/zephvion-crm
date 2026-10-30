@@ -154,3 +154,13 @@ create or replace trigger audit_tickets after insert or update or delete on publ
     for each row execute function public.write_audit_log();
 create or replace trigger notify_ticket_assignment after insert or update of sales_id on public.tickets
     for each row execute function public.notify_assignment();
+
+-- Automation rules
+create or replace trigger automations_on_deal_stage after update of stage on public.deals
+    for each row execute function public.run_event_automations();
+create or replace trigger automations_on_lead after insert on public.leads
+    for each row execute function public.run_event_automations();
+create or replace trigger automations_on_ticket after insert on public.tickets
+    for each row execute function public.run_event_automations();
+create or replace trigger audit_automation_rules after insert or update or delete on public.automation_rules
+    for each row execute function public.write_audit_log();

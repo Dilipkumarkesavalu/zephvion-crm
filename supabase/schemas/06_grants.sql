@@ -258,3 +258,13 @@ grant all on sequence public.ticket_comments_id_seq to service_role;
 grant all on sequence public.ticket_number_seq to service_role;
 revoke execute on function public.pick_ticket_owner() from public, anon;
 grant execute on function public.pick_ticket_owner() to authenticated, service_role;
+
+-- Automation rules
+grant select, insert, update, delete on table public.automation_rules to authenticated;
+grant select on table public.automation_runs to authenticated;
+grant all on table public.automation_rules to service_role;
+grant all on table public.automation_runs to service_role;
+grant all on sequence public.automation_rules_id_seq to service_role;
+grant all on sequence public.automation_runs_id_seq to service_role;
+revoke execute on function public.run_scheduled_automations() from public, anon, authenticated;
+revoke execute on function public.apply_automation_rule(public.automation_rules, text, jsonb) from public, anon, authenticated;

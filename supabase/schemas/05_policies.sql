@@ -159,3 +159,14 @@ create policy "Read comments on visible tickets" on public.ticket_comments for s
 create policy "Comment on visible tickets" on public.ticket_comments for insert to authenticated with check (sales_id = public.current_sales_id() and exists (select 1 from public.tickets t where t.id = ticket_comments.ticket_id));
 create policy "Edit own comments" on public.ticket_comments for update to authenticated using (sales_id = public.current_sales_id()) with check (sales_id = public.current_sales_id());
 create policy "Delete own comments" on public.ticket_comments for delete to authenticated using (sales_id = public.current_sales_id() or public.is_admin());
+
+-- Automation rules
+-- Admins manage rules; everyone may read them and their runs
+alter table public.automation_rules enable row level security;
+create policy "Read automation rules" on public.automation_rules for select to authenticated using (true);
+create policy "Admins create automation rules" on public.automation_rules for insert to authenticated with check (public.is_admin());
+create policy "Admins update automation rules" on public.automation_rules for update to authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Admins delete automation rules" on public.automation_rules for delete to authenticated using (public.is_admin());
+
+alter table public.automation_runs enable row level security;
+create policy "Read automation runs" on public.automation_runs for select to authenticated using (true);
