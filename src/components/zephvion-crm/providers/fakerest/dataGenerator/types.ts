@@ -7,6 +7,8 @@ import type {
   DealNote,
   Department,
   Invoice,
+  InvoicePayment,
+  InvoiceReminder,
   Lead,
   Notification,
   SavedView,
@@ -27,6 +29,8 @@ export interface Db {
   notifications: Notification[];
   saved_views: SavedView[];
   leads: Lead[];
+  invoice_payments: InvoicePayment[];
+  invoice_reminders: InvoiceReminder[];
   audit_log: AuditLogEntry[];
   sales: Sale[];
   tags: Tag[];

@@ -270,6 +270,54 @@ export type Invoice = {
   paid_at?: string | null;
   created_at: string;
   updated_at: string;
+  /** Payments plus TDS received so far, kept up to date by the database. */
+  amount_paid?: number;
+  recurrence?: InvoiceRecurrence;
+  /** When the next copy of a recurring invoice is drafted. */
+  next_issue_date?: string | null;
+  recurring_parent_id?: Identifier | null;
+  payment_link_url?: string | null;
+  payment_link_id?: string | null;
+} & Pick<RaRecord, "id">;
+
+export const INVOICE_RECURRENCES = [
+  "none",
+  "monthly",
+  "quarterly",
+  "yearly",
+] as const;
+export type InvoiceRecurrence = (typeof INVOICE_RECURRENCES)[number];
+
+export const PAYMENT_METHODS = [
+  "bank_transfer",
+  "upi",
+  "razorpay",
+  "cheque",
+  "cash",
+  "other",
+] as const;
+export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
+
+export type InvoicePayment = {
+  created_at: string;
+  invoice_id: Identifier;
+  amount: number;
+  /** Tax deducted at source by the client, counts towards settling. */
+  tds_amount: number;
+  paid_on: string;
+  method: PaymentMethod;
+  reference?: string | null;
+  notes?: string | null;
+  sales_id?: Identifier | null;
+  external_id?: string | null;
+} & Pick<RaRecord, "id">;
+
+export type InvoiceReminder = {
+  sent_at: string;
+  invoice_id: Identifier;
+  kind: string;
+  sent_to: string;
+  sales_id?: Identifier | null;
 } & Pick<RaRecord, "id">;
 
 export type DealNote = {

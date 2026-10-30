@@ -128,3 +128,9 @@ create or replace trigger audit_leads after insert or update or delete on public
     for each row execute function public.write_audit_log();
 create or replace trigger notify_lead_assignment after insert or update of sales_id on public.leads
     for each row execute function public.notify_assignment();
+
+-- Billing
+create or replace trigger refresh_invoice_payments after insert or update or delete on public.invoice_payments
+    for each row execute function public.refresh_invoice_payments();
+create or replace trigger audit_invoice_payments after insert or update or delete on public.invoice_payments
+    for each row execute function public.write_audit_log();

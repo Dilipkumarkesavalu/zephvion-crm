@@ -1,6 +1,7 @@
 import {
   Building2,
   CheckSquare,
+  HandCoins,
   Handshake,
   History,
   Import,
@@ -83,6 +84,11 @@ export const AppSidebar = () => {
           to: "/invoices",
           icon: ReceiptText,
           label: translate("resources.invoices.name", { smart_count: 2 }),
+        },
+        {
+          to: "/receivables",
+          icon: HandCoins,
+          label: translate("resources.invoices.receivables.title"),
         },
       ],
     },

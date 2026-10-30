@@ -712,3 +712,99 @@ begin
   return new;
 end;
 $$;
+
+-- Billing: payment totals, invoice numbers and recurring invoices
+CREATE OR REPLACE FUNCTION "public"."refresh_invoice_payments"() RETURNS "trigger"
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+declare
+  target_id bigint := coalesce(new.invoice_id, old.invoice_id);
+  settled numeric(14, 2);
+  last_paid date;
+begin
+  select coalesce(sum(p.amount + p.tds_amount), 0), max(p.paid_on)
+    into settled, last_paid
+    from public.invoice_payments p
+    where p.invoice_id = target_id;
+
+  update public.invoices i
+  set amount_paid = settled,
+      status = case
+        when i.type = 'invoice' and i.status in ('sent', 'paid') and settled >= i.total then 'paid'
+        when i.type = 'invoice' and i.status = 'paid' and settled < i.total then 'sent'
+        else i.status
+      end,
+      paid_at = case
+        when i.type = 'invoice' and settled >= i.total then coalesce(i.paid_at, last_paid::timestamp with time zone)
+        when i.type = 'invoice' and i.status = 'paid' and settled < i.total then null
+        else i.paid_at
+      end,
+      updated_at = now()
+  where i.id = target_id;
+  return null;
+end;
+$$;
+
+-- Same series as getNextDocumentNumber() in invoiceModel.ts: INV-2026-0001
+CREATE OR REPLACE FUNCTION "public"."next_invoice_number"("issued_on" date) RETURNS text
+    LANGUAGE "sql" STABLE SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+  select 'INV-' || extract(year from issued_on)::int || '-' || lpad((
+    coalesce(max(nullif(regexp_replace(substr(i.number, 10), '\D', '', 'g'), '')::int), 0) + 1
+  )::text, 4, '0')
+  from public.invoices i
+  where i.number like 'INV-' || extract(year from issued_on)::int || '-%'
+$$;
+
+-- Drafts the next invoice for every recurring invoice that is due, so the
+-- team can check and send it. Catches up on missed runs, at most 12 at a time.
+CREATE OR REPLACE FUNCTION "public"."generate_recurring_invoices"() RETURNS integer
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+declare
+  template public.invoices;
+  step interval;
+  payment_days integer;
+  created integer := 0;
+  rounds integer;
+begin
+  for template in
+    select * from public.invoices
+    where type = 'invoice' and recurrence <> 'none' and status <> 'cancelled'
+      and next_issue_date is not null and next_issue_date <= current_date
+    for update
+  loop
+    step := case template.recurrence
+      when 'monthly' then interval '1 month'
+      when 'quarterly' then interval '3 months'
+      else interval '1 year'
+    end;
+    payment_days := coalesce(template.due_date - template.issue_date, 15);
+    rounds := 0;
+    while template.next_issue_date <= current_date and rounds < 12 loop
+      insert into public.invoices (
+        type, number, status, company_id, contact_id, deal_id, sales_id,
+        issue_date, due_date, tax_mode, items, notes, subtotal, tax_total, total,
+        recurring_parent_id
+      ) values (
+        'invoice', public.next_invoice_number(template.next_issue_date), 'draft',
+        template.company_id, template.contact_id, template.deal_id, template.sales_id,
+        template.next_issue_date, template.next_issue_date + payment_days,
+        template.tax_mode, template.items, template.notes,
+        template.subtotal, template.tax_total, template.total, template.id
+      );
+      template.next_issue_date := (template.next_issue_date + step)::date;
+      rounds := rounds + 1;
+      created := created + 1;
+    end loop;
+    update public.invoices set next_issue_date = template.next_issue_date where id = template.id;
+  end loop;
+  return created;
+end;
+$$;
+
+-- generate_recurring_invoices() runs daily through pg_cron, scheduled in
+-- migration 20261030100000_billing.sql

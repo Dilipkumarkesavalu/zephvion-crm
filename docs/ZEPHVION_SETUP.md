@@ -180,6 +180,55 @@ Leads only get an owner once someone is in the **Sales and Business
 Development** department; until then they arrive unassigned and everyone can
 see them.
 
+## 9. Billing: payments, reminders, Razorpay and Zoho Books
+
+**Payments.** On a sent invoice, **Record payment** adds what arrived (bank
+transfer, UPI, cheque…) and any TDS the client deducted. Part payments keep
+the invoice open as "Partly paid"; once payments plus TDS cover the total it
+is marked paid. **Billing → Receivables** shows who owes what, and how late.
+
+**Repeating invoices.** On an invoice, set **Repeat** (monthly, quarterly or
+yearly) and **Next invoice on**. Every day at 9:00 IST the CRM drafts the
+next copy with a new number; check it and mark it sent.
+
+**Reminders.** Every day the CRM emails the invoice's contact about unpaid
+sent invoices: 3 days before the due date, on the day, then 7, 14 and 30 days
+late, once each. **Send reminder** on an invoice sends one straight away.
+Reminders go from the noreply mailbox (step 5) and include the bank details
+from **Settings → Billing details** and the Razorpay link, if there is one.
+The daily run is a scheduled database job that calls the `invoice_reminders`
+function with the `REMINDERS_CRON_SECRET` secret.
+
+**Razorpay payment links.** In the Razorpay dashboard:
+
+1. **Account & Settings → API Keys → Generate key** (use Test mode first).
+   From the `zephvion-crm` folder, type the two values yourself:
+
+   ```sh
+   npx supabase secrets set RAZORPAY_KEY_ID="rzp_..." RAZORPAY_KEY_SECRET="..." --project-ref uphoiejqlfbeogtvxxqp
+   ```
+
+2. **Account & Settings → Webhooks → Add new webhook**:
+   - URL: `https://uphoiejqlfbeogtvxxqp.supabase.co/functions/v1/razorpay_webhook`
+   - Secret: make up a long random string
+   - Active event: `payment_link.paid`
+
+   Then store the same secret for the CRM:
+
+   ```sh
+   npx supabase secrets set RAZORPAY_WEBHOOK_SECRET="the-same-secret" --project-ref uphoiejqlfbeogtvxxqp
+   ```
+
+**Razorpay link** on an invoice then creates a link for the balance (copied
+to the clipboard, printed on the PDF and added to reminders). When the client
+pays, the payment is recorded and the invoice is marked paid automatically.
+
+**Zoho Books.** On **Quotes & Invoices**, filter the list (for example by
+month) and choose **Export for Zoho Books**. In Zoho Books: **Sales →
+Invoices → ⋯ → Import Invoices**, upload the file and confirm the column
+mapping. Each line item is one row; rows with the same invoice number form
+one invoice.
+
 ## Troubleshooting
 
 | Symptom | Fix |

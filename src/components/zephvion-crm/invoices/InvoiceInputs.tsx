@@ -13,7 +13,13 @@ import { Card, CardContent } from "@/components/ui/card";
 
 import { AutocompleteCompanyInput } from "../companies/AutocompleteCompanyInput";
 import { useConfigurationContext } from "../root/ConfigurationContext";
-import type { Company, InvoiceItem, InvoiceType, TaxMode } from "../types";
+import {
+  INVOICE_RECURRENCES,
+  type Company,
+  type InvoiceItem,
+  type InvoiceType,
+  type TaxMode,
+} from "../types";
 import {
   GST_RATES,
   amountInRupeeWords,
@@ -158,7 +164,37 @@ const InvoiceDetailsInputs = ({ isEdit }: { isEdit: boolean }) => {
           helperText={false}
         />
       </div>
+      {type === "invoice" ? <RecurrenceInputs /> : null}
     </>
+  );
+};
+
+/** Retainers: draft a copy of this invoice every month, quarter or year. */
+const RecurrenceInputs = () => {
+  const translate = useTranslate();
+  const recurrence = useWatch({ name: "recurrence" }) ?? "none";
+  const choices = INVOICE_RECURRENCES.map((value) => ({
+    id: value,
+    name: translate(`resources.invoices.recurrence.${value}`),
+  }));
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <SelectInput
+        source="recurrence"
+        label="resources.invoices.recurrence.label"
+        choices={choices}
+        defaultValue="none"
+        helperText={false}
+      />
+      {recurrence !== "none" ? (
+        <DateInput
+          source="next_issue_date"
+          label="resources.invoices.recurrence.next_issue_date"
+          validate={required()}
+          helperText="resources.invoices.recurrence.hint"
+        />
+      ) : null}
+    </div>
   );
 };
 

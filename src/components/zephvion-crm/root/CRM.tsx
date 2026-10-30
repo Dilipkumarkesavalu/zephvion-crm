@@ -22,6 +22,7 @@ import { MobileDashboard } from "../dashboard/MobileDashboard";
 import deals from "../deals";
 import invoices from "../invoices";
 import leads from "../leads";
+import { ReceivablesPage } from "../invoices/ReceivablesPage";
 import { Layout } from "../layout/Layout";
 import { MobileLayout } from "../layout/MobileLayout";
 import { SignupPage } from "../login/SignupPage";
@@ -268,6 +269,7 @@ const DesktopAdmin = (
         <Route path={ProfilePage.path} element={<ProfilePage />} />
         <Route path={SettingsPage.path} element={<SettingsPage />} />
         <Route path={ImportPage.path} element={<ImportPage />} />
+        <Route path={ReceivablesPage.path} element={<ReceivablesPage />} />
       </CustomRoutes>
       <Resource name="leads" {...leads} />
       <Resource name="deals" {...deals} />
@@ -289,6 +291,8 @@ const DesktopAdmin = (
       <Resource name="audit_log" list={AuditLogList} />
       <Resource name="notifications" />
       <Resource name="saved_views" />
+      <Resource name="invoice_payments" />
+      <Resource name="invoice_reminders" />
     </Admin>
   );
 };

@@ -6,7 +6,12 @@ import { cn } from "@/lib/utils";
 
 import { useConfigurationContext } from "../root/ConfigurationContext";
 import type { Invoice } from "../types";
-import { formatMoney, getDisplayStatus } from "./invoiceModel";
+import {
+  formatMoney,
+  getAmountReceived,
+  getBalanceDue,
+  getDisplayStatus,
+} from "./invoiceModel";
 
 const SUMMARY_FETCH_LIMIT = 1000;
 
@@ -36,14 +41,15 @@ const summarizeInvoices = (invoices: Invoice[]): SummaryTotals =>
       if (status === "paid") {
         return { ...acc, collected: addTo(acc.collected, invoice.total) };
       }
-      if (status === "sent" || status === "overdue") {
+      if (["sent", "overdue", "partially_paid"].includes(status)) {
+        const balance = getBalanceDue(invoice);
+        const received = getAmountReceived(invoice);
         return {
           ...acc,
-          outstanding: addTo(acc.outstanding, invoice.total),
+          outstanding: addTo(acc.outstanding, balance),
           overdue:
-            status === "overdue"
-              ? addTo(acc.overdue, invoice.total)
-              : acc.overdue,
+            status === "overdue" ? addTo(acc.overdue, balance) : acc.overdue,
+          collected: received ? addTo(acc.collected, received) : acc.collected,
         };
       }
       return acc;

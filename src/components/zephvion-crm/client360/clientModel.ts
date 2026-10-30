@@ -1,6 +1,11 @@
 import type { Identifier } from "ra-core";
 
-import { getDisplayStatus, roundMoney } from "../invoices/invoiceModel";
+import {
+  getAmountReceived,
+  getBalanceDue,
+  getDisplayStatus,
+  roundMoney,
+} from "../invoices/invoiceModel";
 import type {
   Contact,
   ContactNote,
@@ -91,13 +96,9 @@ export const buildClientSummary = (
     wonValue: sum(wonDeals.map((deal) => deal.amount)),
     wonDeals: wonDeals.length,
     invoiced: sum(invoices.map((invoice) => invoice.total)),
-    paid: sum(
-      invoices
-        .filter((invoice) => invoice.status === "paid")
-        .map((invoice) => invoice.total),
-    ),
-    outstanding: sum(unpaid.map((invoice) => invoice.total)),
-    overdue: sum(overdue.map((invoice) => invoice.total)),
+    paid: sum(invoices.map(getAmountReceived)),
+    outstanding: sum(unpaid.map(getBalanceDue)),
+    overdue: sum(overdue.map(getBalanceDue)),
     openTasks: openTasks.length,
     overdueTasks: openTasks.filter((task) => task.due_date < now).length,
     // Upcoming task due dates are not activity

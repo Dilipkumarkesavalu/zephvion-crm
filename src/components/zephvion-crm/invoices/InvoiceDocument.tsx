@@ -7,6 +7,8 @@ import {
   amountInRupeeWords,
   computeTotals,
   formatMoney,
+  getAmountReceived,
+  getBalanceDue,
   getLineTax,
   getLineTaxable,
   getTaxLines,
@@ -26,6 +28,7 @@ export const InvoiceDocument = ({ invoice }: { invoice: Invoice }) => {
     .join(" · ");
   const bank = sellerDetails.bank;
   const hasBankDetails = !!bank.accountNumber && !!bank.ifsc;
+  const received = getAmountReceived(invoice);
   const { data: company } = useGetOne<Company>(
     "companies",
     { id: invoice.company_id },
@@ -224,6 +227,18 @@ export const InvoiceDocument = ({ invoice }: { invoice: Invoice }) => {
                 </div>
               </div>
             ) : null}
+            {!isQuote &&
+            invoice.payment_link_url &&
+            invoice.status === "sent" ? (
+              <div>
+                <SectionLabel>
+                  {translate("resources.invoices.payments.link_label")}
+                </SectionLabel>
+                <div className="break-all text-[#0a5fa6]">
+                  {invoice.payment_link_url}
+                </div>
+              </div>
+            ) : null}
             {!isQuote && hasBankDetails ? (
               <div>
                 <SectionLabel>
@@ -255,6 +270,18 @@ export const InvoiceDocument = ({ invoice }: { invoice: Invoice }) => {
               <span>{translate("resources.invoices.totals.total")}</span>
               <span className="tabular-nums">{money(totals.total)}</span>
             </div>
+            {received > 0 && invoice.status !== "paid" ? (
+              <>
+                <DocTotalRow
+                  label={translate("resources.invoices.payments.received")}
+                  value={money(received)}
+                />
+                <DocTotalRow
+                  label={translate("resources.invoices.payments.balance")}
+                  value={money(getBalanceDue(invoice))}
+                />
+              </>
+            ) : null}
           </div>
         </section>
 

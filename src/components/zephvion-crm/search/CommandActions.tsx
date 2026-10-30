@@ -65,6 +65,12 @@ const useCommandActions = () => {
       },
       { id: "go.deals", label: plural("deals"), to: "/deals", icon: Handshake },
       {
+        id: "go.receivables",
+        label: translate("resources.invoices.receivables.title"),
+        to: "/receivables",
+        icon: ReceiptText,
+      },
+      {
         id: "go.tasks",
         label: plural("tasks"),
         to: "/tasks",

@@ -185,5 +185,13 @@ verify_jwt = false
 # Public website contact form; validates input and drops honeypot spam itself
 [functions.lead_capture]
 verify_jwt = false
+# Razorpay calls this; every request is checked against the webhook signature
+[functions.razorpay_webhook]
+verify_jwt = false
+# Called daily by the scheduled job with its own secret, or by signed-in users
+[functions.invoice_reminders]
+verify_jwt = false
+[functions.razorpay_payment_link]
+verify_jwt = false
 [functions.mcp]
 verify_jwt = false

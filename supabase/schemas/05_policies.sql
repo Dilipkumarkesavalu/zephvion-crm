@@ -117,3 +117,13 @@ create policy "Read visible leads" on public.leads for select to authenticated u
 create policy "Create leads" on public.leads for insert to authenticated with check (true);
 create policy "Update visible leads" on public.leads for update to authenticated using (public.can_see_owner(sales_id)) with check (true);
 create policy "Delete visible leads" on public.leads for delete to authenticated using (public.can_see_owner(sales_id));
+
+-- Billing
+alter table public.invoice_payments enable row level security;
+create policy "Read payments on visible invoices" on public.invoice_payments for select to authenticated using (exists (select 1 from public.invoices i where i.id = invoice_payments.invoice_id));
+create policy "Record payments on visible invoices" on public.invoice_payments for insert to authenticated with check (exists (select 1 from public.invoices i where i.id = invoice_payments.invoice_id));
+create policy "Correct payments on visible invoices" on public.invoice_payments for update to authenticated using (exists (select 1 from public.invoices i where i.id = invoice_payments.invoice_id)) with check (exists (select 1 from public.invoices i where i.id = invoice_payments.invoice_id));
+create policy "Delete payments on visible invoices" on public.invoice_payments for delete to authenticated using (exists (select 1 from public.invoices i where i.id = invoice_payments.invoice_id));
+
+alter table public.invoice_reminders enable row level security;
+create policy "Read reminders on visible invoices" on public.invoice_reminders for select to authenticated using (exists (select 1 from public.invoices i where i.id = invoice_reminders.invoice_id));

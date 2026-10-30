@@ -1,10 +1,10 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import nodemailer from "npm:nodemailer@6.9.16";
 import { supabaseAdmin } from "../_shared/supabaseAdmin.ts";
 import { corsHeaders, OptionsMiddleware } from "../_shared/cors.ts";
 import { createErrorResponse } from "../_shared/utils.ts";
 import { AuthMiddleware, UserMiddleware } from "../_shared/authentication.ts";
 import { getUserSale } from "../_shared/getUserSale.ts";
+import { getCrmUrl, getMailer } from "../_shared/mailer.ts";
 import { buildTaskEmail } from "./taskEmail.ts";
 
 /**
@@ -17,9 +17,6 @@ import { buildTaskEmail } from "./taskEmail.ts";
  * SMTP_PASSWORD, optional SMTP_FROM_NAME and CRM_URL.
  */
 
-const DEFAULT_CRM_URL =
-  "https://dilipkumarkesavalu.github.io/zephvion-crm/app/";
-
 const json = (body: Record<string, unknown>) =>
   new Response(JSON.stringify(body), {
     headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -27,23 +24,6 @@ const json = (body: Record<string, unknown>) =>
 
 const fullName = (person: { first_name: string; last_name?: string | null }) =>
   `${person.first_name} ${person.last_name ?? ""}`.trim();
-
-const getTransport = () => {
-  const host = Deno.env.get("SMTP_HOST");
-  const user = Deno.env.get("SMTP_USER");
-  const pass = Deno.env.get("SMTP_PASSWORD");
-  if (!host || !user || !pass) return null;
-  const port = Number(Deno.env.get("SMTP_PORT") ?? "465");
-  return {
-    from: `"${Deno.env.get("SMTP_FROM_NAME") ?? "Zephvion CRM"}" <${user}>`,
-    transporter: nodemailer.createTransport({
-      host,
-      port,
-      secure: port === 465,
-      auth: { user, pass },
-    }),
-  };
-};
 
 async function notifyAssignee(req: Request, callerId: number) {
   const body = await req.json().catch(() => null);
@@ -78,7 +58,7 @@ async function notifyAssignee(req: Request, callerId: number) {
   }
   if (task.done_date) return json({ sent: false, reason: "task is done" });
 
-  const mail = getTransport();
+  const mail = getMailer();
   if (!mail) return json({ sent: false, reason: "email is not configured" });
 
   const { data: caller } = await supabaseAdmin
@@ -90,7 +70,7 @@ async function notifyAssignee(req: Request, callerId: number) {
     first_name: string;
     last_name: string | null;
   } | null;
-  const crmUrl = Deno.env.get("CRM_URL") ?? DEFAULT_CRM_URL;
+  const crmUrl = getCrmUrl();
 
   const email = buildTaskEmail({
     assigneeFirstName: assignee.first_name,

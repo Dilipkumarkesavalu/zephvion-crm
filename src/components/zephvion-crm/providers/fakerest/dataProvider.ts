@@ -13,6 +13,8 @@ import type {
   Contact,
   ContactNote,
   Deal,
+  Invoice,
+  InvoicePayment,
   Lead,
   DealNote,
   Sale,
@@ -29,6 +31,7 @@ import { getCompanyAvatar } from "../commons/getCompanyAvatar";
 import { getContactAvatar } from "../commons/getContactAvatar";
 import { mergeContacts } from "../commons/mergeContacts";
 import { getSearchResults } from "./search";
+import { settleInvoice } from "../../invoices/billingModel";
 import { prepareLead } from "../../leads/leadModel";
 import type { CrmDataProvider } from "../types";
 import {
@@ -183,6 +186,25 @@ export const createDataProvider = ({
     });
   };
 
+  const refreshInvoicePayments = async (
+    dataProvider: DataProvider,
+    invoiceId: Identifier,
+  ) => {
+    const [{ data: invoice }, { data: payments }] = await Promise.all([
+      baseDataProvider.getOne<Invoice>("invoices", { id: invoiceId }),
+      baseDataProvider.getList<InvoicePayment>("invoice_payments", {
+        filter: { invoice_id: invoiceId },
+        pagination: { page: 1, perPage: 1000 },
+        sort: { field: "id", order: "ASC" },
+      }),
+    ]);
+    await dataProvider.update<Invoice>("invoices", {
+      id: invoiceId,
+      data: settleInvoice(invoice, payments),
+      previousData: invoice,
+    });
+  };
+
   const dataProviderWithCustomMethod: CrmDataProvider = {
     ...baseDataProvider,
     async getMany(resource: string, params: any) {
@@ -334,6 +356,15 @@ export const createDataProvider = ({
         maxResults,
       );
     },
+    // The demo sends no email and has no Razorpay account
+    sendInvoiceReminder: async (_invoiceId: Identifier) => ({
+      ok: false,
+      reason: "demo",
+    }),
+    createPaymentLink: async (_invoiceId: Identifier) => ({
+      ok: false,
+      reason: "demo",
+    }),
     mergeContacts: async (sourceId: Identifier, targetId: Identifier) => {
       return mergeContacts(sourceId, targetId, baseDataProvider);
     },
@@ -653,6 +684,22 @@ export const createDataProvider = ({
           data: prepareLead({ ...params.previousData, ...params.data }),
         }),
       } satisfies ResourceCallbacks<Lead>,
+      {
+        // The database trigger keeps the invoice's paid amount and status
+        resource: "invoice_payments",
+        afterCreate: async (result, dataProvider) => {
+          await refreshInvoicePayments(dataProvider, result.data.invoice_id);
+          return result;
+        },
+        afterUpdate: async (result, dataProvider) => {
+          await refreshInvoicePayments(dataProvider, result.data.invoice_id);
+          return result;
+        },
+        afterDelete: async (result, dataProvider) => {
+          await refreshInvoicePayments(dataProvider, result.data.invoice_id);
+          return result;
+        },
+      } satisfies ResourceCallbacks<InvoicePayment>,
       {
         resource: "tags",
         afterDelete: async (result, dataProvider) => {

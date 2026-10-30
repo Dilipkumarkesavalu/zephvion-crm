@@ -1,5 +1,9 @@
 import type { Deal, DealStage, Invoice } from "../types";
-import { getDisplayStatus, toISODate } from "../invoices/invoiceModel";
+import {
+  getBalanceDue,
+  getDisplayStatus,
+  toISODate,
+} from "../invoices/invoiceModel";
 
 const CLOSED_STAGES = ["won", "lost"];
 
@@ -52,12 +56,12 @@ export const computeKpis = (
     openDeals: openDeals.length,
     collectedThisYear: sumBy(paidThisYear, (invoice) => invoice.total),
     paidInvoicesThisYear: paidThisYear.length,
-    outstanding: sumBy(unpaid, (invoice) => invoice.total),
+    outstanding: sumBy(unpaid, getBalanceDue),
     overdue: sumBy(
       unpaid.filter(
         (invoice) => getDisplayStatus(invoice, today) === "overdue",
       ),
-      (invoice) => invoice.total,
+      getBalanceDue,
     ),
     winRate: won + lost > 0 ? won / (won + lost) : null,
     wonDeals: won,

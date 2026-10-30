@@ -224,3 +224,14 @@ grant all on table public.leads to service_role;
 grant all on sequence public.leads_id_seq to service_role;
 revoke execute on function public.pick_lead_owner() from public, anon;
 grant execute on function public.pick_lead_owner() to authenticated, service_role;
+
+-- Billing
+grant select, insert, update, delete on table public.invoice_payments to authenticated;
+grant all on table public.invoice_payments to service_role;
+grant all on sequence public.invoice_payments_id_seq to service_role;
+grant select on table public.invoice_reminders to authenticated;
+grant all on table public.invoice_reminders to service_role;
+grant all on sequence public.invoice_reminders_id_seq to service_role;
+revoke execute on function public.generate_recurring_invoices() from public, anon, authenticated;
+revoke execute on function public.next_invoice_number(date) from public, anon;
+grant execute on function public.next_invoice_number(date) to authenticated, service_role;

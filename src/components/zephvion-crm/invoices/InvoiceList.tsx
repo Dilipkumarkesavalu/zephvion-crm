@@ -16,6 +16,7 @@ import { formatISODateString } from "../deals/dealUtils";
 import { formatMoney } from "./invoiceModel";
 import { InvoiceStatusBadge, InvoiceTypeBadge } from "./InvoiceStatusBadge";
 import { InvoiceSummary } from "./InvoiceSummary";
+import { ZohoExportButton } from "./ZohoExportButton";
 
 const filters = [<SearchInput source="q" alwaysOn key="q" />];
 
@@ -123,6 +124,7 @@ const TypeTabs = () => {
 const InvoiceListActions = () => (
   <TopToolbar>
     <SavedViewsMenu resource="invoices" />
+    <ZohoExportButton />
     <NewDocumentButtons />
   </TopToolbar>
 );

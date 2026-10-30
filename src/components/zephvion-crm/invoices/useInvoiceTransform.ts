@@ -33,8 +33,14 @@ export const useNextDocumentNumber = () => {
 export const withComputedTotals = (values: Partial<Invoice>) => {
   const items = sanitizeItems(values.items);
   const { subtotal, taxTotal, total } = computeTotals(items);
+  // The database keeps amount_paid from the recorded payments
+  const { amount_paid: _amountPaid, ...rest } = values;
+  const isRecurring =
+    rest.type === "invoice" && !!rest.recurrence && rest.recurrence !== "none";
   return {
-    ...values,
+    ...rest,
+    recurrence: isRecurring ? rest.recurrence : "none",
+    next_issue_date: isRecurring ? rest.next_issue_date : null,
     items,
     subtotal,
     tax_total: taxTotal,

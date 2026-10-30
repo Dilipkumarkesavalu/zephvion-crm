@@ -286,8 +286,45 @@ const getDataProviderWithCustomMethods = () => {
       });
       return data.config as ConfigurationContextValue;
     },
+    /** Emails the invoice contact a payment reminder now. */
+    async sendInvoiceReminder(invoiceId: Identifier): Promise<BillingResult> {
+      const { data, error } = await getSupabaseClient().functions.invoke<
+        BillingResult & { sent?: boolean }
+      >("invoice_reminders", {
+        method: "POST",
+        body: { invoice_id: invoiceId },
+      });
+      if (error) {
+        console.error("invoice_reminders.error", error);
+        return { ok: false, reason: "the reminder could not be sent" };
+      }
+      return { ...data, ok: !!data?.sent };
+    },
+    /** Creates a Razorpay link for the invoice balance and saves it. */
+    async createPaymentLink(invoiceId: Identifier): Promise<BillingResult> {
+      const { data, error } =
+        await getSupabaseClient().functions.invoke<BillingResult>(
+          "razorpay_payment_link",
+          {
+            method: "POST",
+            body: { invoice_id: invoiceId },
+          },
+        );
+      if (error) {
+        console.error("razorpay_payment_link.error", error);
+        return { ok: false, reason: "the payment link could not be created" };
+      }
+      return data ?? { ok: false };
+    },
   } satisfies DataProvider;
 };
+
+export interface BillingResult {
+  ok: boolean;
+  reason?: string;
+  url?: string;
+  to?: string;
+}
 
 export type CrmDataProvider = ReturnType<
   typeof getDataProviderWithCustomMethods

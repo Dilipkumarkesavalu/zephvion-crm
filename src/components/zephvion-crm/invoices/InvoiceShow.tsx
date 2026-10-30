@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import type { Invoice } from "../types";
 import { getInvoiceDefaults } from "./invoiceDefaults";
 import { InvoiceDocument } from "./InvoiceDocument";
+import { InvoicePayments } from "./InvoicePayments";
 import { getDisplayStatus } from "./invoiceModel";
 import { InvoiceStatusBadge } from "./InvoiceStatusBadge";
 import { useNextDocumentNumber } from "./useInvoiceTransform";
@@ -40,6 +41,7 @@ const InvoiceShowContent = () => {
   return (
     <div className="mt-4 flex flex-col gap-4 pb-8">
       <InvoiceShowToolbar invoice={record} />
+      {record.type === "invoice" ? <InvoicePayments invoice={record} /> : null}
       <InvoiceDocument invoice={record} />
     </div>
   );
@@ -82,12 +84,7 @@ const getStatusActions = (invoice: Invoice): StatusActionConfig[] => {
   if (invoice.status === "draft") {
     return [{ status: "sent", label: "mark_sent", icon: Send }];
   }
-  if (
-    invoice.type === "invoice" &&
-    (status === "sent" || status === "overdue")
-  ) {
-    return [{ status: "paid", label: "mark_paid", icon: Check }];
-  }
+  // Invoices are marked paid by recording payments
   if (invoice.type === "quote" && (status === "sent" || status === "expired")) {
     return [
       { status: "accepted", label: "mark_accepted", icon: Check },

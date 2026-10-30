@@ -140,14 +140,41 @@ export const getTaxModeForState = (
 export const getStatusChoices = (type: InvoiceType): string[] =>
   type === "quote" ? QUOTE_STATUSES : INVOICE_STATUSES;
 
-/** Stored status, or the derived overdue/expired status once the due date passes. */
+/**
+ * Stored status, or a derived one: overdue/expired once the due date passes,
+ * partially paid while an invoice has some payments but is not yet due.
+ */
 export const getDisplayStatus = (
-  invoice: Pick<Invoice, "type" | "status" | "due_date">,
+  invoice: Pick<Invoice, "type" | "status" | "due_date" | "amount_paid">,
   today: Date = new Date(),
 ): string => {
   const isPastDue = !!invoice.due_date && invoice.due_date < toISODate(today);
-  if (invoice.status !== "sent" || !isPastDue) return invoice.status;
-  return invoice.type === "invoice" ? "overdue" : "expired";
+  if (invoice.status !== "sent") return invoice.status;
+  if (isPastDue) return invoice.type === "invoice" ? "overdue" : "expired";
+  return invoice.type === "invoice" && Number(invoice.amount_paid) > 0
+    ? "partially_paid"
+    : invoice.status;
+};
+
+/** Money received on an invoice, counting older ones marked paid by hand. */
+export const getAmountReceived = (
+  invoice: Pick<Invoice, "type" | "status" | "total" | "amount_paid">,
+): number => {
+  if (invoice.type !== "invoice") return 0;
+  return invoice.status === "paid"
+    ? Number(invoice.total)
+    : Number(invoice.amount_paid ?? 0);
+};
+
+/** What the client still owes on an invoice; nothing on quotes or paid ones. */
+export const getBalanceDue = (
+  invoice: Pick<Invoice, "type" | "status" | "total" | "amount_paid">,
+): number => {
+  if (invoice.type !== "invoice" || invoice.status !== "sent") return 0;
+  return Math.max(
+    0,
+    roundMoney(Number(invoice.total) - Number(invoice.amount_paid ?? 0)),
+  );
 };
 
 /** Next number in the QT-2026-0001 / INV-2026-0001 series for the given year. */
