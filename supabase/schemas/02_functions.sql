@@ -604,6 +604,7 @@ begin
     when 'contacts' then trim(concat_ws(' ', row_data ->> 'first_name', row_data ->> 'last_name'))
     when 'leads' then trim(concat_ws(' ', row_data ->> 'first_name', row_data ->> 'last_name', nullif('· ' || coalesce(row_data ->> 'company_name', ''), '· ')))
     when 'tasks' then row_data ->> 'text'
+    when 'tickets' then concat_ws(' ', row_data ->> 'number', row_data ->> 'subject')
     else row_data ->> 'name'
   end;
 
@@ -831,6 +832,80 @@ begin
   elsif new.status <> 'done' then
     new.completed_at := null;
   end if;
+  return new;
+end;
+$$;
+
+-- Support desk
+-- Deadlines per priority: hours to first response, hours to resolve.
+-- Same values as TICKET_SLA_HOURS in src/components/zephvion-crm/tickets/ticketModel.ts
+CREATE OR REPLACE FUNCTION "public"."ticket_sla_hours"("priority" text, "kind" text) RETURNS integer
+    LANGUAGE "sql" IMMUTABLE
+    SET "search_path" TO ''
+    AS $$
+  select case kind
+    when 'response' then case priority when 'urgent' then 1 when 'high' then 4 when 'normal' then 8 else 24 end
+    else case priority when 'urgent' then 8 when 'high' then 24 when 'normal' then 72 else 120 end
+  end
+$$;
+
+-- Active member of the support team with the fewest open tickets
+CREATE OR REPLACE FUNCTION "public"."pick_ticket_owner"() RETURNS bigint
+    LANGUAGE "sql" STABLE SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+  select s.id
+  from public.sales s
+  join public.departments d on d.id = s.department_id
+  where d.name = 'Support and Customer Success' and not s.disabled
+  order by (
+    select count(*) from public.tickets t
+    where t.sales_id = s.id and t.status in ('open', 'in_progress', 'waiting_client')
+  ), s.id
+  limit 1
+$$;
+
+CREATE OR REPLACE FUNCTION "public"."prepare_ticket"() RETURNS "trigger"
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+begin
+  new.updated_at := now();
+  if tg_op = 'INSERT' then
+    if new.sales_id is null then
+      new.sales_id := public.pick_ticket_owner();
+    end if;
+    new.first_response_due := new.created_at + make_interval(hours => public.ticket_sla_hours(new.priority, 'response'));
+    new.resolve_due := new.created_at + make_interval(hours => public.ticket_sla_hours(new.priority, 'resolve'));
+  elsif new.priority is distinct from old.priority then
+    -- A new priority moves the deadlines, counted from when the ticket came in
+    new.first_response_due := new.created_at + make_interval(hours => public.ticket_sla_hours(new.priority, 'response'));
+    new.resolve_due := new.created_at + make_interval(hours => public.ticket_sla_hours(new.priority, 'resolve'));
+  end if;
+  if new.status in ('resolved', 'closed') then
+    new.resolved_at := coalesce(new.resolved_at, now());
+  else
+    new.resolved_at := null;
+  end if;
+  if new.status <> 'open' and new.first_responded_at is null then
+    new.first_responded_at := now();
+  end if;
+  return new;
+end;
+$$;
+
+-- A reply to the client (not an internal note) counts as the first response
+CREATE OR REPLACE FUNCTION "public"."mark_ticket_responded"() RETURNS "trigger"
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    SET "search_path" TO ''
+    AS $$
+begin
+  if not new.is_internal then
+    update public.tickets
+    set first_responded_at = coalesce(first_responded_at, new.created_at)
+    where id = new.ticket_id and first_responded_at is null;
+  end if;
+  update public.tickets set updated_at = now() where id = new.ticket_id;
   return new;
 end;
 $$;

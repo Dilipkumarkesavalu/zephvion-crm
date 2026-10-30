@@ -300,6 +300,22 @@ const getDataProviderWithCustomMethods = () => {
       }
       return { ...data, ok: !!data?.sent };
     },
+    /** Emails a ticket reply to the ticket's contact. */
+    async emailTicketReply(commentId: Identifier): Promise<BillingResult> {
+      const { data, error } =
+        await getSupabaseClient().functions.invoke<BillingResult>(
+          "ticket_reply",
+          {
+            method: "POST",
+            body: { comment_id: commentId },
+          },
+        );
+      if (error) {
+        console.error("ticket_reply.error", error);
+        return { ok: false, reason: "the email could not be sent" };
+      }
+      return data ?? { ok: false };
+    },
     /** Creates a Razorpay link for the invoice balance and saves it. */
     async createPaymentLink(invoiceId: Identifier): Promise<BillingResult> {
       const { data, error } =
@@ -448,6 +464,12 @@ const lifeCycleCallbacks: ResourceCallbacks[] = [
     resource: "projects",
     beforeGetList: async (params) => {
       return applyFullTextSearch(["name", "description"])(params);
+    },
+  },
+  {
+    resource: "tickets",
+    beforeGetList: async (params) => {
+      return applyFullTextSearch(["number", "subject", "description"])(params);
     },
   },
   {

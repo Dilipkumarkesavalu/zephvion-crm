@@ -18,6 +18,8 @@ import type {
   Lead,
   Project,
   ProjectMilestone,
+  Ticket,
+  TicketComment,
   DealNote,
   Sale,
   SalesFormData,
@@ -35,6 +37,7 @@ import { mergeContacts } from "../commons/mergeContacts";
 import { getSearchResults } from "./search";
 import { settleInvoice } from "../../invoices/billingModel";
 import { prepareLead } from "../../leads/leadModel";
+import { nextTicketNumber, prepareTicket } from "../../tickets/ticketModel";
 import type { CrmDataProvider } from "../types";
 import {
   authProvider as defaultAuthProvider,
@@ -377,6 +380,10 @@ export const createDataProvider = ({
       ok: false,
       reason: "demo",
     }),
+    emailTicketReply: async (_commentId: Identifier) => ({
+      ok: false,
+      reason: "demo",
+    }),
     mergeContacts: async (sourceId: Identifier, targetId: Identifier) => {
       return mergeContacts(sourceId, targetId, baseDataProvider);
     },
@@ -696,6 +703,53 @@ export const createDataProvider = ({
           data: prepareLead({ ...params.previousData, ...params.data }),
         }),
       } satisfies ResourceCallbacks<Lead>,
+      {
+        // Database triggers number tickets, set deadlines and stamp replies
+        resource: "tickets",
+        beforeCreate: async (params) => {
+          const { data: existing } = await baseDataProvider.getList<Ticket>(
+            "tickets",
+            {
+              pagination: { page: 1, perPage: 10000 },
+              sort: { field: "id", order: "ASC" },
+              filter: {},
+            },
+          );
+          return {
+            ...params,
+            data: prepareTicket({
+              ...params.data,
+              number: nextTicketNumber(existing.map((ticket) => ticket.number)),
+            }),
+          };
+        },
+        beforeUpdate: async (params) => ({
+          ...params,
+          data: prepareTicket(
+            { ...params.previousData, ...params.data },
+            params.previousData,
+          ),
+        }),
+      } satisfies ResourceCallbacks<Ticket>,
+      {
+        resource: "ticket_comments",
+        afterCreate: async (result, dataProvider) => {
+          if (!result.data.is_internal) {
+            const { data: ticket } = await baseDataProvider.getOne<Ticket>(
+              "tickets",
+              { id: result.data.ticket_id },
+            );
+            if (!ticket.first_responded_at) {
+              await dataProvider.update<Ticket>("tickets", {
+                id: ticket.id,
+                data: { first_responded_at: result.data.created_at },
+                previousData: ticket,
+              });
+            }
+          }
+          return result;
+        },
+      } satisfies ResourceCallbacks<TicketComment>,
       {
         // Database triggers stamp when a milestone is done
         resource: "project_milestones",

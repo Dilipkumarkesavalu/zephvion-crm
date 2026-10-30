@@ -6,6 +6,7 @@ import {
   Handshake,
   History,
   Inbox,
+  LifeBuoy,
   LayoutDashboard,
   Network,
   Plus,
@@ -78,6 +79,12 @@ const useCommandActions = () => {
         icon: FolderKanban,
       },
       {
+        id: "go.tickets",
+        label: plural("tickets"),
+        to: "/tickets",
+        icon: LifeBuoy,
+      },
+      {
         id: "go.tasks",
         label: plural("tasks"),
         to: "/tasks",
@@ -129,6 +136,12 @@ const useCommandActions = () => {
         id: "new.project",
         label: translate("resources.projects.action.new"),
         to: "/projects/create",
+        icon: Plus,
+      },
+      {
+        id: "new.ticket",
+        label: translate("resources.tickets.action.new"),
+        to: "/tickets/create",
         icon: Plus,
       },
       {

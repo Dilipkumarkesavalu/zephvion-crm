@@ -13,6 +13,8 @@ import type {
   Project,
   ProjectMilestone,
   TimeEntry,
+  Ticket,
+  TicketComment,
   Notification,
   SavedView,
   Sale,
@@ -37,6 +39,8 @@ export interface Db {
   projects: Project[];
   project_milestones: ProjectMilestone[];
   time_entries: TimeEntry[];
+  tickets: Ticket[];
+  ticket_comments: TicketComment[];
   audit_log: AuditLogEntry[];
   sales: Sale[];
   tags: Tag[];

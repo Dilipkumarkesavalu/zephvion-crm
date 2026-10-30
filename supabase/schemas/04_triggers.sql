@@ -144,3 +144,13 @@ create or replace trigger audit_projects after insert or update or delete on pub
     for each row execute function public.write_audit_log();
 create or replace trigger notify_project_assignment after insert or update of sales_id on public.projects
     for each row execute function public.notify_assignment();
+
+-- Support desk
+create or replace trigger prepare_ticket before insert or update on public.tickets
+    for each row execute function public.prepare_ticket();
+create or replace trigger mark_ticket_responded after insert on public.ticket_comments
+    for each row execute function public.mark_ticket_responded();
+create or replace trigger audit_tickets after insert or update or delete on public.tickets
+    for each row execute function public.write_audit_log();
+create or replace trigger notify_ticket_assignment after insert or update of sales_id on public.tickets
+    for each row execute function public.notify_assignment();

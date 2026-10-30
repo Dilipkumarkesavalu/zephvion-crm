@@ -110,7 +110,8 @@ export type SavedViewResource =
   | "companies"
   | "deals"
   | "invoices"
-  | "projects";
+  | "projects"
+  | "tickets";
 
 export type SavedView = {
   created_at: string;
@@ -306,6 +307,59 @@ export type Project = {
   budget: number;
   budget_hours: number;
   description?: string | null;
+} & Pick<RaRecord, "id">;
+
+export const TICKET_STATUSES = [
+  "open",
+  "in_progress",
+  "waiting_client",
+  "resolved",
+  "closed",
+] as const;
+export type TicketStatus = (typeof TICKET_STATUSES)[number];
+
+export const TICKET_PRIORITIES = ["low", "normal", "high", "urgent"] as const;
+export type TicketPriority = (typeof TICKET_PRIORITIES)[number];
+
+export const TICKET_CHANNELS = [
+  "email",
+  "phone",
+  "whatsapp",
+  "portal",
+  "other",
+] as const;
+export type TicketChannel = (typeof TICKET_CHANNELS)[number];
+
+export type Ticket = {
+  created_at: string;
+  updated_at: string;
+  /** TKT-0001, set by the database */
+  number: string;
+  subject: string;
+  description?: string | null;
+  company_id?: Identifier | null;
+  contact_id?: Identifier | null;
+  project_id?: Identifier | null;
+  /** Assignee */
+  sales_id?: Identifier | null;
+  status: TicketStatus;
+  priority: TicketPriority;
+  channel: TicketChannel;
+  first_response_due?: string | null;
+  resolve_due?: string | null;
+  first_responded_at?: string | null;
+  resolved_at?: string | null;
+} & Pick<RaRecord, "id">;
+
+export type TicketComment = {
+  created_at: string;
+  ticket_id: Identifier;
+  sales_id?: Identifier | null;
+  body: string;
+  /** Internal notes are for the team only and never emailed */
+  is_internal: boolean;
+  emailed_at?: string | null;
+  emailed_to?: string | null;
 } & Pick<RaRecord, "id">;
 
 export const MILESTONE_STATUSES = ["pending", "in_progress", "done"] as const;

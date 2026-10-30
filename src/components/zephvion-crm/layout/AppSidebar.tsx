@@ -7,6 +7,7 @@ import {
   History,
   Import,
   Inbox,
+  LifeBuoy,
   LayoutDashboard,
   Network,
   ReceiptText,
@@ -100,6 +101,16 @@ export const AppSidebar = () => {
           to: "/projects",
           icon: FolderKanban,
           label: translate("resources.projects.name", { smart_count: 2 }),
+        },
+      ],
+    },
+    {
+      label: translate("crm.nav.support"),
+      items: [
+        {
+          to: "/tickets",
+          icon: LifeBuoy,
+          label: translate("resources.tickets.name", { smart_count: 2 }),
         },
       ],
     },

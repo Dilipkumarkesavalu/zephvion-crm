@@ -23,6 +23,7 @@ import deals from "../deals";
 import invoices from "../invoices";
 import leads from "../leads";
 import projects from "../projects";
+import tickets from "../tickets";
 import { ReceivablesPage } from "../invoices/ReceivablesPage";
 import { Layout } from "../layout/Layout";
 import { MobileLayout } from "../layout/MobileLayout";
@@ -293,6 +294,8 @@ const DesktopAdmin = (
       <Resource name="notifications" />
       <Resource name="saved_views" />
       <Resource name="projects" {...projects} />
+      <Resource name="tickets" {...tickets} />
+      <Resource name="ticket_comments" />
       <Resource name="project_milestones" />
       <Resource name="time_entries" />
       <Resource name="invoice_payments" />

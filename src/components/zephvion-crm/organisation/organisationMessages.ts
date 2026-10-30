@@ -80,6 +80,7 @@ export const organisationMessages = {
       sell: "Sell",
       billing: "Billing",
       deliver: "Deliver",
+      support: "Support",
       work: "Work",
     },
     views: {
@@ -133,6 +134,7 @@ export const organisationMessages = {
       tables: {
         leads: "Lead",
         projects: "Project",
+        tickets: "Ticket",
         companies: "Company",
         contacts: "Contact",
         deals: "Deal",
@@ -157,6 +159,7 @@ export const organisationMessages = {
         companies: "%{actor} assigned you a company",
         leads: "%{actor} assigned you a lead",
         projects: "%{actor} made you project manager",
+        tickets: "%{actor} assigned you a ticket",
       },
       someone: "Someone",
     },

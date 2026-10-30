@@ -27,6 +27,7 @@ const SHOWN = 20;
 const RECORD_PATHS: Record<string, string> = {
   leads: "/leads",
   projects: "/projects",
+  tickets: "/tickets",
   deals: "/deals",
   contacts: "/contacts",
   companies: "/companies",

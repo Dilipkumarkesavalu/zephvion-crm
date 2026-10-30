@@ -191,6 +191,8 @@ verify_jwt = false
 # Called daily by the scheduled job with its own secret, or by signed-in users
 [functions.invoice_reminders]
 verify_jwt = false
+[functions.ticket_reply]
+verify_jwt = false
 [functions.razorpay_payment_link]
 verify_jwt = false
 [functions.mcp]

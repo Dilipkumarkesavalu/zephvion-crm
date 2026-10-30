@@ -145,3 +145,17 @@ create policy "Read time on visible projects" on public.time_entries for select 
 create policy "Log own time" on public.time_entries for insert to authenticated with check (sales_id = public.current_sales_id() and exists (select 1 from public.projects p where p.id = time_entries.project_id));
 create policy "Edit own time" on public.time_entries for update to authenticated using (sales_id = public.current_sales_id() or public.is_admin()) with check (sales_id = public.current_sales_id() or public.is_admin());
 create policy "Delete own time" on public.time_entries for delete to authenticated using (sales_id = public.current_sales_id() or public.is_admin());
+
+-- Support desk
+alter table public.tickets enable row level security;
+create policy "Read visible tickets" on public.tickets for select to authenticated using (public.can_see_owner(sales_id) or exists (select 1 from public.companies c where c.id = tickets.company_id));
+create policy "Create tickets" on public.tickets for insert to authenticated with check (true);
+create policy "Update visible tickets" on public.tickets for update to authenticated using (public.can_see_owner(sales_id) or exists (select 1 from public.companies c where c.id = tickets.company_id)) with check (true);
+create policy "Delete visible tickets" on public.tickets for delete to authenticated using (public.can_see_owner(sales_id) or exists (select 1 from public.companies c where c.id = tickets.company_id));
+
+-- Anyone who sees the ticket reads and adds to the thread; authors edit theirs
+alter table public.ticket_comments enable row level security;
+create policy "Read comments on visible tickets" on public.ticket_comments for select to authenticated using (exists (select 1 from public.tickets t where t.id = ticket_comments.ticket_id));
+create policy "Comment on visible tickets" on public.ticket_comments for insert to authenticated with check (sales_id = public.current_sales_id() and exists (select 1 from public.tickets t where t.id = ticket_comments.ticket_id));
+create policy "Edit own comments" on public.ticket_comments for update to authenticated using (sales_id = public.current_sales_id()) with check (sales_id = public.current_sales_id());
+create policy "Delete own comments" on public.ticket_comments for delete to authenticated using (sales_id = public.current_sales_id() or public.is_admin());

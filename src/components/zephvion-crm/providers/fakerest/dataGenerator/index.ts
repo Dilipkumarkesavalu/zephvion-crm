@@ -9,6 +9,7 @@ import { generateInvoices } from "./invoices";
 import { generateLeads } from "./leads";
 import { generateInvoicePayments } from "./invoicePayments";
 import { generateProjects } from "./projects";
+import { generateTickets } from "./tickets";
 import { generateAuditLog, generateNotifications } from "./notifications";
 import { generateSales } from "./sales";
 import { generateSavedViews } from "./savedViews";
@@ -35,6 +36,7 @@ export default (): Db => {
   db.invoice_payments = generateInvoicePayments(db);
   db.invoice_reminders = [];
   Object.assign(db, generateProjects(db));
+  Object.assign(db, generateTickets(db));
   db.configuration = [
     {
       id: 1,

@@ -246,3 +246,15 @@ grant all on table public.time_entries to service_role;
 grant all on sequence public.projects_id_seq to service_role;
 grant all on sequence public.project_milestones_id_seq to service_role;
 grant all on sequence public.time_entries_id_seq to service_role;
+
+-- Support desk
+grant select, insert, update, delete on table public.tickets to authenticated;
+grant select, insert, update, delete on table public.ticket_comments to authenticated;
+grant usage on sequence public.ticket_number_seq to authenticated;
+grant all on table public.tickets to service_role;
+grant all on table public.ticket_comments to service_role;
+grant all on sequence public.tickets_id_seq to service_role;
+grant all on sequence public.ticket_comments_id_seq to service_role;
+grant all on sequence public.ticket_number_seq to service_role;
+revoke execute on function public.pick_ticket_owner() from public, anon;
+grant execute on function public.pick_ticket_owner() to authenticated, service_role;
